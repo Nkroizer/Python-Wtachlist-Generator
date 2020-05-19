@@ -1,5 +1,5 @@
 from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu
-from WatchListFunctions import extractIMDBIdFromLink, cleanFileName, checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists
+from WatchListFunctions import extractIMDBIdFromLink, cleanFileName, checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClicked
 from imdb import IMDb
 import csv
 import pathlib
@@ -55,56 +55,9 @@ def rClickbinder(r):
         pass
 
 
-def addShowClicked():
+def addShowClick():
     link = showInput.get()
-    showToAdd = extractIMDBIdFromLink(link)
-    ia = IMDb()
-    series = ia.get_movie(showToAdd)
-    ia.update(series, "episodes")
-    SeasonsArr = sorted(series["episodes"].keys())
-    ShowTitle = series["title"]
-    cleanTitle = cleanFileName(str(ShowTitle))
-    print("Started working on: " + cleanTitle)
-    with open("Local DB/" + cleanTitle + ".csv", 'w', newline='') as csvfile:
-        showWriter = csv.writer(csvfile, delimiter=' ',
-                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for SeasonNum in SeasonsArr:
-            print("Season: " + str(SeasonNum))
-            seasonx = series["episodes"][SeasonNum]
-            EpisodeArr = sorted(seasonx)
-            try:
-                for episodz in EpisodeArr:
-                    episode = series["episodes"][SeasonNum][episodz]
-                    ESeason = episode["season"]
-                    Eepisode = episode["episode"]
-                    ETitle = episode["title"]
-                    if "," in ETitle:
-                        ETitle = ETitle.replace(',', ' ')
-                    try:
-                        EAirdate = episode["original air date"]
-                    except:
-                        EAirdate = "1 Jan. 2000"
-                    if len(EAirdate) < 10:
-                        print("E: " + str(EAirdate))
-                        EAirdate = "1 Jan. 2000"
-                    try:
-                        Erate = episode["rating"]
-                    except:
-                        Erate = 0
-                    if Erate > 10:
-                        Erate = 0
-                    print("Season: " + str(ESeason) +
-                          " Episode: " + str(Eepisode))
-                    try:
-                        showWriter.writerow(
-                            [str(ESeason), str(Eepisode), str(ETitle), str(EAirdate), str(Erate)])
-                    except:
-                        showWriter.writerow(
-                            [str(ESeason), str(Eepisode), "bad tite encoding", str(EAirdate), str(Erate)])
-            except:
-                print("An exception occurred trying to extract an episode")
-        print("Finished working on: " + cleanTitle)
-        print("-----------------------------------------")
+    cleanTitle = addShowClicked(link)
     messagebox.showinfo("info", cleanTitle + " Added successfuly")
 
 
@@ -150,7 +103,7 @@ showInput.pack(side=LEFT, padx=10, pady=7, anchor="w")
 
 showInput.bind('<Button-3>', rClicker, add='')
 
-addShowBtn = Button(frame, text="+ Add", command=addShowClicked, width=7)
+addShowBtn = Button(frame, text="+ Add", command=addShowClick, width=7)
 
 addShowBtn.pack(side=LEFT, padx=10, pady=7)
 

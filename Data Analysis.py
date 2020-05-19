@@ -1,5 +1,5 @@
-from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu
-from WatchListFunctions import getDateOfFirstEpisodeInListFunc, intializeRawFile, turnRawFileIntoExcel
+from tkinter import Tk, messagebox, Frame, Label, LEFT, RIGHT, Entry, Button, Listbox, END, Menu
+from WatchListFunctions import getDateOfFirstEpisodeInListFunc, intializeRawFile, turnRawFileIntoExcel, addNewEntryToTimeTrak
 
 window = Tk()
 
@@ -51,6 +51,12 @@ def rClickbinder(r):
         pass
 
 
+def addNewEntryToTimeTrakBridge():
+    inputDateReached = inputDateReachedInput.get()
+    inputLastEpisodePlace = inputLastEpisodePlaceInput.get()
+    InputLastEpisodeReached = InputLastEpisodeReachedInput.get()
+    addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached)
+
 # Add show section
 frame = Frame(window)
 frame.pack()
@@ -61,6 +67,15 @@ frame2.pack()
 frame3 = Frame(window)
 frame3.pack()
 
+frame4 = Frame(window)
+frame4.pack()
+
+frame5 = Frame(window)
+frame5.pack()
+
+frame6 = Frame(window)
+frame6.pack()
+
 # ----------------------------------------------------------------------------------
 
 createNewFileBtn = Button(
@@ -68,24 +83,48 @@ createNewFileBtn = Button(
 
 createNewFileBtn.pack(side=LEFT, padx=10, pady=7)
 
-addShowLbl = Label(frame2, text="Current Date of episode reached (MM/DD/YYYY)")
-
-addShowLbl.pack(side=LEFT, padx=10, pady=7)
-
-showInput = Entry(frame2, width=53)
-
-showInput.pack(side=LEFT, padx=10, pady=7, anchor="w")
-
-showInput.bind('<Button-3>', rClicker, add='')
-
 convertRawFileBtn = Button(
-    frame3, text="Convert Raw File to Excel", command=turnRawFileIntoExcel, width=22)
+    frame2, text="Convert Raw File to Excel", command=turnRawFileIntoExcel, width=22)
 
 convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
 
-# f=open("raw.txt", "a+")
-# for i in range(2):
-#     f.write("Appended line %d\r" % (i+1))
-#     f.close()
+inputDateReachedLbl = Label(frame3, text="Current Date of episode reached (MM/DD/YYYY)")
+
+inputDateReachedLbl.pack(side=LEFT, padx=10, pady=7)
+
+inputDateReachedInput = Entry(frame3, width=53)
+
+inputDateReachedInput.pack(side=LEFT, padx=10, pady=7, anchor="w")
+
+inputDateReachedInput.bind('<Button-3>', rClicker, add='')
+
+
+inputLastEpisodePlaceLbl = Label(frame4, text="Last Episode Place")
+
+inputLastEpisodePlaceLbl.pack(side=LEFT, padx=10, pady=7)
+
+inputLastEpisodePlaceInput = Entry(frame4, width=53)
+
+inputLastEpisodePlaceInput.pack(side=LEFT, padx=10, pady=7, anchor="w")
+
+inputLastEpisodePlaceInput.bind('<Button-3>', rClicker, add='')
+
+
+inputLastEpisodeReachedLbl = Label(frame5, text="Last Episode Reached")
+
+inputLastEpisodeReachedLbl.pack(side=LEFT, padx=10, pady=7)
+
+InputLastEpisodeReachedInput = Entry(frame5, width=53)
+
+InputLastEpisodeReachedInput.pack(side=RIGHT, padx=10, pady=7, anchor="w")
+
+InputLastEpisodeReachedInput.bind('<Button-3>', rClicker, add='')
+
+convertRawFileBtn = Button(
+    frame6, text="Add TimeTrak Line", command=addNewEntryToTimeTrakBridge, width=22)
+
+convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
+
+
 
 window.mainloop()
