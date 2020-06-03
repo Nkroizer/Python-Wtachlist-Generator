@@ -534,7 +534,7 @@ def intializeRawFile():
     f.write("0,13,ETAC,EQU\r")
     f.write("1,13,TODAY + TOTAL,EQU\r")
     f.write("2,13,Esitmitade Time Of Complete,REG\r")
-    f.write("3,13,=(D4 + M4),N\r")
+    f.write("3,13,4/11/2044,N\r")
     #LatestInfo["colN"] = StrToDate(FirstDate) + totalDaysLeft
     LatestInfo["colN"] = StrToDate("4/11/2044")
     # -------------------------------- Col O:O ----------------------------------
@@ -547,7 +547,7 @@ def intializeRawFile():
     f.write("0,15,LE_YEAR,EQU\r")
     f.write("1,15,LE_YEAR,EQU\r")
     f.write("2,15,Last Episode Year,REG\r")
-    f.write("3,15,1995,P\r")
+    f.write("3,15,5/14/1995,P\r")
     #f.write("3,15," + oldestYear + ",P\r")
     # LatestInfo["colP"] = str(oldestYear)
     LatestInfo["colP"] = "1995"
@@ -655,8 +655,8 @@ def turnRawFileIntoExcel():
     formats["REGO"] = Regular_format
     Nuetral_format = workbook.add_format({'font_color': '#9C5700', 'align': 'center', 'border': 1, 'bg_color': '#FFEB9C', 'border_color': '#575163', 'num_format': '0'})
     formats["NUE"] = Nuetral_format
-    Nuetral_format = workbook.add_format({'font_color': '#9C5700', 'align': 'center', 'border': 1, 'bg_color': '#FFEB9C', 'border_color': '#575163', 'num_format': '[$-en-US]mmmm d, yyyy;@'})
-    formats["NUEB"] = Nuetral_format
+    Nuetral_format_B = workbook.add_format({'font_color': '#9C5700', 'align': 'center', 'border': 1, 'bg_color': '#FFEB9C', 'border_color': '#575163', 'num_format': '[$-en-US]mmmm d, yyyy;@'})
+    formats["NUEB"] = Nuetral_format_B
     # ------------------------------------------Set Colmn Width-----------------------------------------------------------
     sheet1.set_column('A:A', 20)  # 00
     sheet1.set_column('B:B', 13)  # 01
@@ -700,6 +700,8 @@ def turnRawFileIntoExcel():
             format = format[0:len(format)-1]
             if (format == "A") or (format == "C") or (format == "EG") or (format == "EB") or (format == "NUE"):
                 title = int(title)
+            elif (format == "B") or (format == "D") or (format == "N") or (format == "P") or (format == "NUEB"):
+                title = StrToDate(title)
             elif (format == "I") or (format == "W") or (format == "Y"):
                 title = float(title)
             sheet1.write(row, col, title, formats[format])
@@ -736,7 +738,7 @@ def addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, inputLastEpis
     print("OldH: " + str(OldH))
     OldI = LatestInfo["colI"]
     print("OldI: " + str(OldI))
-    OldNDate = LatestInfo["colN"]
+    OldNDate = StrToDate(LatestInfo["colN"])
     OldN = OldNDate.strftime("%m/%d/%Y")
     print("OldN: " + str(OldN))
     inputColQ = inputLastEpisodePlace
@@ -758,7 +760,12 @@ def addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, inputLastEpis
     print("a: " + str(colA))
     tmpColA = str(colA)
     tmpColA = DaysLeftToInt(tmpColA)
-    colE = DaysLeftToInt(OldA) - int(tmpColA)
+    tempOldColA = 0
+    if "day" in str(OldA):
+        tempOldColA = DaysLeftToInt(OldA)
+    else:
+        tempOldColA = int(OldA)
+    colE = tempOldColA - int(tmpColA)
     print("e: " + str(colE))
     colF = int(OldI) * colC
     colG = int(OldG) + int(colE)
@@ -812,7 +819,7 @@ def addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, inputLastEpis
     print(str(rowNum) + ",0," + str(DaysLeftToInt(colA)) + ",A\r")
     NewLatestInfo["colA"] = str(DaysLeftToInt(colA))
     # -------------------------------- Col B:B ---------------------------------- DATE(RCHD)
-    f.write(str(rowNum) + ",1," + str(DateFormatToListFormat(colB)) + ",B\r")
+    f.write(str(rowNum) + ",1," + DateFormatToListFormat(colB) + ",B\r")
     print(str(rowNum) + ",1," + str(DateFormatToListFormat(colB)) + ",B\r")
     NewLatestInfo["colB"] = DateFormatToListFormat(colB)
     # -------------------------------- Col C:C ---------------------------------- DAYS(PSSD)
@@ -820,7 +827,7 @@ def addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, inputLastEpis
     print(str(rowNum) + ",2," + str(colC) + ",C\r")
     NewLatestInfo["colC"] = colC
     # -------------------------------- Col D:D ---------------------------------- TODAY
-    f.write(str(rowNum) + ",3,=(D" + str(rowNum) + " + C" + str(rowNumPlus) + "),D\r")
+    f.write(str(rowNum) + ",3," + str(DateFormatToListFormat(colD)) + ",D\r")
     print(str(rowNum) + ",3," + str(DateFormatToListFormat(colD)) + ",D\r")
     NewLatestInfo["colD"] = DateFormatToListFormat(colD)
     # -------------------------------- Col E:E ---------------------------------- DAYS(ADV)
@@ -837,6 +844,7 @@ def addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, inputLastEpis
     NewLatestInfo["colF"] = colF
     # -------------------------------- Col G:G ---------------------------------- #LDAYS(PSSD)
     f.write(str(rowNum) + ",6," + str(colG) + ",A\r")
+    print(str(rowNum) + ",6," + str(colG) + ",A\r")
     NewLatestInfo["colG"] = colG
     # -------------------------------- Col H:H ---------------------------------- PDP
     f.write(str(rowNum) + ",7," + str(colH) + ",A\r")
@@ -857,17 +865,17 @@ def addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, inputLastEpis
     f.write(str(rowNum) + ",12," + str(colM) + ",I\r")
     NewLatestInfo["colM"] = colM
     # -------------------------------- Col N:N ---------------------------------- ETAC
-    f.write(str(rowNum) + ",13,=(D" + str(rowNum) + " + M" + str(rowNum) + "),N\r")
-    NewLatestInfo["colN"] = colNDate
+    f.write(str(rowNum) + ",13," + str(DateFormatToListFormat(colNDate)) + ",N\r")
+    NewLatestInfo["colN"] = str(DateFormatToListFormat(colNDate))
     # -------------------------------- Col O:O ----------------------------------DAYS ADDED
     if DaysLeftToInt(colO) > 0:
-        f.write(str(rowNum) + ",14," + str(DaysLeftToInt(colO)) + " days,OG\r")
-    else:
         f.write(str(rowNum) + ",14," + str(DaysLeftToInt(colO)) + " days,OB\r")
+    else:
+        f.write(str(rowNum) + ",14," + str(DaysLeftToInt(colO)) + " days,OG\r")
     NewLatestInfo["colO"] = str(DaysLeftToInt(colO)) + " days"
     # -------------------------------- Col P:P ---------------------------------- LE_YEAR
-    f.write(str(rowNum) + ",15," + str(colP) + ",P\r")
-    NewLatestInfo["colP"] = colP
+    f.write(str(rowNum) + ",15," + str(DateFormatToListFormat(colP)) + ",P\r")
+    NewLatestInfo["colP"] = str(DateFormatToListFormat(colP))
     # -------------------------------- Col Q:Q ---------------------------------- LE_PLACE
     f.write(str(rowNum) + ",16," + str(colQ) + ",C\r")
     NewLatestInfo["colQ"] = colQ
