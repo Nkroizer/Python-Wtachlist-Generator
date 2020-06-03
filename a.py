@@ -1,15 +1,21 @@
-# Save a dictionary into a pickle file.
-import pickle
-
-# favorite_color = {}
-
-# favorite_color["lion"] = "yellow" 
-# favorite_color["kitty"] = "red" 
-
-# # { "lion": "yellow", "kitty": "red" }
-
-# pickle.dump( favorite_color, open( "save.p", "wb" ) )
-
-favorite_color = pickle.load( open( "save.p", "rb" ) ) 
-# favorite_color is now { "lion": "yellow", "kitty": "red" }
-print(favorite_color["lion"])
+# Reading an excel file using Python 
+import xlrd 
+  
+# Give the location of the file 
+loc = ("C:\\Users\\Quickode\\Desktop\\xyz\\Watchlists\\2002 Watchlist.xlsx") 
+  
+# To open Workbook 
+wb = xlrd.open_workbook(loc) 
+sheet = wb.sheet_by_index(0) 
+  
+# For row 0 and column 0 
+r = 0
+true1 = True
+while true1:
+    for c in range(0, 11):
+        try:
+            a = sheet.cell_value(r, c)
+        except:
+            true1 = False
+        print(a) 
+    r += 1

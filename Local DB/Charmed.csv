@@ -17,10 +17,10 @@
 1 16 |Which Prue Is It  Anyway?| |3 Mar. 1999| 8.501234567891
 1 17 |That '70s Episode| |7 Apr. 1999| 8.901234567891
 1 18 |When Bad Warlocks Turn Good| |28 Apr. 1999| 7.401234567891
-1 19 |Out of Sight| |5 May 1999| 8.301234567891
-1 20 |The Power of Two| |12 May 1999| 8.201234567891
-1 21 |Love Hurts| |19 May 1999| 8.501234567891
-1 22 |bad tite encoding| |26 May 1999| 9.101234567891
+1 19 |Out of Sight| |5 May. 1999| 8.301234567891
+1 20 |The Power of Two| |12 May. 1999| 8.201234567891
+1 21 |Love Hurts| |19 May. 1999| 8.501234567891
+1 22 |bad tite encoding| |26 May. 1999| 9.101234567891
 2 1 |Witch Trial| |30 Sep. 1999| 8.301234567891
 2 2 |Morality Bites| |7 Oct. 1999| 8.701234567891
 2 3 |The Painted World| |14 Oct. 1999| 8.401234567891
@@ -33,17 +33,17 @@
 2 10 |Heartbreak City| |20 Jan. 2000| 7.801234567891
 2 11 |Reckless Abandon| |27 Jan. 2000| 7.801234567891
 2 12 Awakened |3 Feb. 2000| 8.601234567891
-2 13 |Animal Pragmatism| |10 Feb. 2000| 7.401234567891
+2 13 |Animal Pragmatism| |10 Feb. 2000| 7.501234567891
 2 14 |Pardon My Past| |17 Feb. 2000| 8.401234567891
-2 15 |Give Me a Sign| |24 Feb. 2000| 7.701234567891
+2 15 |Give Me a Sign| |24 Feb. 2000| 7.801234567891
 2 16 |Murphy's Luck| |30 Mar. 2000| 8.201234567891
 2 17 |How to Make a Quilt Out of Americans| |6 Apr. 2000| 7.701234567891
 2 18 |Chick Flick| |20 Apr. 2000| 8.601234567891
 2 19 |Ex Libris| |27 Apr. 2000| 8.301234567891
-2 20 |Astral Monkey| |4 May 2000| 8.401234567891
-2 21 |Apocalypse  Not| |11 May 2000| 8.301234567891
-2 22 |Be Careful What You Witch For| |18 May 2000| 8.401234567891
-3 1 |The Honeymoon's Over| |5 Oct. 2000| 8.501234567891
+2 20 |Astral Monkey| |4 May. 2000| 8.401234567891
+2 21 |Apocalypse  Not| |11 May. 2000| 8.301234567891
+2 22 |Be Careful What You Witch For| |18 May. 2000| 8.401234567891
+3 1 |The Honeymoon's Over| |5 Oct. 2000| 8.401234567891
 3 2 |Magic Hour| |12 Oct. 2000| 8.101234567891
 3 3 |Once Upon a Time| |19 Oct. 2000| 7.901234567891
 3 4 |All Halliwell's Eve| |26 Oct. 2000| 8.701234567891
@@ -62,9 +62,9 @@
 3 17 Pre-Witched |22 Mar. 2001| 8.501234567891
 3 18 |Sin Francisco| |19 Apr. 2001| 8.801234567891
 3 19 |The Demon Who Came in from the Cold| |26 Apr. 2001| 8.101234567891
-3 20 |Exit Strategy| |3 May 2001| 8.301234567891
-3 21 |Look Who's Barking| |10 May 2001| 8.501234567891
-3 22 |All Hell Breaks Loose| |17 May 2001| 9.201234567891
+3 20 |Exit Strategy| |3 May. 2001| 8.301234567891
+3 21 |Look Who's Barking| |10 May. 2001| 8.501234567891
+3 22 |All Hell Breaks Loose| |17 May. 2001| 9.201234567891
 4 1 |Charmed Again: Part 1| |4 Oct. 2001| 8.801234567891
 4 2 |Charmed Again: Part 2| |4 Oct. 2001| 8.701234567891
 4 3 |Hell Hath No Fury| |11 Oct. 2001| 8.601234567891
@@ -84,9 +84,9 @@
 4 17 |Saving Private Leo| |28 Mar. 2002| 8.201234567891
 4 18 |Bite Me| |18 Apr. 2002| 8.301234567891
 4 19 |We're Off to See the Wizard| |25 Apr. 2002| 8.501234567891
-4 20 |Long Live the Queen| |2 May 2002| 8.901234567891
-4 21 |Womb Raider| |9 May 2002| 8.601234567891
-4 22 |Witch Way Now?| |16 May 2002| 8.601234567891
+4 20 |Long Live the Queen| |2 May. 2002| 8.901234567891
+4 21 |Womb Raider| |9 May. 2002| 8.601234567891
+4 22 |Witch Way Now?| |16 May. 2002| 8.601234567891
 5 1 |A Witch's Tail: Part 1| |22 Sep. 2002| 8.301234567891
 5 2 |A Witch's Tail: Part 2| |22 Sep. 2002| 8.301234567891
 5 3 |Happily Ever After| |29 Sep. 2002| 8.401234567891
@@ -94,7 +94,7 @@
 5 5 |Witches in Tights| |13 Oct. 2002| 8.001234567891
 5 6 |The Eyes Have It| |20 Oct. 2002| 8.101234567891
 5 7 |Sympathy for the Demon| |3 Nov. 2002| 8.601234567891
-5 8 |A Witch in Time| |10 Nov. 2002| 8.701234567891
+5 8 |A Witch in Time| |10 Nov. 2002| 8.601234567891
 5 9 |Sam I Am| |17 Nov. 2002| 8.001234567891
 5 10 |bad tite encoding| |5 Jan. 2003| 8.201234567891
 5 11 |The Importance of Being Phoebe| |12 Jan. 2003| 8.301234567891
@@ -104,12 +104,12 @@
 5 15 |The Day the Magic Died| |16 Feb. 2003| 8.701234567891
 5 16 |Baby's First Demon| |30 Mar. 2003| 7.801234567891
 5 17 |Lucky Charmed| |6 Apr. 2003| 7.201234567891
-5 18 |Cat House| |13 Apr. 2003| 8.101234567891
+5 18 |Cat House| |13 Apr. 2003| 8.201234567891
 5 19 |Nymphs Just Wanna Have Fun| |20 Apr. 2003| 7.001234567891
 5 20 |Sense and Sense Ability| |27 Apr. 2003| 8.701234567891
-5 21 |Necromancing the Stone| |4 May 2003| 7.701234567891
-5 22 |Oh My Goddess!: Part 1| |11 May 2003| 8.201234567891
-5 23 |Oh My Goddess!: Part 2| |11 May 2003| 8.301234567891
+5 21 |Necromancing the Stone| |4 May. 2003| 7.701234567891
+5 22 |Oh My Goddess!: Part 1| |11 May. 2003| 8.201234567891
+5 23 |Oh My Goddess!: Part 2| |11 May. 2003| 8.301234567891
 6 1 |Valhalley of the Dolls: Part 1| |28 Sep. 2003| 7.601234567891
 6 2 |Valhalley of the Dolls: Part 2| |28 Sep. 2003| 7.701234567891
 6 3 |Forget Me... Not| |5 Oct. 2003| 8.101234567891
@@ -118,21 +118,21 @@
 6 6 |My Three Witches| |26 Oct. 2003| 7.801234567891
 6 7 |Soul Survivor| |2 Nov. 2003| 7.301234567891
 6 8 |Sword and the City| |9 Nov. 2003| 7.401234567891
-6 9 |Little Monsters| |16 Nov. 2003| 7.601234567891
+6 9 |Little Monsters| |16 Nov. 2003| 7.701234567891
 6 10 Chris-Crossed |23 Nov. 2003| 8.701234567891
 6 11 Witchstock |11 Jan. 2004| 7.901234567891
 6 12 |Prince Charmed| |18 Jan. 2004| 7.501234567891
 6 13 |Used Karma| |25 Jan. 2004| 7.101234567891
 6 14 |The Legend of Sleepy Halliwell| |8 Feb. 2004| 7.901234567891
-6 15 |I Dream of Phoebe| |15 Feb. 2004| 8.101234567891
+6 15 |I Dream of Phoebe| |15 Feb. 2004| 8.201234567891
 6 16 |The Courtship of Wyatt's Father| |22 Feb. 2004| 8.301234567891
 6 17 |Hyde School Reunion| |14 Mar. 2004| 7.501234567891
 6 18 |Spin City| |18 Apr. 2004| 7.701234567891
 6 19 |Crimes & Witch Demeanors| |25 Apr. 2004| 7.401234567891
-6 20 |A Wrong Day's Journey Into Right| |2 May 2004| 7.401234567891
-6 21 |Witch Wars| |9 May 2004| 7.801234567891
-6 22 |It's a Bad  Bad  Bad  Bad World: Part 1| |16 May 2004| 8.601234567891
-6 23 |It's a Bad  Bad  Bad  Bad World: Part 2| |16 May 2004| 8.701234567891
+6 20 |A Wrong Day's Journey Into Right| |2 May. 2004| 7.501234567891
+6 21 |Witch Wars| |9 May. 2004| 7.801234567891
+6 22 |It's a Bad  Bad  Bad  Bad World: Part 1| |16 May. 2004| 8.601234567891
+6 23 |It's a Bad  Bad  Bad  Bad World: Part 2| |16 May. 2004| 8.701234567891
 7 1 |A Call to Arms| |12 Sep. 2004| 7.701234567891
 7 2 |The Bare Witch Project| |19 Sep. 2004| 7.701234567891
 7 3 |Cheaper by the Coven| |26 Sep. 2004| 8.001234567891
@@ -140,21 +140,21 @@
 7 5 |Styx Feet Under| |10 Oct. 2004| 8.301234567891
 7 6 |Once in a Blue Moon| |17 Oct. 2004| 7.401234567891
 7 7 |Someone to Witch Over Me| |31 Oct. 2004| 8.101234567891
-7 8 |Charmed Noir| |14 Nov. 2004| 8.401234567891
+7 8 |Charmed Noir| |14 Nov. 2004| 8.501234567891
 7 9 |There's Something About Leo| |21 Nov. 2004| 8.201234567891
 7 10 |Witchness Protection| |28 Nov. 2004| 8.801234567891
 7 11 |Ordinary Witches| |16 Jan. 2005| 7.801234567891
-7 12 |Extreme Makeover World Edition| |23 Jan. 2005| 8.201234567891
-7 13 Charmageddon |30 Jan. 2005| 8.301234567891
+7 12 |Extreme Makeover World Edition| |23 Jan. 2005| 8.301234567891
+7 13 Charmageddon |30 Jan. 2005| 8.401234567891
 7 14 |Carpe Demon| |13 Feb. 2005| 7.701234567891
 7 15 |Show Ghouls| |20 Feb. 2005| 7.201234567891
 7 16 |The Seven Year Witch| |10 Apr. 2005| 8.801234567891
 7 17 |Scry Hard| |17 Apr. 2005| 8.001234567891
-7 18 |Little Box of Horrors| |24 Apr. 2005| 7.601234567891
-7 19 |Freaky Phoebe| |1 May 2005| 7.701234567891
-7 20 |Imaginary Fiends| |8 May 2005| 8.101234567891
-7 21 |Death Becomes Them| |15 May 2005| 8.101234567891
-7 22 |Something Wicca This Way Goes| |22 May 2005| 8.901234567891
+7 18 |Little Box of Horrors| |24 Apr. 2005| 7.701234567891
+7 19 |Freaky Phoebe| |1 May. 2005| 7.701234567891
+7 20 |Imaginary Fiends| |8 May. 2005| 8.101234567891
+7 21 |Death Becomes Them| |15 May. 2005| 8.101234567891
+7 22 |Something Wicca This Way Goes| |22 May. 2005| 8.901234567891
 8 1 |Still Charmed and Kicking| |25 Sep. 2005| 7.901234567891
 8 2 |Malice in Wonderland| |2 Oct. 2005| 6.801234567891
 8 3 |Run  Piper  Run| |9 Oct. 2005| 7.701234567891
@@ -166,14 +166,14 @@
 8 9 |Hulkus Pocus| |20 Nov. 2005| 7.201234567891
 8 10 |Vaya Con Leos| |27 Nov. 2005| 8.501234567891
 8 11 |Mr. & Mrs. Witch| |8 Jan. 2006| 7.001234567891
-8 12 |Payback's a Witch| |15 Jan. 2006| 7.301234567891
-8 13 |Repo Manor| |22 Jan. 2006| 7.901234567891
+8 12 |Payback's a Witch| |15 Jan. 2006| 7.401234567891
+8 13 |Repo Manor| |22 Jan. 2006| 8.001234567891
 8 14 |12 Angry Zen| |12 Feb. 2006| 7.701234567891
 8 15 |The Last Temptation of Christy| |19 Feb. 2006| 7.401234567891
 8 16 |Engaged and Confused| |26 Feb. 2006| 8.101234567891
 8 17 |Generation Hex| |16 Apr. 2006| 7.301234567891
-8 18 |The Torn Identity| |23 Apr. 2006| 7.501234567891
+8 18 |The Torn Identity| |23 Apr. 2006| 7.601234567891
 8 19 |The Jung and the Restless| |30 Apr. 2006| 7.701234567891
-8 20 |Gone with the Witches| |7 May 2006| 8.001234567891
-8 21 |Kill Billie: Vol. 2| |14 May 2006| 8.801234567891
-8 22 |Forever Charmed| |21 May 2006| 9.301234567891
+8 20 |Gone with the Witches| |7 May. 2006| 8.001234567891
+8 21 |Kill Billie: Vol. 2| |14 May. 2006| 8.801234567891
+8 22 |Forever Charmed| |21 May. 2006| 9.301234567891

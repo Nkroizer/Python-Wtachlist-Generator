@@ -22,7 +22,7 @@
 2 1 |The Serpent's Lair| |26 Jun. 1998| 8.801234567891
 2 2 |In the Line of Duty| |3 Jul. 1998| 8.101234567891
 2 3 Prisoners |10 Jul. 1998| 7.501234567891
-2 4 |The Gamekeeper| |17 Jul. 1998| 7.201234567891
+2 4 |The Gamekeeper| |17 Jul. 1998| 7.301234567891
 2 5 Need |24 Jul. 1998| 7.001234567891
 2 6 |Thor's Chariot| |31 Jul. 1998| 8.501234567891
 2 7 |Message in a Bottle| |7 Aug. 1998| 7.501234567891
@@ -84,7 +84,7 @@
 4 19 Prodigy |2 Feb. 2001| 7.501234567891
 4 20 Entity |9 Feb. 2001| 7.201234567891
 4 21 |Double Jeopardy| |16 Feb. 2001| 8.101234567891
-4 22 Exodus |23 Feb. 2001| 8.601234567891
+4 22 Exodus |23 Feb. 2001| 8.501234567891
 5 1 Enemies |29 Jun. 2001| 8.601234567891
 5 2 Threshold |6 Jul. 2001| 7.701234567891
 5 3 Ascension |13 Jul. 2001| 7.801234567891
@@ -104,26 +104,26 @@
 5 17 |Fail Safe| |5 Apr. 2002| 7.901234567891
 5 18 |The Warrior| |12 Apr. 2002| 7.501234567891
 5 19 Menace |26 Apr. 2002| 8.001234567891
-5 20 |The Sentinel| |3 May 2002| 7.301234567891
-5 21 Meridian |10 May 2002| 8.601234567891
-5 22 Revelations |17 May 2002| 8.601234567891
-6 1 |Redemption: Part 1| |7 Jun. 2002| 8.201234567891
+5 20 |The Sentinel| |3 May. 2002| 7.301234567891
+5 21 Meridian |10 May. 2002| 8.601234567891
+5 22 Revelations |17 May. 2002| 8.601234567891
+6 1 |Redemption: Part 1| |7 Jun. 2002| 8.101234567891
 6 2 |Redemption: Part 2| |14 Jun. 2002| 8.501234567891
 6 3 Descent |21 Jun. 2002| 8.301234567891
 6 4 Frozen |28 Jun. 2002| 7.701234567891
 6 5 Nightwalkers |12 Jul. 2002| 7.301234567891
 6 6 Abyss |19 Jul. 2002| 8.601234567891
-6 7 |Shadow Play| |26 Jul. 2002| 7.501234567891
+6 7 |Shadow Play| |26 Jul. 2002| 7.401234567891
 6 8 |The Other Guys| |2 Aug. 2002| 8.301234567891
 6 9 Allegiance |9 Aug. 2002| 8.101234567891
 6 10 Cure |16 Aug. 2002| 8.001234567891
 6 11 Prometheus |23 Aug. 2002| 8.401234567891
 6 12 |Unnatural Selection| |10 Jan. 2003| 8.801234567891
-6 13 |Sight Unseen| |17 Jan. 2003| 7.201234567891
+6 13 |Sight Unseen| |17 Jan. 2003| 7.101234567891
 6 14 |Smoke & Mirrors| |24 Jan. 2003| 8.001234567891
 6 15 |Paradise Lost| |31 Jan. 2003| 7.801234567891
 6 16 Metamorphosis |7 Feb. 2003| 7.301234567891
-6 17 Disclosure |14 Feb. 2003| 6.801234567891
+6 17 Disclosure |14 Feb. 2003| 6.701234567891
 6 18 Forsaken |21 Feb. 2003| 7.601234567891
 6 19 |The Changeling| |28 Feb. 2003| 7.901234567891
 6 20 Memento |7 Mar. 2003| 8.001234567891
@@ -134,16 +134,16 @@
 7 3 |Fragile Balance| |20 Jun. 2003| 8.301234567891
 7 4 Orpheus |27 Jun. 2003| 7.601234567891
 7 5 Revisions |11 Jul. 2003| 7.901234567891
-7 6 Lifeboat |18 Jul. 2003| 7.801234567891
+7 6 Lifeboat |18 Jul. 2003| 7.901234567891
 7 7 |Enemy Mine| |25 Jul. 2003| 7.901234567891
 7 8 |Space Race| |1 Aug. 2003| 7.301234567891
 7 9 |Avenger 2.0| |8 Aug. 2003| 7.301234567891
 7 10 Birthright |15 Aug. 2003| 7.101234567891
 7 11 |Evolution: Part 1| |22 Aug. 2003| 8.301234567891
 7 12 |Evolution: Part 2| |9 Jan. 2004| 8.401234567891
-7 13 Grace |16 Jan. 2004| 7.301234567891
+7 13 Grace |16 Jan. 2004| 7.401234567891
 7 14 Fallout |23 Jan. 2004| 7.601234567891
-7 15 Chimera |30 Jan. 2004| 7.501234567891
+7 15 Chimera |30 Jan. 2004| 7.401234567891
 7 16 |Death Knell| |6 Feb. 2004| 8.101234567891
 7 17 |Heroes: Part 1| |13 Feb. 2004| 8.101234567891
 7 18 |Heroes: Part 2| |20 Feb. 2004| 9.001234567891
@@ -164,7 +164,7 @@
 8 11 Gemini |21 Jan. 2005| 7.601234567891
 8 12 |Prometheus Unbound| |28 Jan. 2005| 8.601234567891
 8 13 |It's Good to Be King| |4 Feb. 2005| 8.101234567891
-8 14 |Full Alert| |11 Feb. 2005| 7.701234567891
+8 14 |Full Alert| |11 Feb. 2005| 7.601234567891
 8 15 |Citizen Joe| |18 Feb. 2005| 7.701234567891
 8 16 |Reckoning: Part 1| |25 Feb. 2005| 8.601234567891
 8 17 |Reckoning: Part 2| |4 Mar. 2005| 9.101234567891
@@ -204,9 +204,9 @@
 10 11 |The Quest: Part 2| |13 Apr. 2007| 8.801234567891
 10 12 |Line in the Sand| |20 Apr. 2007| 7.701234567891
 10 13 |The Road Not Taken| |27 Apr. 2007| 7.801234567891
-10 14 |The Shroud| |4 May 2007| 8.801234567891
-10 15 Bounty |11 May 2007| 7.901234567891
-10 16 |Bad Guys| |18 May 2007| 8.201234567891
+10 14 |The Shroud| |4 May. 2007| 8.801234567891
+10 15 Bounty |11 May. 2007| 7.901234567891
+10 16 |Bad Guys| |18 May. 2007| 8.201234567891
 10 17 Talion |1 Jun. 2007| 7.401234567891
 10 18 |Family Ties| |8 Jun. 2007| 6.801234567891
 10 19 Dominion |15 Jun. 2007| 8.401234567891

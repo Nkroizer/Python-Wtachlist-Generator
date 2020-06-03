@@ -11,7 +11,6 @@ window.geometry('600x700')
 def rClicker(e):
     try:
         def rClick_Copy(e, apnd=0):
-            print("why?")
             e.widget.event_generate('<Control-c>')
 
         def rClick_Cut(e):
@@ -55,7 +54,8 @@ def addNewEntryToTimeTrakBridge():
     inputDateReached = inputDateReachedInput.get()
     inputLastEpisodePlace = inputLastEpisodePlaceInput.get()
     InputLastEpisodeReached = InputLastEpisodeReachedInput.get()
-    addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached)
+    DDR = DDInput.get()
+    addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached, DDR)
 
 # Add show section
 frame = Frame(window)
@@ -75,6 +75,9 @@ frame5.pack()
 
 frame6 = Frame(window)
 frame6.pack()
+
+frame7 = Frame(window)
+frame7.pack()
 
 # ----------------------------------------------------------------------------------
 
@@ -124,6 +127,16 @@ convertRawFileBtn = Button(
     frame6, text="Add TimeTrak Line", command=addNewEntryToTimeTrakBridge, width=22)
 
 convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
+
+DDLbl = Label(frame7, text="Date Date Reached")
+
+DDLbl.pack(side=LEFT, padx=10, pady=7)
+
+DDInput = Entry(frame7, width=53)
+
+DDInput.pack(side=RIGHT, padx=10, pady=7, anchor="w")
+
+DDInput.bind('<Button-3>', rClicker, add='')
 
 
 
