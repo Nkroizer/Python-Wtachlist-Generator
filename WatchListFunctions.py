@@ -9,7 +9,7 @@ import pickle
 
 
 def StrToDate(strDate):
-    fixedDate = datetime.strptime(strDate, "%m/%d/%Y")
+    fixedDate = datetime.strptime(str(strDate), "%m/%d/%Y")
     return fixedDate
 
 
@@ -536,7 +536,7 @@ def intializeRawFile():
     f.write("2,13,Esitmitade Time Of Complete,REG\r")
     f.write("3,13,4/11/2044,N\r")
     #LatestInfo["colN"] = StrToDate(FirstDate) + totalDaysLeft
-    LatestInfo["colN"] = StrToDate("4/11/2044")
+    LatestInfo["colN"] = "4/11/2044"
     # -------------------------------- Col O:O ----------------------------------
     f.write("0,14,DAYS ADDED,EQU\r")
     f.write("1,14,ETAC[N] - ETAC[N-1],EQU\r")
@@ -718,9 +718,6 @@ def addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, inputLastEpis
     todaysDate = DDR
     todaysDate = StrToDate(todaysDate)
     rowNum = LatestInfo["row"]
-    # rowNumMinus = int(rowNum) - 1
-    rowNumPlus = int(rowNum) + 1
-    print("rowNum: " + str(rowNum))
     # ------------------------------------------------------------------------------------
     OldA = LatestInfo["colA"]
     print("OldA: " + str(OldA))
