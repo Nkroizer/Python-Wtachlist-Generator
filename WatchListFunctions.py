@@ -279,6 +279,16 @@ def getBadDatesFunc():
     messagebox.showinfo("info", "Bad Dates List was Generated Successfuly")
 
 
+def showStatus(showTitle):
+    lastDig = showTitle[len(showTitle) - 3: len(showTitle) - 2]
+    status = '?'
+    if lastDig == '-':
+        status = 'active'
+    else:
+        status = 'ended'
+    return status
+
+
 def addShowClicked(link):
     showToAdd = extractIMDBIdFromLink(link)
     directory = pathlib.Path().absolute()
@@ -288,13 +298,13 @@ def addShowClicked(link):
     SeasonsArr = sorted(series["episodes"].keys())
     ShowTitle = series["title"]
     cleanTitle = cleanFileName(str(ShowTitle))
+    status = showStatus(str(series["original title"]))
     isExistsShowLinkFile = os.path.exists(str(directory) + '\\Files\\Show Links.txt')
     if isExistsShowLinkFile:
         f = open("Files\\Show Links.txt", "a+")
-        f.write(str(cleanTitle) + " : " + showToAdd + "\r")
     else:
         f = open("Files\\Show Links.txt", "w+")
-        f.write(str(cleanTitle) + " : " + showToAdd + "\r")
+    f.write(str(cleanTitle) + " : " + showToAdd + " : " + status + "\r")
     print("Started working on: " + cleanTitle)
     with open("Local DB/" + cleanTitle + ".csv", 'w', newline='') as csvfile:
         showWriter = csv.writer(csvfile, delimiter=' ',

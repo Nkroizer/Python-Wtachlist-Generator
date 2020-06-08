@@ -108,7 +108,7 @@ convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
 
 # ----------------------------------------------------------------------------------
 
-inputDateReachedLbl = Label(frame3, text="Current Date of episode reached (MM/DD/YYYY)")
+inputDateReachedLbl = Label(frame3, text="Current Date of episode reached")
 
 calDateReached = Calendar(frame3, font="Arial 14", selectmode='day', locale='en_US',
                 cursor="hand1", year=LDR.year, month=LDR.month, day=LDR.day)
