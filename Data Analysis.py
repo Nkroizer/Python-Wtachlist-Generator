@@ -1,5 +1,6 @@
 from tkinter import Tk, messagebox, Frame, Label, LEFT, RIGHT, Entry, Button, Listbox, END, Menu, Checkbutton, IntVar, ttk
-from WatchListFunctions import getDateOfFirstEpisodeInListFunc, intializeRawFile, turnRawFileIntoExcel, addNewEntryToTimeTrak, StrToDate
+from WatchListFunctions import getDateOfFirstEpisodeInListFunc, intializeRawFile, turnRawFileIntoExcel, addNewEntryToTimeTrak
+from ConversionFunctions import StrToDate
 from datetime import date
 from tkcalendar import Calendar
 import pickle

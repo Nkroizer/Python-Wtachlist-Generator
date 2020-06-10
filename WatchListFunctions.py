@@ -1,4 +1,5 @@
 import xlsxwriter
+from ConversionFunctions import StrToDate, DateFormatToListFormat, DaysLeftToInt, cleanFileName, extractIMDBIdFromLink, showStatus
 from tkinter import messagebox
 from imdb import IMDb
 from datetime import datetime, date, timedelta
@@ -6,49 +7,11 @@ import csv
 import os
 import pathlib
 import pickle
+import shutil
 
-
-def StrToDate(strDate):
-    fixedDate = datetime.strptime(str(strDate), "%m/%d/%Y")
-    return fixedDate
-
-
-def DateFormatToListFormat(DateForm):
-    ListForm = DateForm.strftime("%m/%d/%Y")
-    return ListForm
-
-
-def DaysLeftToInt(DL):
-    strDl = str(DL)
-    if "day" in strDl:
-        NDL = strDl[0: strDl.find("day") - 1]
-        return int(NDL)
-    else:
-        return 1
-
-
-def cleanFileName(fileName):
-    # Windows Unallowed chars: \/:*?"<>|
-    cleanTitle = fileName
-    if cleanTitle.find('\\'):
-        cleanTitle = cleanTitle.replace('\\', '-')
-    if cleanTitle.find('/'):
-        cleanTitle = cleanTitle.replace('/', '-')
-    if cleanTitle.find(':'):
-        cleanTitle = cleanTitle.replace(':', '')
-    if cleanTitle.find('*'):
-        cleanTitle = cleanTitle.replace('*', '')
-    if cleanTitle.find('?'):
-        cleanTitle = cleanTitle.replace('?', '')
-    if cleanTitle.find('"'):
-        cleanTitle = cleanTitle.replace('"', '')
-    if cleanTitle.find('<'):
-        cleanTitle = cleanTitle.replace('<', '')
-    if cleanTitle.find('>'):
-        cleanTitle = cleanTitle.replace('>', '')
-    if cleanTitle.find('|'):
-        cleanTitle = cleanTitle.replace('|', '')
-    return cleanTitle
+def checkIfFolderExistAndCreate(folderName):
+    if not os.path.exists(folderName):
+        os.makedirs(folderName)
 
 
 def fixedPlaceEquation(rowNum):
@@ -67,6 +30,7 @@ def nameStickerEquation(rowNum):
 
 
 def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
+    checkIfFolderExistAndCreate("Watchlists")
     workbook = xlsxwriter.Workbook("Watchlists\\" + YOF + " Watchlist.xlsx")
     sheet1 = workbook.add_worksheet()
     sheet1.set_column('A:A', 25)  # 00
@@ -134,6 +98,7 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
             except:
                 print('S W W')
     workbook.close()
+
 
 # def mainWatchlistGeneratorFunction2(showsToAdd, YOF, showMessage):
 #     workbook = xlsxwriter.Workbook("Watchlists\\" + YOF + " Watchlist.xlsx")
@@ -210,6 +175,7 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
 
 
 def checkIfContainsYear(show, YOF):
+    checkIfFolderExistAndCreate("Local DB")
     with open(r"Local DB\\" + show, newline='') as csvfile:
         showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
         for row in showReader:
@@ -218,20 +184,13 @@ def checkIfContainsYear(show, YOF):
     return False
 
 
-def extractIMDBIdFromLink(link):
-    IdPlace = link.find('title/tt')
-    IMDBID = link[IdPlace + 8: IdPlace + 15]
-    print(IMDBID)
-    return IMDBID
-
-
 def generatAllWatchlists():
     directory = pathlib.Path().absolute()
     today = date.today()
     ThisYear = today.year
     oldestYear = "1900"
-    isExistsFile = os.path.exists(
-        str(directory) + '\\Files\\First Episode Information.p')
+    checkIfFolderExistAndCreate("Files")
+    isExistsFile = os.path.exists(str(directory) + '\\Files\\First Episode Information.p')
     if not(isExistsFile):
         getDateOfFirstEpisodeInListFunc()
     Oldest_Dates = pickle.load(open("Files\\First Episode Information.p", "rb"))
@@ -249,6 +208,8 @@ def generatAllWatchlists():
 
 def getBadDatesFunc():
     directory = pathlib.Path().absolute()
+    checkIfFolderExistAndCreate("Files")
+    checkIfFolderExistAndCreate("Local DB")
     workbook = xlsxwriter.Workbook("Files\\Bad.xlsx")
     sheet1 = workbook.add_worksheet()
     sheet1.write(0, 0, "Show")
@@ -258,7 +219,7 @@ def getBadDatesFunc():
     sheet1.write(0, 4, "Air Date")
     row = 1
     formatDate = workbook.add_format({'num_format': 'd mmm yyyy'})
-    for filename in os.listdir(str(directory) + r"\Local DB"):
+    for filename in os.listdir(str(directory) + r"\\Local DB"):
         if ".csv" in filename:
             with open(r"Local DB\\" + filename, newline='') as csvfile:
                 showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
@@ -279,22 +240,16 @@ def getBadDatesFunc():
     messagebox.showinfo("info", "Bad Dates List was Generated Successfuly")
 
 
-def showStatus(showTitle):
-    lastDig = showTitle[len(showTitle) - 3: len(showTitle) - 2]
-    status = '?'
-    if lastDig == '-':
-        status = 'active'
-    else:
-        status = 'ended'
-    return status
-
-
 def addShowClicked(link):
+    checkIfFolderExistAndCreate("Files")
     showToAdd = extractIMDBIdFromLink(link)
     directory = pathlib.Path().absolute()
     ia = IMDb()
     series = ia.get_movie(showToAdd)
     ia.update(series, "episodes")
+    kind = series["kind"]
+    if not(kind == "tv series"):
+        return "The Link enterd is not a TV Series"
     SeasonsArr = sorted(series["episodes"].keys())
     ShowTitle = series["title"]
     cleanTitle = cleanFileName(str(ShowTitle))
@@ -305,6 +260,7 @@ def addShowClicked(link):
     else:
         f = open("Files\\Show Links.txt", "w+")
     f.write(str(cleanTitle) + " : " + showToAdd + " : " + status + "\r")
+    f.close()
     print("Started working on: " + cleanTitle)
     with open("Local DB/" + cleanTitle + ".csv", 'w', newline='') as csvfile:
         showWriter = csv.writer(csvfile, delimiter=' ',
@@ -326,43 +282,40 @@ def addShowClicked(link):
                     except:
                         EAirdate = "1 Jan. 2000"
                     if len(EAirdate) < 10:
-                        print("E: " + str(EAirdate))
                         EAirdate = "1 Jan. 2000"
-                    if "May" in str(EAirdate):
-                        if not("May." in str(EAirdate)):
-                            EAirdate = EAirdate.replace('May', 'May.')
+                    if "May" in str(EAirdate) and not("May." in str(EAirdate)):
+                        EAirdate = EAirdate.replace('May', 'May.')
                     try:
                         Erate = episode["rating"]
                     except:
                         Erate = 0
                     if Erate > 10:
                         Erate = 0
-                    print("Season: " + str(ESeason) +
-                          " Episode: " + str(Eepisode))
+                    print("Season: " + str(ESeason) + " Episode: " + str(Eepisode))
                     try:
                         showWriter.writerow(
                             [str(ESeason), str(Eepisode), str(ETitle), str(EAirdate), str(Erate)])
                     except:
                         showWriter.writerow(
-                            [str(ESeason), str(Eepisode), "bad tite encoding", str(EAirdate), str(Erate)])
+                            [str(ESeason), str(Eepisode), "bad title encoding", str(EAirdate), str(Erate)])
             except:
                 print("An exception occurred trying to extract an episode")
         print("Finished working on: " + cleanTitle)
         print("-----------------------------------------")
-    return cleanTitle
+    return cleanTitle  + " Added successfuly"
 
 
 def getDateOfFirstEpisodeInListFunc():
+    checkIfFolderExistAndCreate("Files")
+    checkIfFolderExistAndCreate("Local DB")
     today = date.today()
     oldestDate = today.strftime("%m/%d/%Y")
     oldestDate = StrToDate(oldestDate)
     oldestYear = today.year
     oldestEpisode = ""
-    print("new oldest date: " + str(oldestDate))
-    print("new oldest year: " + str(oldestYear))
     directory = pathlib.Path().absolute()
     Oldest_Dates = {}
-    for filename in os.listdir(str(directory) + r"\Local DB"):
+    for filename in os.listdir(str(directory) + r"\\Local DB"):
         if ".csv" in filename:
             with open(r"Local DB\\" + filename, newline='') as csvfile:
                 showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
@@ -392,6 +345,7 @@ def getDateOfFirstEpisodeInListFunc():
     print(Oldest_Dates["date"])
     Oldest_Dates["episode"] = str(oldestEpisode)
     pickle.dump(Oldest_Dates, open("Files\\First Episode Information.p", "wb"))
+
 
 # def getDateOfFirstEpisodeInListFunc2():
 #     today = date.today()
@@ -432,7 +386,40 @@ def getDateOfFirstEpisodeInListFunc():
 #     pickle.dump(Oldest_Dates, open("Files\\First Episode Information.p", "wb"))
 
 
+def refreshShowStatus():
+    ia = IMDb()
+    directory = pathlib.Path().absolute()
+    checkIfFolderExistAndCreate("Files")
+    checkIfFolderExistAndCreate("TmpFiles")
+    original = str(directory) + r'\\Files\\Show Links.txt'
+    target = str(directory) + r'\\TmpFiles\\Show Links.txt'
+    shutil.copyfile(original, target)
+    os.remove(str(directory) + r'\\Files\\Show Links.txt')
+    f = open("TmpFiles\\Show Links.txt", "r")
+    if f.mode == 'r':
+        f1 = f.readlines()
+        for x in f1:
+            text = x.split(' : ')
+            cleanTitle = text[0]
+            showToAdd = text[1]
+            series = ia.get_movie(showToAdd)
+            ShowTitle = series["original title"]
+            lastDig = ShowTitle[len(ShowTitle) - 3: len(ShowTitle) - 2]
+            status = '?'
+            if lastDig == '-':
+                status = 'active'
+            else:
+                status = 'ended'
+            print("status: " + status)
+            f2 = open("Files\\Show Links.txt", "a+")
+            f2.write(str(cleanTitle) + " : " + showToAdd + " : " + status + "\r")
+            f2.close()
+    f.close()
+    os.remove(str(directory) + r'\\TmpFiles\\Show Links.txt')
+            
+
 def intializeRawFile():
+    checkIfFolderExistAndCreate("Files")
     directory = pathlib.Path().absolute()
     isExistsFirstDateFile = os.path.exists(
         str(directory) + '\\Files\\First Episode Information.p')
@@ -625,6 +612,7 @@ def intializeRawFile():
 
 
 def turnRawFileIntoExcel():
+    checkIfFolderExistAndCreate("Files")
     workbook = xlsxwriter.Workbook("Files\\Time Track 2.0.xlsx")
     sheet1 = workbook.add_worksheet()
     # ------------------------------------------Formats------------------------------------------------------------
@@ -720,6 +708,7 @@ def turnRawFileIntoExcel():
 
 
 def addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, inputLastEpisodeReached, DDR):
+    checkIfFolderExistAndCreate("Files")
     LatestInfo = pickle.load(open("Files\\OldInfo.p", "rb"))
     NewLatestInfo = {}
     # today = date.today()

@@ -1,5 +1,6 @@
 from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu
-from WatchListFunctions import extractIMDBIdFromLink, cleanFileName, checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClicked
+from WatchListFunctions import extractIMDBIdFromLink, checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClicked, refreshShowStatus
+from ConversionFunctions import cleanFileName
 from imdb import IMDb
 import csv
 import pathlib
@@ -58,7 +59,7 @@ def rClickbinder(r):
 def addShowClick():
     link = showInput.get()
     cleanTitle = addShowClicked(link)
-    messagebox.showinfo("info", cleanTitle + " Added successfuly")
+    messagebox.showinfo("info", cleanTitle)
 
 
 def generatWatchlist():
@@ -80,79 +81,67 @@ def showAvilableShowsBtnFunc():
             Lb1.insert(END, showname)
 
 
+def refreshShowStatusFunc():
+    refreshShowStatus()
+
 # Add show section
 frame = Frame(window)
-frame.pack()
-
-# year watchist generator section
-frame2 = Frame(window)
-frame2.pack()
-
-# MISC uttons section
-frame3 = Frame(window)
-frame3.pack()
-
-
 addShowLbl = Label(frame, text="Add Show: ")
 
-addShowLbl.pack(side=LEFT, padx=10, pady=7)
-
 showInput = Entry(frame, width=53)
-
-showInput.pack(side=LEFT, padx=10, pady=7, anchor="w")
 
 showInput.bind('<Button-3>', rClicker, add='')
 
 addShowBtn = Button(frame, text="+ Add", command=addShowClick, width=7)
 
+addShowLbl.pack(side=LEFT, padx=10, pady=7)
+showInput.pack(side=LEFT, padx=10, pady=7, anchor="w")
 addShowBtn.pack(side=LEFT, padx=10, pady=7)
+frame.pack()
 
 # ----------------------------------------------------------------------------------
-
+# year watchist generator section
+frame2 = Frame(window)
 GenListYear = Label(frame2, text="Year: ")
 
-GenListYear.pack(side=LEFT, padx=10, pady=7)
-
 yearInput = Entry(frame2, width=20)
-
-yearInput.pack(side=LEFT, padx=10, pady=7, anchor="w")
 
 yearInput.bind('<Button-3>', rClicker, add='')
 
 yearGenBtn = Button(frame2, text="Generate", command=generatWatchlist, width=7)
 
+GenListYear.pack(side=LEFT, padx=10, pady=7)
+yearInput.pack(side=LEFT, padx=10, pady=7, anchor="w")
 yearGenBtn.pack(side=LEFT, padx=10, pady=7)
+frame2.pack()
 
 # ----------------------------------------------------------------------------------
 
+# MISC uttons section
+frame3 = Frame(window)
 BadDateGenBtn = Button(frame3, text="Get Bad Dates", command=getBadDatesFunc)
 
+showAvilableShowsBtn = Button(frame3, text="Show Avilable Shows", command=showAvilableShowsBtnFunc)
+
+FirstDateGenBtn = Button(frame3, text="Get First Dates", command=getDateOfFirstEpisodeInListFunc)
+
+GenerateAllWatchlistsBtn = Button(frame3, text="Generate All Watchlists", command=generatAllWatchlists)
+
 BadDateGenBtn.pack(side=LEFT, padx=10, pady=7)
-
-# ----------------------------------------------------------------------------------
-
-showAvilableShowsBtn = Button(
-    frame3, text="Show Avilable Shows", command=showAvilableShowsBtnFunc)
-
 showAvilableShowsBtn.pack(side=LEFT, padx=10, pady=7)
-
-# ----------------------------------------------------------------------------------
-
-FirstDateGenBtn = Button(frame3, text="Get first Dates",
-                         command=getDateOfFirstEpisodeInListFunc)
-
 FirstDateGenBtn.pack(side=LEFT, padx=10, pady=7)
-
-# ----------------------------------------------------------------------------------
-
-GenerateAllWatchlistsBtn = Button(
-    frame3, text="Generate All watchlists", command=generatAllWatchlists)
-
 GenerateAllWatchlistsBtn.pack(side=LEFT, padx=10, pady=7)
+frame3.pack()
+
+frame4 = Frame(window)
+refreshShowStatusBtn = Button(frame4, text="Refresh Show Status", command=refreshShowStatusFunc)
+refreshShowStatusBtn.pack(side=LEFT, padx=10, pady=7)
+frame4.pack()
+
 
 # ----------------------------------------------------------------------------------
 
-Lb1 = Listbox(window, width=70, height=35)
+Lb1 = Listbox(window, width=70, height=25)
 Lb1.pack()
 
 window.mainloop()
