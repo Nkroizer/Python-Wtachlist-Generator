@@ -1,6 +1,7 @@
 
 from datetime import datetime
 
+
 def StrToDate(strDate):
     fixedDate = datetime.strptime(str(strDate), "%m/%d/%Y")
     return fixedDate
@@ -18,6 +19,7 @@ def DaysLeftToInt(DL):
         return int(NDL)
     else:
         return 1
+
 
 def cleanFileName(fileName):
     # Windows Unallowed chars: \/:*?"<>|
@@ -43,7 +45,7 @@ def cleanFileName(fileName):
     return cleanTitle
 
 
-def extractIMDBIdFromLink(link):
+def LinkToIMDBId(link):
     IdPlace = link.find('title/tt')
     IMDBID = link[IdPlace + 8: IdPlace + 15]
     return IMDBID

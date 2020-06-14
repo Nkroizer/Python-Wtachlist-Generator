@@ -1,5 +1,5 @@
 from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu
-from WatchListFunctions import extractIMDBIdFromLink, checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClicked, refreshShowStatus
+from WatchListFunctions import checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClickedMed, refreshShowStatus, refreshDB
 from ConversionFunctions import cleanFileName
 from imdb import IMDb
 import csv
@@ -58,7 +58,7 @@ def rClickbinder(r):
 
 def addShowClick():
     link = showInput.get()
-    cleanTitle = addShowClicked(link)
+    cleanTitle = addShowClickedMed(link)
     messagebox.showinfo("info", cleanTitle)
 
 
@@ -83,6 +83,11 @@ def showAvilableShowsBtnFunc():
 
 def refreshShowStatusFunc():
     refreshShowStatus()
+
+
+def refreshDBFunc():
+    refreshDB()
+
 
 # Add show section
 frame = Frame(window)
@@ -121,11 +126,14 @@ frame2.pack()
 frame3 = Frame(window)
 BadDateGenBtn = Button(frame3, text="Get Bad Dates", command=getBadDatesFunc)
 
-showAvilableShowsBtn = Button(frame3, text="Show Avilable Shows", command=showAvilableShowsBtnFunc)
+showAvilableShowsBtn = Button(
+    frame3, text="Show Avilable Shows", command=showAvilableShowsBtnFunc)
 
-FirstDateGenBtn = Button(frame3, text="Get First Dates", command=getDateOfFirstEpisodeInListFunc)
+FirstDateGenBtn = Button(frame3, text="Get First Dates",
+                         command=getDateOfFirstEpisodeInListFunc)
 
-GenerateAllWatchlistsBtn = Button(frame3, text="Generate All Watchlists", command=generatAllWatchlists)
+GenerateAllWatchlistsBtn = Button(
+    frame3, text="Generate All Watchlists", command=generatAllWatchlists)
 
 BadDateGenBtn.pack(side=LEFT, padx=10, pady=7)
 showAvilableShowsBtn.pack(side=LEFT, padx=10, pady=7)
@@ -134,8 +142,13 @@ GenerateAllWatchlistsBtn.pack(side=LEFT, padx=10, pady=7)
 frame3.pack()
 
 frame4 = Frame(window)
-refreshShowStatusBtn = Button(frame4, text="Refresh Show Status", command=refreshShowStatusFunc)
+refreshShowStatusBtn = Button(
+    frame4, text="Refresh Show Status", command=refreshShowStatusFunc)
 refreshShowStatusBtn.pack(side=LEFT, padx=10, pady=7)
+
+refreshDBBtn = Button(
+    frame4, text="Refresh DB", command=refreshDBFunc)
+refreshDBBtn.pack(side=LEFT, padx=10, pady=7)
 frame4.pack()
 
 

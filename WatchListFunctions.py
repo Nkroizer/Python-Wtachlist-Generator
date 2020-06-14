@@ -1,5 +1,5 @@
 import xlsxwriter
-from ConversionFunctions import StrToDate, DateFormatToListFormat, DaysLeftToInt, cleanFileName, extractIMDBIdFromLink, showStatus
+from ConversionFunctions import StrToDate, DateFormatToListFormat, DaysLeftToInt, cleanFileName, LinkToIMDBId, showStatus
 from tkinter import messagebox
 from imdb import IMDb
 from datetime import datetime, date, timedelta
@@ -9,9 +9,20 @@ import pathlib
 import pickle
 import shutil
 
+
 def checkIfFolderExistAndCreate(folderName):
     if not os.path.exists(folderName):
         os.makedirs(folderName)
+
+
+def checkIfContainsYear(show, YOF):
+    checkIfFolderExistAndCreate("Local DB")
+    with open(r"Local DB\\" + show, newline='') as csvfile:
+        showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+        for row in showReader:
+            if str(YOF) in row[3]:
+                return True
+    return False
 
 
 def fixedPlaceEquation(rowNum):
@@ -44,12 +55,16 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
     sheet1.set_column('I:I', 13)  # 08
     sheet1.set_column('J:J', 12)  # 09
     sheet1.set_column('K:K', 77)  # 10
-    Number_format = workbook.add_format({ 'align': 'center', 'num_format': '0', 'border': 1})
-    float_format = workbook.add_format({ 'align': 'center', 'num_format': '0.00', 'border': 1})
-    String_format = workbook.add_format({ 'align': 'center', 'border': 1})
-    String_format_No_Align = workbook.add_format({ 'border': 1})
-    Header_format = workbook.add_format({'bold': True, 'align': 'center', 'border': 1, 'bg_color': '#C4BD97'}) 
-    date_Format = workbook.add_format({ 'align': 'center', 'num_format': 'd mmm yyyy', 'border': 1})
+    Number_format = workbook.add_format(
+        {'align': 'center', 'num_format': '0', 'border': 1})
+    float_format = workbook.add_format(
+        {'align': 'center', 'num_format': '0.00', 'border': 1})
+    String_format = workbook.add_format({'align': 'center', 'border': 1})
+    String_format_No_Align = workbook.add_format({'border': 1})
+    Header_format = workbook.add_format(
+        {'bold': True, 'align': 'center', 'border': 1, 'bg_color': '#C4BD97'})
+    date_Format = workbook.add_format(
+        {'align': 'center', 'num_format': 'd mmm yyyy', 'border': 1})
     sheet1.write(0, 0, 'Show', Header_format)
     sheet1.write(0, 1, 'Season', Header_format)
     sheet1.write(0, 2, 'Episode', Header_format)
@@ -82,7 +97,8 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
                     if not YOF in str(EAirdate):
                         continue
                     TotalNumberOfEpisodes = TotalNumberOfEpisodes + 1
-                    print('Season: ' + str(ESeason) + ' Episode: ' + str(Eepisode))
+                    print('Season: ' + str(ESeason) +
+                          ' Episode: ' + str(Eepisode))
                     sheet1.write(row, 0, Eshow, String_format_No_Align)
                     sheet1.write(row, 1, int(ESeason), Number_format)
                     sheet1.write(row, 2, int(Eepisode), Number_format)
@@ -90,98 +106,18 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
                     sheet1.write(row, 4, EAirdate, date_Format)
                     sheet1.write(row, 5, float(Erate), float_format)
                     sheet1.write(row, 6, 0, String_format)
-                    sheet1.write(row, 7, str(fixedPlaceEquation(row)), String_format)
-                    sheet1.write(row, 8, str(fixedSeasonAndEpisodeNumberEquation(row, 'B')), String_format)
-                    sheet1.write(row, 9, str(fixedSeasonAndEpisodeNumberEquation(row, 'C')), String_format)
-                    sheet1.write(row, 10, str(nameStickerEquation(row)), String_format_No_Align)
+                    sheet1.write(row, 7, str(
+                        fixedPlaceEquation(row)), String_format)
+                    sheet1.write(row, 8, str(
+                        fixedSeasonAndEpisodeNumberEquation(row, 'B')), String_format)
+                    sheet1.write(row, 9, str(
+                        fixedSeasonAndEpisodeNumberEquation(row, 'C')), String_format)
+                    sheet1.write(row, 10, str(
+                        nameStickerEquation(row)), String_format_No_Align)
                     row = row + 1
             except:
                 print('S W W')
     workbook.close()
-
-
-# def mainWatchlistGeneratorFunction2(showsToAdd, YOF, showMessage):
-#     workbook = xlsxwriter.Workbook("Watchlists\\" + YOF + " Watchlist.xlsx")
-#     sheet1 = workbook.add_worksheet()
-#     sheet1.set_column('A:A', 25)  # 00
-#     sheet1.set_column('B:B', 7)  # 01
-#     sheet1.set_column('C:C', 8)  # 02
-#     sheet1.set_column('D:D', 47)  # 03
-#     sheet1.set_column('E:E', 11)  # 04
-#     sheet1.set_column('F:F', 6)  # 05
-#     sheet1.set_column('G:G', 11)  # 06
-#     sheet1.set_column('H:H', 11)  # 07
-#     sheet1.set_column('I:I', 13)  # 08
-#     sheet1.set_column('J:J', 12)  # 09
-#     sheet1.set_column('K:K', 77)  # 10
-#     Number_format = workbook.add_format({ 'align': 'center', 'num_format': '0', 'border': 1})
-#     float_format = workbook.add_format({ 'align': 'center', 'num_format': '0.00', 'border': 1})
-#     String_format = workbook.add_format({ 'align': 'center', 'border': 1})
-#     String_format_No_Align = workbook.add_format({ 'border': 1})
-#     Header_format = workbook.add_format({'bold': True, 'align': 'center', 'border': 1, 'bg_color': '#C4BD97'}) 
-#     date_Format = workbook.add_format({ 'align': 'center', 'num_format': 'd mmm yyyy', 'border': 1})
-#     sheet1.write(0, 0, 'Show', Header_format)
-#     sheet1.write(0, 1, 'Season', Header_format)
-#     sheet1.write(0, 2, 'Episode', Header_format)
-#     sheet1.write(0, 3, 'Title', Header_format)
-#     sheet1.write(0, 4, 'Air Date', Header_format)
-#     sheet1.write(0, 5, 'Rating', Header_format)
-#     sheet1.write(0, 6, 'Place In List', Header_format)
-#     sheet1.write(0, 7, 'Fixed Place', Header_format)
-#     sheet1.write(0, 8, 'Fixed Episode', Header_format)
-#     sheet1.write(0, 9, 'Fixed Season', Header_format)
-#     sheet1.write(0, 10, 'Name Sticker', Header_format)
-#     row = 1
-#     TotalNumberOfEpisodes = 0
-#     for show in showsToAdd:
-#         print("Started working on: " + show)
-#         with open("Local DB2/" + show, newline='') as csvfile:
-#             showCSV = csv.reader(csvfile)
-#             try:
-#                 for cell in showCSV:
-#                     Eshow = cleanFileName(show[0: len(show) - 4])
-#                     ESeason = cell[0]
-#                     if ESeason == 0:
-#                         continue
-#                     Eepisode = cell[1]
-#                     ETitle = cleanFileName(cell[2])
-#                     EAirdate = cell[3]
-#                     if not(YOF in  EAirdate):
-#                         continue
-#                     try:
-#                         #EAirdate = datetime.strptime(EAirdate, '%Y-%m-%d')
-#                         Airdate = datetime.strptime(EAirdate, '%Y-%m-%d')
-#                         #Airdate = EAirdate.strftime("%m/%d/%Y")
-#                     except:
-#                         Airdate = '2000-01-01 00:00:00'
-#                     Erate = cell[4]
-#                     TotalNumberOfEpisodes = TotalNumberOfEpisodes + 1
-#                     print('Season: ' + str(ESeason) + ' Episode: ' + str(Eepisode))
-#                     sheet1.write(row, 0, Eshow, String_format_No_Align)
-#                     sheet1.write(row, 1, int(ESeason), Number_format)
-#                     sheet1.write(row, 2, int(Eepisode), Number_format)
-#                     sheet1.write(row, 3, str(ETitle), String_format_No_Align)
-#                     sheet1.write(row, 4, Airdate, date_Format)
-#                     sheet1.write(row, 5, float(Erate), float_format)
-#                     sheet1.write(row, 6, 0, String_format)
-#                     sheet1.write(row, 7, str(fixedPlaceEquation(row)), String_format)
-#                     sheet1.write(row, 8, str(fixedSeasonAndEpisodeNumberEquation(row, 'B')), String_format)
-#                     sheet1.write(row, 9, str(fixedSeasonAndEpisodeNumberEquation(row, 'C')), String_format)
-#                     sheet1.write(row, 10, str(nameStickerEquation(row)), String_format_No_Align)
-#                     row = row + 1
-#             except:
-#                 print('S W W')
-#     workbook.close()
-
-
-def checkIfContainsYear(show, YOF):
-    checkIfFolderExistAndCreate("Local DB")
-    with open(r"Local DB\\" + show, newline='') as csvfile:
-        showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-        for row in showReader:
-            if str(YOF) in row[3]:
-                return True
-    return False
 
 
 def generatAllWatchlists():
@@ -190,10 +126,12 @@ def generatAllWatchlists():
     ThisYear = today.year
     oldestYear = "1900"
     checkIfFolderExistAndCreate("Files")
-    isExistsFile = os.path.exists(str(directory) + '\\Files\\First Episode Information.p')
+    isExistsFile = os.path.exists(
+        str(directory) + '\\Files\\First Episode Information.p')
     if not(isExistsFile):
         getDateOfFirstEpisodeInListFunc()
-    Oldest_Dates = pickle.load(open("Files\\First Episode Information.p", "rb"))
+    Oldest_Dates = pickle.load(
+        open("Files\\First Episode Information.p", "rb"))
     oldestYear = Oldest_Dates["year"]
     year = int(oldestYear)
     ThisYear = int(ThisYear) + 1
@@ -240,12 +178,16 @@ def getBadDatesFunc():
     messagebox.showinfo("info", "Bad Dates List was Generated Successfuly")
 
 
-def addShowClicked(link):
+def addShowClickedMed(Link):
+    showToAdd = LinkToIMDBId(Link)
+    return addShowClicked(showToAdd)
+
+
+def addShowClicked(IMDBID):
     checkIfFolderExistAndCreate("Files")
-    showToAdd = extractIMDBIdFromLink(link)
     directory = pathlib.Path().absolute()
     ia = IMDb()
-    series = ia.get_movie(showToAdd)
+    series = ia.get_movie(IMDBID)
     ia.update(series, "episodes")
     kind = series["kind"]
     if not(kind == "tv series"):
@@ -254,12 +196,13 @@ def addShowClicked(link):
     ShowTitle = series["title"]
     cleanTitle = cleanFileName(str(ShowTitle))
     status = showStatus(str(series["original title"]))
-    isExistsShowLinkFile = os.path.exists(str(directory) + '\\Files\\Show Links.txt')
+    isExistsShowLinkFile = os.path.exists(
+        str(directory) + '\\Files\\Show Links.txt')
     if isExistsShowLinkFile:
         f = open("Files\\Show Links.txt", "a+")
     else:
         f = open("Files\\Show Links.txt", "w+")
-    f.write(str(cleanTitle) + " : " + showToAdd + " : " + status + "\r")
+    f.write(str(cleanTitle) + " : " + IMDBID + " : " + status + "\r")
     f.close()
     print("Started working on: " + cleanTitle)
     with open("Local DB/" + cleanTitle + ".csv", 'w', newline='') as csvfile:
@@ -291,7 +234,8 @@ def addShowClicked(link):
                         Erate = 0
                     if Erate > 10:
                         Erate = 0
-                    print("Season: " + str(ESeason) + " Episode: " + str(Eepisode))
+                    print("Season: " + str(ESeason) +
+                          " Episode: " + str(Eepisode))
                     try:
                         showWriter.writerow(
                             [str(ESeason), str(Eepisode), str(ETitle), str(EAirdate), str(Erate)])
@@ -302,7 +246,7 @@ def addShowClicked(link):
                 print("An exception occurred trying to extract an episode")
         print("Finished working on: " + cleanTitle)
         print("-----------------------------------------")
-    return cleanTitle  + " Added successfuly"
+    return cleanTitle + " Added successfuly"
 
 
 def getDateOfFirstEpisodeInListFunc():
@@ -332,58 +276,16 @@ def getDateOfFirstEpisodeInListFunc():
                     Airdate = StrToDate(Airdate)
                     newYear = Airdate.year
                     if newYear < oldestYear:
-                        print(str(oldestYear) + " ---> " + str(newYear))
                         oldestYear = newYear
                     if Airdate < oldestDate:
                         oldestDate = Airdate
                         oldestEpisode = show + " " + \
                             str(ESeason) + str(Eepisode)
-                        print("new oldest date: " + str(oldestDate))
     Oldest_Dates["year"] = str(oldestYear)
     tmpDate = str(oldestDate)
     Oldest_Dates["date"] = tmpDate[0: len(tmpDate) - 9]
-    print(Oldest_Dates["date"])
     Oldest_Dates["episode"] = str(oldestEpisode)
     pickle.dump(Oldest_Dates, open("Files\\First Episode Information.p", "wb"))
-
-
-# def getDateOfFirstEpisodeInListFunc2():
-#     today = date.today()
-#     oldestDate = today.strftime("%m/%d/%Y")
-#     oldestDate = StrToDate(oldestDate)
-#     oldestYear = today.year
-#     oldestEpisode = ""
-#     print("new oldest date: " + str(oldestDate))
-#     print("new oldest year: " + str(oldestYear))
-#     directory = pathlib.Path().absolute()
-#     Oldest_Dates = {}
-#     for filename in os.listdir(str(directory) + r"\Local DB2"):
-#         if ".csv" in filename:
-#             with open(r"Local DB2\\" + filename, newline='') as csvfile:
-#                 showReader = csv.reader(csvfile)
-#                 for cell in showReader:
-#                     show = str(cleanFileName(filename[0: len(filename) - 4]))
-#                     ESeason = cell[0]
-#                     Eepisode = cell[1]
-#                     EAirdate = cell[3]
-#                     EAirdate = datetime.strptime(EAirdate, '%d/%m/%Y')
-#                     Airdate = EAirdate.strftime("%m/%d/%Y")
-#                     Airdate = StrToDate(Airdate)
-#                     newYear = Airdate.year
-#                     if newYear < oldestYear:
-#                         print(str(oldestYear) + " ---> " + str(newYear))
-#                         oldestYear = newYear
-#                     if Airdate < oldestDate:
-#                         oldestDate = Airdate
-#                         oldestEpisode = show + " " + \
-#                             str(ESeason) + str(Eepisode)
-#                         print("new oldest date: " + str(oldestDate))
-#     Oldest_Dates["year"] = str(oldestYear)
-#     tmpDate = str(oldestDate)
-#     Oldest_Dates["date"] = tmpDate[0: len(tmpDate) - 9]
-#     print(Oldest_Dates["date"])
-#     Oldest_Dates["episode"] = str(oldestEpisode)
-#     pickle.dump(Oldest_Dates, open("Files\\First Episode Information.p", "wb"))
 
 
 def refreshShowStatus():
@@ -410,13 +312,36 @@ def refreshShowStatus():
                 status = 'active'
             else:
                 status = 'ended'
-            print("status: " + status)
             f2 = open("Files\\Show Links.txt", "a+")
-            f2.write(str(cleanTitle) + " : " + showToAdd + " : " + status + "\r")
+            f2.write(str(cleanTitle) + " : " +
+                     showToAdd + " : " + status + "\r")
             f2.close()
     f.close()
     os.remove(str(directory) + r'\\TmpFiles\\Show Links.txt')
-            
+
+
+def refreshDB():
+    directory = pathlib.Path().absolute()
+    checkIfFolderExistAndCreate("Files")
+    checkIfFolderExistAndCreate("TmpFiles")
+    original = str(directory) + r'\\Files\\Show Links.txt'
+    target = str(directory) + r'\\TmpFiles\\Show Links.txt'
+    shutil.copyfile(original, target)
+    os.remove(str(directory) + r'\\Files\\Show Links.txt')
+    f = open("TmpFiles\\Show Links.txt", "r")
+    if f.mode == 'r':
+        f1 = f.readlines()
+        for x in f1:
+            text = x.split(' : ')
+            showToAdd = text[1]
+            status = text[2]
+            if "active" in status:
+                addShowClicked(showToAdd)
+    f.close()
+    os.remove(str(directory) + r'\\Files\\Show Links.txt')
+    shutil.copyfile(target, original)
+    os.remove(str(directory) + r'\\TmpFiles\\Show Links.txt')
+
 
 def intializeRawFile():
     checkIfFolderExistAndCreate("Files")
@@ -506,7 +431,7 @@ def intializeRawFile():
     f.write("2,9,Days To Reach Current Date,REG\r")
     f.write("3,9,8932,I\r")
     LatestInfo["colJ"] = "8932"
-    #f.write("3,9,=(A4),REGO\r")
+    # f.write("3,9,=(A4),REGO\r")
     # LatestInfo["colJ"] = str(totalDaysLeft)
     # -------------------------------- Col K:K ----------------------------------
     f.write("0,10,ADDS,EQU\r")
@@ -616,44 +541,63 @@ def turnRawFileIntoExcel():
     workbook = xlsxwriter.Workbook("Files\\Time Track 2.0.xlsx")
     sheet1 = workbook.add_worksheet()
     # ------------------------------------------Formats------------------------------------------------------------
-    formats = {} 
-    cell_A_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '0'})
+    formats = {}
+    cell_A_Format = workbook.add_format(
+        {'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '0'})
     formats["A"] = cell_A_Format
-    cell_B_Format = workbook.add_format({'font_color': '#3F3F76', 'align': 'center', 'border': 1, 'bg_color': '#FFCC99', 'border_color': '#7F7F7F', 'num_format': 'mmmm d, yyyy'})
+    cell_B_Format = workbook.add_format({'font_color': '#3F3F76', 'align': 'center', 'border': 1,
+                                         'bg_color': '#FFCC99', 'border_color': '#7F7F7F', 'num_format': 'mmmm d, yyyy'})
     formats["B"] = cell_B_Format
-    cell_C_Format = workbook.add_format({'font_color': '#3F3F76', 'align': 'center', 'border': 1, 'bg_color': '#FFCC99', 'border_color': '#7F7F7F', 'num_format': '0'})
+    cell_C_Format = workbook.add_format({'font_color': '#3F3F76', 'align': 'center',
+                                         'border': 1, 'bg_color': '#FFCC99', 'border_color': '#7F7F7F', 'num_format': '0'})
     formats["C"] = cell_C_Format
-    cell_D_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '[$-en-US]mmmm d, yyyy;@'})
+    cell_D_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center',
+                                         'border': 1, 'bg_color': '#F2F2F2', 'num_format': '[$-en-US]mmmm d, yyyy;@'})
     formats["D"] = cell_D_Format
-    cell_E_Format_Good = workbook.add_format({'font_color': '#006100', 'align': 'center', 'border': 1, 'bg_color': '#C6EFCE', 'num_format': '0'})
+    cell_E_Format_Good = workbook.add_format(
+        {'font_color': '#006100', 'align': 'center', 'border': 1, 'bg_color': '#C6EFCE', 'num_format': '0'})
     formats["EG"] = cell_E_Format_Good
-    cell_E_Format_Bad = workbook.add_format({'font_color': '#9C0006', 'align': 'center', 'border': 1, 'bg_color': '#FFC7CE', 'num_format': '0'})
+    cell_E_Format_Bad = workbook.add_format(
+        {'font_color': '#9C0006', 'align': 'center', 'border': 1, 'bg_color': '#FFC7CE', 'num_format': '0'})
     formats["EB"] = cell_E_Format_Bad
-    cell_I_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '0.00'})
+    cell_I_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F',
+                                         'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '0.00'})
     formats["I"] = cell_I_Format
-    cell_N_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '[$-x-sysdate]dddd, mmmm dd, yyyy'})
+    cell_N_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center',
+                                         'border': 1, 'bg_color': '#F2F2F2', 'num_format': '[$-x-sysdate]dddd, mmmm dd, yyyy'})
     formats["N"] = cell_N_Format
-    cell_O_Format_Good = workbook.add_format({'font_color': '#006100', 'align': 'center', 'border': 1, 'bg_color': '#C6EFCE'})
+    cell_O_Format_Good = workbook.add_format(
+        {'font_color': '#006100', 'align': 'center', 'border': 1, 'bg_color': '#C6EFCE'})
     formats["OG"] = cell_O_Format_Good
-    cell_O_Format_Bad = workbook.add_format({'font_color': '#9C0006', 'align': 'center', 'border': 1, 'bg_color': '#FFC7CE'})
+    cell_O_Format_Bad = workbook.add_format(
+        {'font_color': '#9C0006', 'align': 'center', 'border': 1, 'bg_color': '#FFC7CE'})
     formats["OB"] = cell_O_Format_Bad
-    cell_P_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '[$-en-US]mmmmm-yy'})
+    cell_P_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center',
+                                         'border': 1, 'bg_color': '#F2F2F2', 'num_format': '[$-en-US]mmmmm-yy'})
     formats["P"] = cell_P_Format
-    cell_R_Format = workbook.add_format({'font_color': '#3F3F76', 'align': 'center', 'border': 1, 'bg_color': '#FFCC99', 'border_color': '#7F7F7F'})
+    cell_R_Format = workbook.add_format(
+        {'font_color': '#3F3F76', 'align': 'center', 'border': 1, 'bg_color': '#FFCC99', 'border_color': '#7F7F7F'})
     formats["R"] = cell_R_Format
-    cell_W_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '0.000'})
+    cell_W_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F',
+                                         'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '0.000'})
     formats["W"] = cell_W_Format
-    cell_Y_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '0.0'})
+    cell_Y_Format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F',
+                                         'align': 'center', 'border': 1, 'bg_color': '#F2F2F2', 'num_format': '0.0'})
     formats["Y"] = cell_Y_Format
-    Equation_format = workbook.add_format({'italic': True, 'font_color': '#959c97', 'align': 'center'})
+    Equation_format = workbook.add_format(
+        {'italic': True, 'font_color': '#959c97', 'align': 'center'})
     formats["EQU"] = Equation_format
-    Regular_format = workbook.add_format({'bold': True, 'align': 'center', 'border': 1})
+    Regular_format = workbook.add_format(
+        {'bold': True, 'align': 'center', 'border': 1})
     formats["REG"] = Regular_format
-    Regular_format = workbook.add_format({'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2'})
+    Regular_format = workbook.add_format(
+        {'bold': True, 'font_color': '#3F3F3F', 'align': 'center', 'border': 1, 'bg_color': '#F2F2F2'})
     formats["REGO"] = Regular_format
-    Nuetral_format = workbook.add_format({'font_color': '#9C5700', 'align': 'center', 'border': 1, 'bg_color': '#FFEB9C', 'border_color': '#575163', 'num_format': '0'})
+    Nuetral_format = workbook.add_format({'font_color': '#9C5700', 'align': 'center',
+                                          'border': 1, 'bg_color': '#FFEB9C', 'border_color': '#575163', 'num_format': '0'})
     formats["NUE"] = Nuetral_format
-    Nuetral_format_B = workbook.add_format({'font_color': '#9C5700', 'align': 'center', 'border': 1, 'bg_color': '#FFEB9C', 'border_color': '#575163', 'num_format': '[$-en-US]mmmm d, yyyy;@'})
+    Nuetral_format_B = workbook.add_format({'font_color': '#9C5700', 'align': 'center', 'border': 1,
+                                            'bg_color': '#FFEB9C', 'border_color': '#575163', 'num_format': '[$-en-US]mmmm d, yyyy;@'})
     formats["NUEB"] = Nuetral_format_B
     # ------------------------------------------Set Colmn Width-----------------------------------------------------------
     sheet1.set_column('A:A', 20)  # 00

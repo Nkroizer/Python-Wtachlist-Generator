@@ -64,7 +64,9 @@ def addNewEntryToTimeTrakBridge():
     if TodaysFlag == 1:
         DDRTMP = date.today()
     DDR = DDRTMP.strftime("%m/%d/%Y")
-    addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached, DDR)
+    addNewEntryToTimeTrak(
+        inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached, DDR)
+
 
 # Add show section
 frame = Frame(window)
@@ -97,13 +99,15 @@ LTD = StrToDate(lastTodaysDate)
 
 # ----------------------------------------------------------------------------------
 
-createNewFileBtn = Button(frame, text="Create New Raw File", command=intializeRawFile, width=18)
+createNewFileBtn = Button(
+    frame, text="Create New Raw File", command=intializeRawFile, width=18)
 
 createNewFileBtn.pack(side=LEFT, padx=10, pady=7)
 
 # ----------------------------------------------------------------------------------
 
-convertRawFileBtn = Button(frame2, text="Convert Raw File to Excel", command=turnRawFileIntoExcel, width=22)
+convertRawFileBtn = Button(
+    frame2, text="Convert Raw File to Excel", command=turnRawFileIntoExcel, width=22)
 
 convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
 
@@ -112,7 +116,7 @@ convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
 inputDateReachedLbl = Label(frame3, text="Current Date of episode reached")
 
 calDateReached = Calendar(frame3, font="Arial 14", selectmode='day', locale='en_US',
-                cursor="hand1", year=LDR.year, month=LDR.month, day=LDR.day)
+                          cursor="hand1", year=LDR.year, month=LDR.month, day=LDR.day)
 
 inputDateReachedLbl.pack(side=LEFT, padx=10, pady=7)
 calDateReached.pack()
@@ -122,11 +126,12 @@ calDateReached.pack()
 DDLbl = Label(frame4, text="Date Date Reached")
 
 calDateToday = Calendar(frame4, font="Arial 14", selectmode='day', locale='en_US',
-                cursor="hand1", year=LTD.year, month=LTD.month, day=LTD.day)
+                        cursor="hand1", year=LTD.year, month=LTD.month, day=LTD.day)
 
 CheckVar1 = IntVar()
 
-C1 = Checkbutton(frame4, text = "Today", variable = CheckVar1, onvalue = 1, offvalue = 0)
+C1 = Checkbutton(frame4, text="Today", variable=CheckVar1,
+                 onvalue=1, offvalue=0)
 
 DDLbl.pack(side=LEFT, padx=10, pady=7)
 calDateToday.pack()
@@ -159,7 +164,8 @@ InputLastEpisodeReachedInput.bind('<Button-3>', rClicker, add='')
 
 # ----------------------------------------------------------------------------------
 
-convertRawFileBtn = Button(frame7, text="Add TimeTrak Line", command=addNewEntryToTimeTrakBridge, width=22)
+convertRawFileBtn = Button(
+    frame7, text="Add TimeTrak Line", command=addNewEntryToTimeTrakBridge, width=22)
 
 convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
 
