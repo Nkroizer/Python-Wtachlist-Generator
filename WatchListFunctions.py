@@ -320,7 +320,7 @@ def refreshShowStatus():
     os.remove(str(directory) + r'\\TmpFiles\\Show Links.txt')
 
 
-def refreshDB():
+def refreshDB(active):
     directory = pathlib.Path().absolute()
     checkIfFolderExistAndCreate("Files")
     checkIfFolderExistAndCreate("TmpFiles")
@@ -335,7 +335,7 @@ def refreshDB():
             text = x.split(' : ')
             showToAdd = text[1]
             status = text[2]
-            if "active" in status:
+            if active and "active" in status:
                 addShowClicked(showToAdd)
     f.close()
     os.remove(str(directory) + r'\\Files\\Show Links.txt')

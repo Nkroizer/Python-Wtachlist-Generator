@@ -85,8 +85,12 @@ def refreshShowStatusFunc():
     refreshShowStatus()
 
 
-def refreshDBFunc():
-    refreshDB()
+def refreshDBFuncActive():
+    refreshDB(True)
+
+
+def refreshDBFuncAll():
+    refreshDB(False)
 
 
 # Add show section
@@ -144,10 +148,16 @@ frame3.pack()
 frame4 = Frame(window)
 refreshShowStatusBtn = Button(
     frame4, text="Refresh Show Status", command=refreshShowStatusFunc)
-refreshShowStatusBtn.pack(side=LEFT, padx=10, pady=7)
+
 
 refreshDBBtn = Button(
-    frame4, text="Refresh DB", command=refreshDBFunc)
+    frame4, text="Refresh DB (Active)", command=refreshDBFuncActive)
+
+refreshDBBtn = Button(
+    frame4, text="Refresh DB (All)", command=refreshDBFuncAll)
+
+
+refreshShowStatusBtn.pack(side=LEFT, padx=10, pady=7)
 refreshDBBtn.pack(side=LEFT, padx=10, pady=7)
 frame4.pack()
 
