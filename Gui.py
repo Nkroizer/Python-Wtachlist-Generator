@@ -1,6 +1,5 @@
 from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu
 from WatchListFunctions import checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClickedMed, refreshShowStatus, refreshDB
-from ConversionFunctions import cleanFileName
 from imdb import IMDb
 import csv
 import pathlib
