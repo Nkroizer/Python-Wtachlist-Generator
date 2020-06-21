@@ -1,7 +1,8 @@
 from ConversionFunctions import StrToDate, cleanFileName, LinkToIMDBId, showStatus
 from VerifyingFunctions import checkIfFolderExistAndCreate, checkIfContainsYear
 from EquationCreator import fixedPlaceEquation, fixedSeasonAndEpisodeNumberEquation, nameStickerEquation
-from tkinter import messagebox
+from tkinter import messagebox, Tk, HORIZONTAL, mainloop, Button
+from tkinter.ttk import Progressbar
 from imdb import IMDb
 from datetime import datetime, date
 import xlsxwriter
@@ -11,7 +12,16 @@ import pathlib
 import pickle
 import shutil
 
+
 def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
+    root = Tk() 
+    root.wm_attributes("-topmost", 1)
+    root.geometry('100x30')
+    progress = Progressbar(root, orient = HORIZONTAL, 
+    length = 100, mode = 'determinate') 
+    progress.pack(pady = 10)
+    root.update()
+
     checkIfFolderExistAndCreate("Watchlists")
     workbook = xlsxwriter.Workbook("Watchlists\\" + YOF + " Watchlist.xlsx")
     sheet1 = workbook.add_worksheet()
@@ -49,49 +59,60 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
     sheet1.write(0, 10, 'Name Sticker', Header_format)
     row = 1
     TotalNumberOfEpisodes = 0
+    TotalNumberOfItemsToWork = len(showsToAdd)
+    currentProgress = 0
+    progressPart = 100/TotalNumberOfItemsToWork
     for show in showsToAdd:
         print("Started working on: " + show)
         with open("Local DB/" + show, newline='') as csvfile:
             showCSV = csv.reader(csvfile, delimiter=' ', quotechar='|')
-            try:
-                for cell in showCSV:
-                    Eshow = cleanFileName(show[0: len(show) - 4])
-                    ESeason = cell[0]
-                    Eepisode = cell[1]
-                    ETitle = cleanFileName(cell[2])
-                    EAirdate = cell[3]
-                    try:
-                        EAirdate = datetime.strptime(EAirdate, '%d %b. %Y')
-                    except:
-                        EAirdate = '2000-01-01 00:00:00'
-                    Erate = cell[4]
-                    if not YOF in str(EAirdate):
-                        continue
-                    TotalNumberOfEpisodes = TotalNumberOfEpisodes + 1
-                    print('Season: ' + str(ESeason) +
-                          ' Episode: ' + str(Eepisode))
-                    sheet1.write(row, 0, Eshow, String_format_No_Align)
-                    sheet1.write(row, 1, int(ESeason), Number_format)
-                    sheet1.write(row, 2, int(Eepisode), Number_format)
-                    sheet1.write(row, 3, str(ETitle), String_format_No_Align)
-                    sheet1.write(row, 4, EAirdate, date_Format)
-                    sheet1.write(row, 5, float(Erate), float_format)
-                    sheet1.write(row, 6, 0, String_format)
-                    sheet1.write(row, 7, str(
-                        fixedPlaceEquation(row)), String_format)
-                    sheet1.write(row, 8, str(
-                        fixedSeasonAndEpisodeNumberEquation(row, 'B')), String_format)
-                    sheet1.write(row, 9, str(
-                        fixedSeasonAndEpisodeNumberEquation(row, 'C')), String_format)
-                    sheet1.write(row, 10, str(
-                        nameStickerEquation(row)), String_format_No_Align)
-                    row = row + 1
-            except:
-                print('S W W')
+            for cell in showCSV:
+                Eshow = cleanFileName(show[0: len(show) - 4])
+                ESeason = cell[0]
+                if "unknown season" in ESeason:
+                    ESeason = 0
+                Eepisode = cell[1]
+                ETitle = cleanFileName(cell[2])
+                EAirdate = cell[3]
+                try:
+                    EAirdate = datetime.strptime(EAirdate, '%d %b. %Y')
+                except:
+                    EAirdate = '2000-01-01 00:00:00'
+                Erate = cell[4]
+                if not YOF in str(EAirdate):
+                    continue
+                TotalNumberOfEpisodes = TotalNumberOfEpisodes + 1
+                sheet1.write(row, 0, Eshow, String_format_No_Align)
+                sheet1.write(row, 1, int(ESeason), Number_format)
+                sheet1.write(row, 2, int(Eepisode), Number_format)
+                sheet1.write(row, 3, str(ETitle), String_format_No_Align)
+                sheet1.write(row, 4, EAirdate, date_Format)
+                sheet1.write(row, 5, float(Erate), float_format)
+                sheet1.write(row, 6, 0, String_format)
+                sheet1.write(row, 7, str(
+                    fixedPlaceEquation(row)), String_format)
+                sheet1.write(row, 8, str(
+                    fixedSeasonAndEpisodeNumberEquation(row, 'B')), String_format)
+                sheet1.write(row, 9, str(
+                    fixedSeasonAndEpisodeNumberEquation(row, 'C')), String_format)
+                sheet1.write(row, 10, str(
+                    nameStickerEquation(row)), String_format_No_Align)
+                row = row + 1
+        currentProgress += progressPart
+        progress['value'] = currentProgress
+        root.update_idletasks() 
+    root.destroy()
     workbook.close()
 
 
 def generatAllWatchlists():
+    root = Tk() 
+    root.wm_attributes("-topmost", 1)
+    root.geometry('100x30')
+    progress = Progressbar(root, orient = HORIZONTAL, 
+    length = 100, mode = 'determinate') 
+    progress.pack(pady = 10)
+    root.update()
     directory = pathlib.Path().absolute()
     today = date.today()
     ThisYear = today.year
@@ -106,6 +127,9 @@ def generatAllWatchlists():
     oldestYear = Oldest_Dates["year"]
     year = int(oldestYear)
     ThisYear = int(ThisYear) + 1
+    TotalNumberOfItemsToWork = ThisYear - year
+    currentProgress = 0
+    progressPart = 100/TotalNumberOfItemsToWork
     for x in range(year, ThisYear):
         shows = []
         for filename in os.listdir(str(directory) + r"\Local DB"):
@@ -113,6 +137,10 @@ def generatAllWatchlists():
                 if checkIfContainsYear(filename, str(x)):
                     shows.append(filename)
         mainWatchlistGeneratorFunction(shows, str(x), False)
+        currentProgress += progressPart
+        progress['value'] = currentProgress
+        root.update_idletasks() 
+    root.destroy()
 
 
 def getBadDatesFunc():
@@ -257,6 +285,25 @@ def getDateOfFirstEpisodeInListFunc():
     Oldest_Dates["date"] = tmpDate[0: len(tmpDate) - 9]
     Oldest_Dates["episode"] = str(oldestEpisode)
     pickle.dump(Oldest_Dates, open("Files\\First Episode Information.p", "wb"))
+
+
+def getallYears():
+    today = date.today()
+    ThisYear = int(today.year)
+    years = []
+    directory = pathlib.Path().absolute()
+    firstYear = "1900"
+    checkIfFolderExistAndCreate("Files")
+    isExistsFile = os.path.exists(
+        str(directory) + '\\Files\\First Episode Information.p')
+    if not(isExistsFile):
+        getDateOfFirstEpisodeInListFunc()
+    Oldest_Dates = pickle.load(
+        open("Files\\First Episode Information.p", "rb"))
+    firstYear = int(Oldest_Dates["year"])
+    for x in range(firstYear, ThisYear):
+        years.append(x)
+    return years        
 
 
 def refreshShowStatus():

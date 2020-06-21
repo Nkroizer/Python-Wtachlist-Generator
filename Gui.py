@@ -1,5 +1,5 @@
-from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu
-from WatchListFunctions import checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClickedMed, refreshShowStatus, refreshDB
+from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu, StringVar, OptionMenu
+from WatchListFunctions import checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClickedMed, refreshShowStatus, refreshDB, getallYears
 from imdb import IMDb
 import csv
 import pathlib
@@ -15,7 +15,6 @@ window.geometry('600x700')
 def rClicker(e):
     try:
         def rClick_Copy(e, apnd=0):
-            print("why?")
             e.widget.event_generate('<Control-c>')
 
         def rClick_Cut(e):
@@ -64,7 +63,7 @@ def addShowClick():
 def generatWatchlist():
     directory = pathlib.Path().absolute()
     shows = []
-    year = yearInput.get()
+    year = variable.get()
     for filename in os.listdir(str(directory) + r"\Local DB"):
         if ".csv" in filename:
             if checkIfContainsYear(filename, year):
@@ -79,6 +78,9 @@ def showAvilableShowsBtnFunc():
             showname = filename[0: len(filename) - 4]
             Lb1.insert(END, showname)
 
+
+def getallYearsFunc():
+    return getallYears()
 
 def refreshShowStatusFunc():
     refreshShowStatus()
@@ -112,9 +114,12 @@ frame.pack()
 frame2 = Frame(window)
 GenListYear = Label(frame2, text="Year: ")
 
-yearInput = Entry(frame2, width=20)
+OPTIONS = getallYearsFunc()
 
-yearInput.bind('<Button-3>', rClicker, add='')
+variable = StringVar(frame2)
+variable.set(OPTIONS[0]) # default value
+
+yearInput = OptionMenu(frame2, variable, 0, *OPTIONS)
 
 yearGenBtn = Button(frame2, text="Generate", command=generatWatchlist, width=7)
 
