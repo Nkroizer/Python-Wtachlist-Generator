@@ -4,7 +4,7 @@ from EquationCreator import fixedPlaceEquation, fixedSeasonAndEpisodeNumberEquat
 from tkinter import messagebox, Tk, HORIZONTAL, mainloop, Button
 from tkinter.ttk import Progressbar
 from imdb import IMDb
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import xlsxwriter
 import csv
 import os
@@ -16,7 +16,8 @@ import shutil
 def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
     root = Tk() 
     root.wm_attributes("-topmost", 1)
-    root.geometry('100x30')
+    root.overrideredirect(True)
+    root.geometry('200x50+500+500')
     progress = Progressbar(root, orient = HORIZONTAL, 
     length = 100, mode = 'determinate') 
     progress.pack(pady = 10)
@@ -30,12 +31,13 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
     sheet1.set_column('C:C', 8)  # 02
     sheet1.set_column('D:D', 47)  # 03
     sheet1.set_column('E:E', 11)  # 04
-    sheet1.set_column('F:F', 6)  # 05
-    sheet1.set_column('G:G', 11)  # 06
+    sheet1.set_column('F:F', 11)  # 05
+    sheet1.set_column('G:G', 6)  # 06
     sheet1.set_column('H:H', 11)  # 07
-    sheet1.set_column('I:I', 13)  # 08
-    sheet1.set_column('J:J', 12)  # 09
-    sheet1.set_column('K:K', 77)  # 10
+    sheet1.set_column('I:I', 11)  # 08
+    sheet1.set_column('J:J', 13)  # 09
+    sheet1.set_column('K:K', 12)  # 10
+    sheet1.set_column('L:L', 77)  # 11
     Number_format = workbook.add_format(
         {'align': 'center', 'num_format': '0', 'border': 1})
     float_format = workbook.add_format(
@@ -51,12 +53,13 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
     sheet1.write(0, 2, 'Episode', Header_format)
     sheet1.write(0, 3, 'Title', Header_format)
     sheet1.write(0, 4, 'Air Date', Header_format)
-    sheet1.write(0, 5, 'Rating', Header_format)
-    sheet1.write(0, 6, 'Place In List', Header_format)
-    sheet1.write(0, 7, 'Fixed Place', Header_format)
-    sheet1.write(0, 8, 'Fixed Episode', Header_format)
-    sheet1.write(0, 9, 'Fixed Season', Header_format)
-    sheet1.write(0, 10, 'Name Sticker', Header_format)
+    sheet1.write(0, 5, 'Air Date + 1', Header_format)
+    sheet1.write(0, 6, 'Rating', Header_format)
+    sheet1.write(0, 7, 'Place In List', Header_format)
+    sheet1.write(0, 8, 'Fixed Place', Header_format)
+    sheet1.write(0, 9, 'Fixed Episode', Header_format)
+    sheet1.write(0, 10, 'Fixed Season', Header_format)
+    sheet1.write(0, 11, 'Name Sticker', Header_format)
     row = 1
     TotalNumberOfEpisodes = 0
     TotalNumberOfItemsToWork = len(showsToAdd)
@@ -81,21 +84,23 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
                 Erate = cell[4]
                 if not YOF in str(EAirdate):
                     continue
+                EAirdatePlusOne = EAirdate + timedelta(days=1)
                 TotalNumberOfEpisodes = TotalNumberOfEpisodes + 1
                 sheet1.write(row, 0, Eshow, String_format_No_Align)
                 sheet1.write(row, 1, int(ESeason), Number_format)
                 sheet1.write(row, 2, int(Eepisode), Number_format)
                 sheet1.write(row, 3, str(ETitle), String_format_No_Align)
                 sheet1.write(row, 4, EAirdate, date_Format)
-                sheet1.write(row, 5, float(Erate), float_format)
-                sheet1.write(row, 6, 0, String_format)
-                sheet1.write(row, 7, str(
-                    fixedPlaceEquation(row)), String_format)
+                sheet1.write(row, 5, EAirdatePlusOne, date_Format)
+                sheet1.write(row, 6, float(Erate), float_format)
+                sheet1.write(row, 7, 0, String_format)
                 sheet1.write(row, 8, str(
-                    fixedSeasonAndEpisodeNumberEquation(row, 'B')), String_format)
+                    fixedPlaceEquation(row)), String_format)
                 sheet1.write(row, 9, str(
-                    fixedSeasonAndEpisodeNumberEquation(row, 'C')), String_format)
+                    fixedSeasonAndEpisodeNumberEquation(row, 'B')), String_format)
                 sheet1.write(row, 10, str(
+                    fixedSeasonAndEpisodeNumberEquation(row, 'C')), String_format)
+                sheet1.write(row, 11, str(
                     nameStickerEquation(row)), String_format_No_Align)
                 row = row + 1
         currentProgress += progressPart
@@ -108,11 +113,13 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
 def generatAllWatchlists():
     root = Tk() 
     root.wm_attributes("-topmost", 1)
-    root.geometry('100x30')
+    root.overrideredirect(True)
+    root.geometry('200x50+500+500')
     progress = Progressbar(root, orient = HORIZONTAL, 
     length = 100, mode = 'determinate') 
     progress.pack(pady = 10)
     root.update()
+
     directory = pathlib.Path().absolute()
     today = date.today()
     ThisYear = today.year
@@ -178,18 +185,33 @@ def getBadDatesFunc():
 
 
 def addShowClickedMed(Link):
+    if not("http" in Link):
+        return "Not a valid Url"
+    if not("www.imdb.com" in Link):
+        return "Not a valid IMDB Url"
     showToAdd = LinkToIMDBId(Link)
     return addShowClicked(showToAdd)
 
 
 def addShowClicked(IMDBID):
+    root = Tk() 
+    root.wm_attributes("-topmost", 1)
+    root.overrideredirect(True)
+    root.geometry('200x50+500+500')
+    progress = Progressbar(root, orient = HORIZONTAL, 
+    length = 100, mode = 'determinate') 
+    progress.pack(pady = 10)
+    root.update()
+
     checkIfFolderExistAndCreate("Files")
     directory = pathlib.Path().absolute()
     ia = IMDb()
     series = ia.get_movie(IMDBID)
     ia.update(series, "episodes")
     kind = series["kind"]
-    if not(kind == "tv series"):
+    print(kind)
+    if not("series" in kind):
+        root.destroy()
         return "The Link enterd is not a TV Series"
     SeasonsArr = sorted(series["episodes"].keys())
     ShowTitle = series["title"]
@@ -204,6 +226,10 @@ def addShowClicked(IMDBID):
     f.write(str(cleanTitle) + " : " + IMDBID + " : " + status + "\r")
     f.close()
     print("Started working on: " + cleanTitle)
+    TotalNumberOfItemsToWork = len(SeasonsArr)
+    currentProgress = 0
+    progressPart = 100/TotalNumberOfItemsToWork
+
     with open("Local DB/" + cleanTitle + ".csv", 'w', newline='') as csvfile:
         showWriter = csv.writer(csvfile, delimiter=' ',
                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -245,6 +271,10 @@ def addShowClicked(IMDBID):
                 print("An exception occurred trying to extract an episode")
         print("Finished working on: " + cleanTitle)
         print("-----------------------------------------")
+        currentProgress += progressPart
+        progress['value'] = currentProgress
+        root.update_idletasks() 
+    root.destroy()
     return cleanTitle + " Added successfuly"
 
 
@@ -307,6 +337,15 @@ def getallYears():
 
 
 def refreshShowStatus():
+    root = Tk() 
+    root.wm_attributes("-topmost", 1)
+    root.overrideredirect(True)
+    root.geometry('200x50+500+500')
+    progress = Progressbar(root, orient = HORIZONTAL, 
+    length = 100, mode = 'determinate') 
+    progress.pack(pady = 10)
+    root.update()
+
     ia = IMDb()
     directory = pathlib.Path().absolute()
     checkIfFolderExistAndCreate("Files")
@@ -318,6 +357,9 @@ def refreshShowStatus():
     f = open("TmpFiles\\Show Links.txt", "r")
     if f.mode == 'r':
         f1 = f.readlines()
+        TotalNumberOfItemsToWork = len(f1)
+        currentProgress = 0
+        progressPart = 100/TotalNumberOfItemsToWork
         for x in f1:
             text = x.split(' : ')
             cleanTitle = text[0]
@@ -334,11 +376,24 @@ def refreshShowStatus():
             f2.write(str(cleanTitle) + " : " +
                      showToAdd + " : " + status + "\r")
             f2.close()
+            currentProgress += progressPart
+            progress['value'] = currentProgress
+            root.update_idletasks() 
+    root.destroy()
     f.close()
     os.remove(str(directory) + r'\\TmpFiles\\Show Links.txt')
 
 
 def refreshDB(active):
+    root = Tk() 
+    root.wm_attributes("-topmost", 1)
+    root.overrideredirect(True)
+    root.geometry('200x50+500+500')
+    progress = Progressbar(root, orient = HORIZONTAL, 
+    length = 100, mode = 'determinate') 
+    progress.pack(pady = 10)
+    root.update()
+
     directory = pathlib.Path().absolute()
     checkIfFolderExistAndCreate("Files")
     checkIfFolderExistAndCreate("TmpFiles")
@@ -349,12 +404,19 @@ def refreshDB(active):
     f = open("TmpFiles\\Show Links.txt", "r")
     if f.mode == 'r':
         f1 = f.readlines()
+        TotalNumberOfItemsToWork = len(f1)
+        currentProgress = 0
+        progressPart = 100/TotalNumberOfItemsToWork
         for x in f1:
             text = x.split(' : ')
             showToAdd = text[1]
             status = text[2]
             if active and "active" in status:
                 addShowClicked(showToAdd)
+        currentProgress += progressPart
+        progress['value'] = currentProgress
+        root.update_idletasks() 
+    root.destroy()
     f.close()
     os.remove(str(directory) + r'\\Files\\Show Links.txt')
     shutil.copyfile(target, original)

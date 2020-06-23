@@ -1,15 +1,16 @@
-from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu, StringVar, OptionMenu
+from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu, StringVar, OptionMenu, ANCHOR, Toplevel
+from ConversionFunctions import DateFormatToListFormat
 from WatchListFunctions import checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClickedMed, refreshShowStatus, refreshDB, getallYears
 from imdb import IMDb
 import csv
 import pathlib
 import os
 
-window = Tk()
+root = Tk()
 
-window.title("Watchlist Generator")
+root.title("Watchlist Generator")
 
-window.geometry('600x700')
+root.geometry('600x700')
 
 
 def rClicker(e):
@@ -82,6 +83,7 @@ def showAvilableShowsBtnFunc():
 def getallYearsFunc():
     return getallYears()
 
+
 def refreshShowStatusFunc():
     refreshShowStatus()
 
@@ -94,8 +96,57 @@ def refreshDBFuncAll():
     refreshDB(False)
 
 
+def create_window(showName):
+    window = Toplevel(root)
+    window.title(showName)
+    frame = Frame(window)
+    with open("Local DB/" + showName + ".csv", newline='') as csvfile:
+        showCSV = csv.reader(csvfile, delimiter=' ', quotechar='|')
+        Label(frame, text="Season", borderwidth=2,
+              relief="ridge", width=15).grid(row=0, column=0)
+        Label(frame, text="Episode", borderwidth=2,
+              relief="ridge", width=15).grid(row=0, column=1)
+        Label(frame, text="Title", borderwidth=2,
+              relief="ridge", width=25).grid(row=0, column=2)
+        Label(frame, text="Air Date", borderwidth=2,
+              relief="ridge", width=15).grid(row=0, column=3)
+        rowNumber = 1
+        for cell in showCSV:
+            ESeason = cell[0]
+            if "unknown season" in ESeason:
+                ESeason = 0
+            Eepisode = cell[1]
+            print(Eepisode)
+            print(cell)
+            ETitle = cell[2]
+            EAirdate = cell[3]
+            try:
+                EAirdate = datetime.strptime(EAirdate, '%d %b. %Y')
+            except:
+                EAirdate = '2000-01-01 00:00:00'
+            # EAirdate = DateFormatToListFormat(EAirdate)
+            Label(frame, text=ESeason, borderwidth=2, relief="ridge",
+                  width=15).grid(row=rowNumber, column=0)
+            Label(frame, text=Eepisode, borderwidth=2, relief="ridge",
+                  width=15).grid(row=rowNumber, column=1)
+            Label(frame, text=ETitle, borderwidth=2, relief="ridge",
+                  width=25).grid(row=rowNumber, column=2)
+            Label(frame, text=EAirdate, borderwidth=2, relief="ridge",
+                  width=15).grid(row=rowNumber, column=3)
+            rowNumber += 1
+    frame.pack()
+
+
+def onselect(evt):
+    # Note here that Tkinter passes an event object to onselect()
+    w = evt.widget
+    index = int(w.curselection()[0])
+    value = w.get(index)
+    create_window(value)
+
+
 # Add show section
-frame = Frame(window)
+frame = Frame(root)
 addShowLbl = Label(frame, text="Add Show: ")
 
 showInput = Entry(frame, width=53)
@@ -111,15 +162,15 @@ frame.pack()
 
 # ----------------------------------------------------------------------------------
 # year watchist generator section
-frame2 = Frame(window)
+frame2 = Frame(root)
 GenListYear = Label(frame2, text="Year: ")
 
 OPTIONS = getallYearsFunc()
 
 variable = StringVar(frame2)
-variable.set(OPTIONS[0]) # default value
+variable.set(OPTIONS[0])  # default value
 
-yearInput = OptionMenu(frame2, variable, 0, *OPTIONS)
+yearInput = OptionMenu(frame2, variable, OPTIONS[0], *OPTIONS)
 
 yearGenBtn = Button(frame2, text="Generate", command=generatWatchlist, width=7)
 
@@ -131,7 +182,7 @@ frame2.pack()
 # ----------------------------------------------------------------------------------
 
 # MISC uttons section
-frame3 = Frame(window)
+frame3 = Frame(root)
 BadDateGenBtn = Button(frame3, text="Get Bad Dates", command=getBadDatesFunc)
 
 showAvilableShowsBtn = Button(
@@ -149,7 +200,7 @@ FirstDateGenBtn.pack(side=LEFT, padx=10, pady=7)
 GenerateAllWatchlistsBtn.pack(side=LEFT, padx=10, pady=7)
 frame3.pack()
 
-frame4 = Frame(window)
+frame4 = Frame(root)
 refreshShowStatusBtn = Button(
     frame4, text="Refresh Show Status", command=refreshShowStatusFunc)
 
@@ -168,7 +219,8 @@ frame4.pack()
 
 # ----------------------------------------------------------------------------------
 
-Lb1 = Listbox(window, width=70, height=25)
+Lb1 = Listbox(root, width=70, height=25)
+Lb1.bind('<<ListboxSelect>>', onselect)
 Lb1.pack()
 
-window.mainloop()
+root.mainloop()
