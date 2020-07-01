@@ -1,3 +1,4 @@
 tkcalendar
 imdb
 xlsxwriter
+mysql-connector-python

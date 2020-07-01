@@ -12,6 +12,12 @@ def DateFormatToListFormat(DateForm):
     return ListForm
 
 
+def DateFormatToMySqlFormat(DateForm):
+    fixedDate = datetime.strptime(str(DateForm), "%d %b. %Y")
+    ListForm = fixedDate.strftime("%Y-%m-%d")
+    return ListForm
+
+
 def DaysLeftToInt(DL):
     strDl = str(DL)
     if "day" in strDl:
