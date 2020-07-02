@@ -160,16 +160,16 @@ def insertSingleEpisodeRecord(imdbIdIns):
             airDate = getAirDate(episode_obj)
             year = getYear(episode_obj)
             plot = episode_obj["plot"]
-            #plot = plot[0 : 254]
             imdbId = 0
             tvdbId = 0
             watched = 0
             wasIncremented = 0
+            verified = 0
             episodeCode = getCleanShowName(
                 showName) + "S" + str(season) + "E" + str(episode)
-            sql = "INSERT INTO episodes (showName, season, episode, title, kind, rating, airDate, year, plot, mainImdbId, mainTvdbId, imdbId, tvdbId, watched, wasIncremented, episodeCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            sql = "INSERT INTO episodes (showName, season, episode, title, kind, rating, airDate, year, plot, mainImdbId, mainTvdbId, imdbId, tvdbId, watched, wasIncremented, verified, episodeCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             val = (str(showName), season, episode, str(title), str(kind),
-                   rating, airDate, year, str(plot), mainImdbId, mainTvdbId, imdbId, imdbId, watched, wasIncremented, str(episodeCode))
+                   rating, airDate, year, str(plot), mainImdbId, mainTvdbId, imdbId, imdbId, watched, wasIncremented, verified, str(episodeCode))
             try:
                 mycursor.execute(sql, val)
                 mydb.commit()
@@ -194,7 +194,7 @@ def createShowsTabel():
 
 
 def createEpisodesTabel():
-    sql = r"CREATE TABLE episodes (showName VARCHAR(255), season INT, episode INT, title VARCHAR(255), kind VARCHAR(255), rating FLOAT, airDate DATE, year INT, plot VARCHAR(1500), mainImdbId INT, mainTvdbId INT, imdbId INT, tvdbId INT, watched BIT, wasIncremented BIT, episodeCode VARCHAR(255) UNIQUE)"
+    sql = r"CREATE TABLE episodes (showName VARCHAR(255), season INT, episode INT, title VARCHAR(255), kind VARCHAR(255), rating FLOAT, airDate DATE, year INT, plot VARCHAR(1500), mainImdbId INT, mainTvdbId INT, imdbId INT, tvdbId INT, watched BIT, wasIncremented BIT, verified BIT, episodeCode VARCHAR(255) UNIQUE)"
     return sql
 
 

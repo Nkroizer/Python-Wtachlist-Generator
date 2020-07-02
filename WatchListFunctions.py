@@ -1,6 +1,7 @@
 from ConversionFunctions import StrToDate, cleanFileName, LinkToIMDBId, showStatus
 from VerifyingFunctions import checkIfFolderExistAndCreate, checkIfContainsYear
 from EquationCreator import fixedPlaceEquation, fixedSeasonAndEpisodeNumberEquation, nameStickerEquation
+from PythonToMySqlConnection import insertSingleEpisodeRecord
 from tkinter import messagebox, Tk, HORIZONTAL, mainloop, Button
 from tkinter.ttk import Progressbar
 from imdb import IMDb
@@ -14,13 +15,13 @@ import shutil
 
 
 def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
-    root = Tk() 
+    root = Tk()
     root.wm_attributes("-topmost", 1)
     root.overrideredirect(True)
     root.geometry('200x50+500+500')
-    progress = Progressbar(root, orient = HORIZONTAL, 
-    length = 100, mode = 'determinate') 
-    progress.pack(pady = 10)
+    progress = Progressbar(root, orient=HORIZONTAL,
+                           length=100, mode='determinate')
+    progress.pack(pady=10)
     root.update()
 
     checkIfFolderExistAndCreate("Watchlists")
@@ -105,19 +106,19 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
                 row = row + 1
         currentProgress += progressPart
         progress['value'] = currentProgress
-        root.update_idletasks() 
+        root.update_idletasks()
     root.destroy()
     workbook.close()
 
 
 def generatAllWatchlists():
-    root = Tk() 
+    root = Tk()
     root.wm_attributes("-topmost", 1)
     root.overrideredirect(True)
     root.geometry('200x50+500+500')
-    progress = Progressbar(root, orient = HORIZONTAL, 
-    length = 100, mode = 'determinate') 
-    progress.pack(pady = 10)
+    progress = Progressbar(root, orient=HORIZONTAL,
+                           length=100, mode='determinate')
+    progress.pack(pady=10)
     root.update()
 
     directory = pathlib.Path().absolute()
@@ -146,7 +147,7 @@ def generatAllWatchlists():
         mainWatchlistGeneratorFunction(shows, str(x), False)
         currentProgress += progressPart
         progress['value'] = currentProgress
-        root.update_idletasks() 
+        root.update_idletasks()
     root.destroy()
 
 
@@ -185,31 +186,40 @@ def getBadDatesFunc():
 
 
 def addShowClickedMed(Link):
+    # Verifying that the link is an IMDB Link
     if not("http" in Link):
         return "Not a valid Url"
     if not("www.imdb.com" in Link):
         return "Not a valid IMDB Url"
+
+    # converting link to id
     showToAdd = LinkToIMDBId(Link)
+
+    # adding show to local DB
     return addShowClicked(showToAdd)
 
 
 def addShowClicked(IMDBID):
-    root = Tk() 
+    # initial variables
+    directory = pathlib.Path().absolute()
+    ia = IMDb()
+
+    # creating loading bar
+    root = Tk()
     root.wm_attributes("-topmost", 1)
     root.overrideredirect(True)
     root.geometry('200x50+500+500')
-    progress = Progressbar(root, orient = HORIZONTAL, 
-    length = 100, mode = 'determinate') 
-    progress.pack(pady = 10)
+    progress = Progressbar(root, orient=HORIZONTAL,
+                           length=100, mode='determinate')
+    progress.pack(pady=10)
     root.update()
 
+    # verifying that all neccessary folders exist
     checkIfFolderExistAndCreate("Files")
-    directory = pathlib.Path().absolute()
-    ia = IMDb()
+
     series = ia.get_movie(IMDBID)
     ia.update(series, "episodes")
     kind = series["kind"]
-    print(kind)
     if not("series" in kind):
         root.destroy()
         return "The Link enterd is not a TV Series"
@@ -273,7 +283,10 @@ def addShowClicked(IMDBID):
         print("-----------------------------------------")
         currentProgress += progressPart
         progress['value'] = currentProgress
-        root.update_idletasks() 
+        root.update_idletasks()
+
+    # adding show to MySqlDB
+    insertSingleEpisodeRecord(IMDBID)
     root.destroy()
     return cleanTitle + " Added successfuly"
 
@@ -333,17 +346,17 @@ def getallYears():
     firstYear = int(Oldest_Dates["year"])
     for x in range(firstYear, ThisYear):
         years.append(x)
-    return years        
+    return years
 
 
 def refreshShowStatus():
-    root = Tk() 
+    root = Tk()
     root.wm_attributes("-topmost", 1)
     root.overrideredirect(True)
     root.geometry('200x50+500+500')
-    progress = Progressbar(root, orient = HORIZONTAL, 
-    length = 100, mode = 'determinate') 
-    progress.pack(pady = 10)
+    progress = Progressbar(root, orient=HORIZONTAL,
+                           length=100, mode='determinate')
+    progress.pack(pady=10)
     root.update()
 
     ia = IMDb()
@@ -378,20 +391,20 @@ def refreshShowStatus():
             f2.close()
             currentProgress += progressPart
             progress['value'] = currentProgress
-            root.update_idletasks() 
+            root.update_idletasks()
     root.destroy()
     f.close()
     os.remove(str(directory) + r'\\TmpFiles\\Show Links.txt')
 
 
 def refreshDB(active):
-    root = Tk() 
+    root = Tk()
     root.wm_attributes("-topmost", 1)
     root.overrideredirect(True)
     root.geometry('200x50+500+500')
-    progress = Progressbar(root, orient = HORIZONTAL, 
-    length = 100, mode = 'determinate') 
-    progress.pack(pady = 10)
+    progress = Progressbar(root, orient=HORIZONTAL,
+                           length=100, mode='determinate')
+    progress.pack(pady=10)
     root.update()
 
     directory = pathlib.Path().absolute()
@@ -415,7 +428,7 @@ def refreshDB(active):
                 addShowClicked(showToAdd)
         currentProgress += progressPart
         progress['value'] = currentProgress
-        root.update_idletasks() 
+        root.update_idletasks()
     root.destroy()
     f.close()
     os.remove(str(directory) + r'\\Files\\Show Links.txt')
