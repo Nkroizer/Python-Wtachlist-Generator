@@ -7,15 +7,13 @@ This project also offers an option to keep track of your advancement through the
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirements.
 
-``
+```
 pip install -r requirements.txt
 ```
 
 ## Usage
 
-``python
 just add all the shows you want to watch and press 'generate' 
-``
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
@@ -23,4 +21,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-powered by Imdb®
+powered by Imdb
