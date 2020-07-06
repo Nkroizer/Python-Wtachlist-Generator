@@ -7,15 +7,15 @@ This project also offers an option to keep track of your advancement through the
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirements.
 
-```bash
+``
 pip install -r requirements.txt
 ```
 
 ## Usage
 
-```python
+``python
 just add all the shows you want to watch and press 'generate' 
-```
+``
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
