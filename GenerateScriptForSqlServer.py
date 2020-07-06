@@ -40,6 +40,7 @@ def getTVDBIdByIMDBId(imdbID, token):
     tvdbID = res2["id"]
     return tvdbID
 
+
 def generateAll():
     ia = IMDb()
     f = open("Files\\Show Links.txt", "r")
@@ -74,6 +75,7 @@ def generateAll():
             print("finished with " + str(showName))
     f.close()
 
+
 def generateSingle(imdbId):
     ia = IMDb()
     token = getToken()
@@ -81,7 +83,7 @@ def generateSingle(imdbId):
     fi = open("Files\\Sql script.txt", "w+")
     fi.write(sqlScript)
     fi.close()
-    
+
     series = ia.get_movie(imdbId)
     releaseYear = series["year"]
     showName = series["title"]

@@ -71,15 +71,6 @@ def addNewEntryToTimeTrakBridge():
 # Add show section
 
 
-
-
-
-
-
-
-
-
-
 LatestInfo = pickle.load(open("Files\\OldInfo.p", "rb"))
 lastDateReached = LatestInfo["colB"]
 LDR = StrToDate(lastDateReached)

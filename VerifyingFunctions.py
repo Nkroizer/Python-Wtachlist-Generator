@@ -1,6 +1,7 @@
 import os
 import csv
 
+
 def checkIfFolderExistAndCreate(folderName):
     if not os.path.exists(folderName):
         os.makedirs(folderName)

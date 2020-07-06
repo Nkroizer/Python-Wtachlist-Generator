@@ -1,8 +1,10 @@
 import sys
 
+
 def main():
-    exec(open('Gui.py').read())
+    exec(open('mainWindow.py').read())
     pass
+
 
 if __name__ == '__main__':
     sys.exit(main())

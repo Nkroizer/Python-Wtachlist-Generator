@@ -8,6 +8,7 @@ import pathlib
 import os
 import xlsxwriter
 
+
 def intializeRawFile():
     checkIfFolderExistAndCreate("Files")
     directory = pathlib.Path().absolute()

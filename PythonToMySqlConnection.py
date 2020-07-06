@@ -1,4 +1,5 @@
 import mysql.connector
+import csv
 from imdb import IMDb
 import requests
 import json
@@ -46,46 +47,6 @@ def getTVDBIdByIMDBId(imdbID, token):
         return 0
 
 
-def insertAllShowRecords():
-    f = open("Files\\Show Links.txt", "r")
-    if f.mode == 'r':
-        f1 = f.readlines()
-        for x in f1:
-            text = x.split(' : ')
-            imdbId = text[1]
-            insertSingleShowRecord(imdbId)
-    f.close()
-
-
-def insertSingleShowRecord(imdbId):
-    ia = IMDb()
-    token = getToken()
-    series = ia.get_movie(imdbId)
-    releaseYear = series["year"]
-    showName = series["title"]
-    seasons = series["seasons"]
-    # plot = series["plot outline"]
-    plot = "plot outline"
-    coverUrl = series["cover url"]
-    fullSizeCoverUrl = series["full-size cover url"]
-    ShowTitle = series["original title"]
-    lastDig = ShowTitle[len(ShowTitle) - 3: len(ShowTitle) - 2]
-    active = 0
-    if lastDig == '-':
-        active = 1
-    tvdbId = getTVDBIdByIMDBId(imdbId, token)
-    sql = "INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    print(sql)
-    val = (str(showName), releaseYear, seasons, active, imdbId,
-           tvdbId, str(plot), str(coverUrl), str(fullSizeCoverUrl))
-    print(val)
-    mycursor.execute(sql, val)
-
-    mydb.commit()
-    print("finished with " + str(showName))
-    print(mycursor.rowcount, "record inserted.")
-
-
 def getRating(episode_obj):
     try:
         rating = episode_obj["rating"]
@@ -116,14 +77,64 @@ def getYear(episode_obj):
         return 0
 
 
+def getPlot(episode_obj):
+    try:
+        plot = episode_obj["plot outline"]
+        return plot
+    except:
+        return "No plot ouline"
+
+
 def getCleanShowName(showName):
     cleanName = showName.replace(" ", "")
     cleanName = cleanName.replace(":", "")
     cleanName = cleanName.replace("-", "")
     cleanName = cleanName.replace("!", "")
     cleanName = cleanName.replace("?", "")
+    cleanName = cleanName.replace(".", "")
     cleanName = cleanName.lower()
     return cleanName
+
+
+def insertAllShowRecords():
+    f = open("Files\\Show Links.txt", "r")
+    if f.mode == 'r':
+        f1 = f.readlines()
+        for x in f1:
+            text = x.split(' : ')
+            imdbId = text[1]
+            insertSingleShowRecord(imdbId)
+    f.close()
+
+
+def insertSingleShowRecord(imdbId):
+    ia = IMDb()
+    token = getToken()
+    series = ia.get_movie(imdbId)
+    releaseYear = series["year"]
+    showName = series["title"]
+    seasons = series["seasons"]
+    plot = getPlot(series)
+    plot = plot[0: 1499]
+    coverUrl = series["cover url"]
+    fullSizeCoverUrl = series["full-size cover url"]
+    ShowTitle = series["original title"]
+    lastDig = ShowTitle[len(ShowTitle) - 3: len(ShowTitle) - 2]
+    active = 0
+    if lastDig == '-':
+        active = 1
+    tvdbId = getTVDBIdByIMDBId(imdbId, token)
+    sql = "INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    val = (str(showName), releaseYear, seasons, active, imdbId,
+           tvdbId, str(plot), str(coverUrl), str(fullSizeCoverUrl))
+    try:
+        mycursor.execute(sql, val)
+        mydb.commit()
+    except:
+        print("E?")
+        print(val)
+    print("finished with " + str(showName))
+    print(mycursor.rowcount, "record inserted.")
 
 
 def insertAllEpisodeRecords():
@@ -138,7 +149,7 @@ def insertAllEpisodeRecords():
 
 
 def insertSingleEpisodeRecord(imdbIdIns):
-    mainImdbId = imdbIdIns
+    mainImdbId = int(imdbIdIns)
     ia = IMDb()
     token = getToken()
     tvdbId = getTVDBIdByIMDBId(imdbIdIns, token)
@@ -167,9 +178,9 @@ def insertSingleEpisodeRecord(imdbIdIns):
             verified = 0
             episodeCode = getCleanShowName(
                 showName) + "S" + str(season) + "E" + str(episode)
-            sql = "INSERT INTO episodes (showName, season, episode, title, kind, rating, airDate, year, plot, mainImdbId, mainTvdbId, imdbId, tvdbId, watched, wasIncremented, verified, episodeCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            sql = "INSERT INTO episodes (showName, season, episode, title, kind, rating, airDate, year, plot, mainImdbId, mainTvdbId, imdbId, tvdbId, watched, wasIncremented, verified, episodeCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             val = (str(showName), season, episode, str(title), str(kind),
-                   rating, airDate, year, str(plot), mainImdbId, mainTvdbId, imdbId, imdbId, watched, wasIncremented, verified, str(episodeCode))
+                   rating, airDate, year, str(plot), mainImdbId, mainTvdbId, imdbId, tvdbId, watched, wasIncremented, verified, str(episodeCode))
             try:
                 mycursor.execute(sql, val)
                 mydb.commit()
@@ -189,7 +200,7 @@ def selectAllFromShows():
 
 
 def createShowsTabel():
-    sql = r"CREATE TABLE shows (id INT AUTO_INCREMENT PRIMARY KEY, showName VARCHAR(255), releaseYear INT, seasons INT, active BIT, imdbId INT, tvdbId INT, plot VARCHAR(255), coverUrl VARCHAR(255), fullSizeCoverUrl VARCHAR(255))"
+    sql = r"CREATE TABLE shows (id INT AUTO_INCREMENT PRIMARY KEY, showName VARCHAR(255), releaseYear INT, seasons INT, active BIT, imdbId INT UNIQUE, tvdbId INT UNIQUE, plot VARCHAR(1500), coverUrl VARCHAR(255), fullSizeCoverUrl VARCHAR(255))"
     return sql
 
 
@@ -204,6 +215,20 @@ def checkIfTableExists():
         print(x)
 
 
+def ImdbFileToDb():
+    with open("Tv Shows I Watch.csv", newline='') as csvfile:
+        showCSV = csv.reader(csvfile, delimiter=',', quotechar='|')
+        for cell in showCSV:
+            x = cell[0]
+            x = x[2: len(x)+2]
+            print(x)
+            mycursor.execute("SELECT imdbId FROM shows WHERE imdbId =" + x)
+            myresult = mycursor.fetchall()
+            if(len(myresult) < 1):
+                insertSingleShowRecord(x)
+                insertSingleEpisodeRecord(x)
+
+
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -212,9 +237,18 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-# sql = createEpisodesTabel()
 
+# mycursor.execute("SELECT imdbId FROM shows")
+
+# myresult = mycursor.fetchall()
+
+# for x in myresult:
+#     if "4113712" in str(x):
+#         print(x)
+
+# sql = createShowsTabel()
 # mycursor.execute(sql)
-insertAllEpisodeRecords()
 
+# insertAllShowRecords()
+ImdbFileToDb()
 # insertSingleEpisodeRecord("4406248")
