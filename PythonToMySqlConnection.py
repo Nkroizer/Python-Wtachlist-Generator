@@ -199,6 +199,11 @@ def selectAllFromShows():
         print(x)
 
 
+def createdatabase():
+    sql = r"CREATE DATABASE watchlistdatabase"
+    return sql
+
+
 def createShowsTabel():
     sql = r"CREATE TABLE shows (id INT AUTO_INCREMENT PRIMARY KEY, showName VARCHAR(255), releaseYear INT, seasons INT, active BIT, imdbId INT UNIQUE, tvdbId INT UNIQUE, plot VARCHAR(1500), coverUrl VARCHAR(255), fullSizeCoverUrl VARCHAR(255))"
     return sql
@@ -207,6 +212,15 @@ def createShowsTabel():
 def createEpisodesTabel():
     sql = r"CREATE TABLE episodes (showName VARCHAR(255), season INT, episode INT, title VARCHAR(255), kind VARCHAR(255), rating FLOAT, airDate DATE, year INT, plot VARCHAR(1500), mainImdbId INT, mainTvdbId INT, imdbId INT, tvdbId INT, watched BIT, wasIncremented BIT, verified BIT, episodeCode VARCHAR(255) UNIQUE)"
     return sql
+
+
+def initDataBases():
+    command = createdatabase()
+    mycursor.execute(command)
+    command = createShowsTabel()
+    mycursor.execute(command)
+    command = createEpisodesTabel()
+    mycursor.execute(command)
 
 
 def checkIfTableExists():
@@ -232,7 +246,7 @@ def ImdbFileToDb():
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="Pwlg2020",
+    password="pwlg2020",
     database="watchlistDatabase"
 )
 
@@ -242,13 +256,9 @@ mycursor = mydb.cursor()
 
 # myresult = mycursor.fetchall()
 
-# for x in myresult:
-#     if "4113712" in str(x):
-#         print(x)
-
-# sql = createShowsTabel()
+# initDataBases()
 # mycursor.execute(sql)
 
 # insertAllShowRecords()
-ImdbFileToDb()
-# insertSingleEpisodeRecord("4406248")
+#ImdbFileToDb()
+insertSingleEpisodeRecord("0318252")

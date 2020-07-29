@@ -1,98 +1,8 @@
-# 1997
-'NightMan',
-#------------------------------------------ [c] 19
-# 1998
-'NightMan',
-'Cardcaptor Sakura',
-'Charmed',
-#------------------------------------------ [c] 18
-# 1999
-'NightMan',
-'Cardcaptor Sakura',
-'Charmed',
-'Family Guy',
-'Futurama',
-'Angel',
-#------------------------------------------ [c] 17
-# 2000,
-'Cardcaptor Sakura',
-'Charmed',
-'Family Guy',
-'Futurama',
-'Angel',
-'Malcolm in the Middle',
-'Ripley\'s Believe It or Not!',
-'Coupling',
-'Even Stevens',
-'Andromeda',
-'Dark Angel',
-'X-Men Evolution',
-#------------------------------------------ [c] 21
-# 2001
-'Charmed',
-'Family Guy',
-'Futurama',
-'Angel',
-'Malcolm in the Middle',
-'Ripley\'s Believe It or Not!',
-'Coupling',
-'Even Stevens',
-'Andromeda',
-'Dark Angel',
-'X-Men Evolution',
-'The Lone Gunmen',
-'Medabots',
-'Star Trek Enterprise',
-'The Mummy',
-'Mutant X',
-'Survivor',
-#------------------------------------------ [c] 25
 # 2002
-'Charmed',
-'Family Guy',
-'Futurama',
-'Angel',
-'Malcolm in the Middle',
-'Ripley\'s Believe It or Not!',
-'Coupling',
-'Even Stevens',
-'Andromeda',
-'Dark Angel',
-'X-Men Evolution',
-'Medabots',
-'Star Trek Enterprise',
-'The Mummy',
-'Mutant X',
-'Survivor',
-'The Dead Zone',
-'Stargate Infinity',
-'The Twilight Zone(2002)',
-'Do Over',
-'Firefly',
-'John Doe',
-'Naruto',
 'Birds of Prey',
 'Top Gear',
 #------------------------------------------ [c] 32
 # 2003
-'Charmed', 1
-'Futurama',1
-'Angel',1
-'Malcolm in the Middle', 1
-'Ripley\'s Believe It or Not!', 1
-'Even Stevens',1
-'Andromeda',
-'X-Men Evolution',
-'Medabots',
-'Star Trek Enterprise',
-'The Mummy',
-'Mutant X',
-'Survivor',
-'The Dead Zone',
-'Stargate Infinity',
-'The Twilight Zone(2002)',
-'John Doe',
-'Naruto',
 'Birds of Prey',
 'Top Gear',
 'MythBusters',
@@ -100,18 +10,6 @@
 'Tru Calling',
 #------------------------------------------ [c] 29
 # 2004
-'Charmed',
-'Family Guy',
-'Angel',
-'Malcolm in the Middle',
-'Coupling',
-'Andromeda',
-'Medabots',
-'Star Trek Enterprise',
-'Mutant X',
-'Survivor',
-'The Dead Zone',
-'Naruto',
 'Top Gear',
 'MythBusters',
 'Fullmetal Alchemist',
@@ -121,14 +19,6 @@
 'Bleach Burîchi',
 #------------------------------------------ [c] 23
 # 2005
-'Charmed',
-'Family Guy',
-'Malcolm in the Middle',
-'Andromeda',
-'Star Trek Enterprise',
-'Survivor',
-'The Dead Zone',
-'Naruto',
 'Top Gear',
 'MythBusters',
 'Tru Calling',
@@ -139,12 +29,6 @@
 'Veronica Mars',
 #------------------------------------------ [c] 19
 # 2006
-'Charmed',
-'Family Guy',
-'Malcolm in the Middle',
-'Survivor',
-'The Dead Zone',
-'Naruto',
 'Top Gear',
 'MythBusters',
 'Stargate Atlantis',
@@ -157,10 +41,6 @@
 'Supernatural',
 #------------------------------------------ [c] 19
 # 2007
-'Family Guy',
-'Survivor',
-'The Dead Zone',
-'Naruto',
 'Top Gear',
 'MythBusters',
 'Stargate Atlantis',
@@ -175,8 +55,6 @@
 'Dexter'
 #------------------------------------------ [c] 20
 # 2008
-'Family Guy',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Tru Calling',
@@ -197,8 +75,6 @@
 'How I Met Your Mother'
 #------------------------------------------ [c] 21
 # 2009
-'Family Guy',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Stargate Atlantis',
@@ -225,9 +101,6 @@
 # Misfits :                         '1548850',
 #------------------------------------------ [c] 29
 # 2010
-'Family Guy',
-'Futurama',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Two and a Half Men',
@@ -256,9 +129,6 @@
 # The Simpsons :                    '0096697',
 #------------------------------------------ [c] 32
 # 2011
-'Family Guy',
-'Futurama',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Two and a Half Men',
@@ -288,9 +158,6 @@
 # Pawn Stars :                      '1492088',
 #------------------------------------------ [c] 32
 # 2012
-'Family Guy',
-'Futurama',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Two and a Half Men',
@@ -325,9 +192,6 @@
 # Green Arrow :                     '2193021',
 #------------------------------------------ [c] 37
 # 2013
-'Family Guy',
-'Futurama',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Two and a Half Men',
@@ -367,8 +231,6 @@
 # Once Upon a Time in Wonderland :  '2802008',
 #------------------------------------------ [c] 42
 # 2014
-'Family Guy',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Two and a Half Men',
@@ -406,8 +268,6 @@
 # BoJack Horseman :                 '3398228',
 #------------------------------------------ [] 39
 # 2015
-'Family Guy',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Two and a Half Men',
@@ -439,8 +299,6 @@
 # BoJack Horseman :                 '3398228',
 #------------------------------------------ [] 33
 # 2016
-'Family Guy',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Supernatural',
@@ -466,8 +324,6 @@
 # BoJack Horseman :                 '3398228',
 #------------------------------------------ [] 28
 # 2017
-'Family Guy',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Supernatural',
@@ -492,8 +348,6 @@ Prison Break',
 # BoJack Horseman :                 '3398228',
 #------------------------------------------ [] 26
 # 2018
-'Family Guy',
-'Survivor',
 'Top Gear',
 'MythBusters',
 'Supernatural',
@@ -514,8 +368,6 @@ Prison Break',
 # BoJack Horseman :                 '3398228',
 #------------------------------------------ [] 22
 # 2019
-'Family Guy',
-'Survivor',
 'Top Gear',
 'Veronica Mars',
 'Supernatural',

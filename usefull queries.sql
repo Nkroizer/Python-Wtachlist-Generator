@@ -2,16 +2,20 @@ select showName, season, count(*) as cnt from episodes
 where verified = 0
 group by showName, season order by cnt asc;
 
-select * from episodes where showName like '%Deep Space Nine%' order by airDate asc;
+select * from episodes where showName like '%Twilight%' order by airDate asc;
+select * from episodes where imdbId = '0318252';
 
-UPDATE episodes SET verified = 1 where showName = 'Saturday Night Live' and season = 45;
-select * from episodes where showName = 'Stargate SG-1' order by airDate asc;
+UPDATE episodes SET verified = 1 where showName = 'Naruto' and season = 5;
 
-delete from episodes where episodeCode = 'buffythevampireslayerS1E0';
+select * from episodes where showName = 'Naruto' and verified = 0 order by airDate asc;
 
-select * from episodes where episodeCode = 'yugiohzexalS2E3';
+delete from episodes where episodeCode = 'survivorS40E0';
 
-CALL `watchlistdatabase`.`_add_Plus_1_To_Air_Date`('Stargate SG-1');
+UPDATE episodes SET verified = 1 where showName = 'The Twilight Zone (2002)';
+
+UPDATE episodes SET watched = 1 where showName = 'Cardcaptor Sakura';
+
+CALL `watchlistdatabase`.`_add_Plus_1_To_Air_Date`('The Twilight Zone (2002)');
 
 CALL `watchlistdatabase`.`_Remove_Plus_1_To_Air_Date`('Star Trek: Voyager');
 
@@ -23,13 +27,10 @@ UPDATE episodes SET season = 2, episode = 3, episodeCode = 'yugiohzexalS2E3' whe
 
 UPDATE episodes SET season = 1, episode = 28, episodeCode = 'yugiohzexalS1E28' where episodeCode = 'yugiohzexalS2E3';
 
-UPDATE episodes SET showName = 'Ripley''s Believe It or Not! (2000)' where showName = 'Ripley''s Believe It or Not!';
-
-UPDATE episodes SET verified = 1 where showName = 'Stargate SG-1';
-
-UPDATE episodes SET watched = 1 where showName = 'Millennium';
+UPDATE episodes SET showName = 'The Twilight Zone (2002)' where mainImdbId = 318252;
 
 select count(*) as cnt from episodes where verified = 1;
+select count(*) as cnt from episodes where verified = 0;
 
 UPDATE episodes SET title = 'Build the Most Powerful Deck!' where episodeCode = 'thedisastrouslifeofsaikikS3E2';
 
@@ -144,5 +145,7 @@ END
 $$
 
 DELIMITER ;
+
+CREATE DATABASE watchlistdatabase;
 
 ALTER TABLE episodes MODIFY episodeCode VARCHAR(255) UNIQUE NOT NULL;

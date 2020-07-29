@@ -2,6 +2,7 @@ from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, 
 from ConversionFunctions import DateFormatToListFormat
 from WatchListFunctions import checkIfContainsYear, mainWatchlistGeneratorFunction, getBadDatesFunc, getDateOfFirstEpisodeInListFunc, generatAllWatchlists, addShowClickedMed, refreshShowStatus, refreshDB, getallYears
 from imdb import IMDb
+from datetime import datetime
 import csv
 import pathlib
 import os
