@@ -1,7 +1,7 @@
-tkcalendar==1.6.1
+tkcalendar
 IMDbPY
-XlsxWriter==1.2.8
-mysql-connector-python==8.0.20
-requests==2.23.0
-xlrd==1.2.0
+XlsxWriter
+mysql-connector-python
+requests
+xlrd
 datetime

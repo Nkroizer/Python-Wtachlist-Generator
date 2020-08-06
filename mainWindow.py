@@ -2,11 +2,11 @@ from tkinter import Tk, Frame, Button, LEFT
 
 
 def openWtachlistGenerator():
-    exec(open('Gui.py').read())
+    exec(open('pythonWtachListGenerator/watchListGenerator.py').read())
 
 
 def openDataAnalysis():
-    exec(open('DataAnalysis.py').read())
+    exec(open('pythonWtachListGenerator/timeTrak2.0.py').read())
 
 
 window = Tk()

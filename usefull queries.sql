@@ -5,9 +5,9 @@ group by showName, season order by cnt asc;
 select * from episodes where showName like '%Twilight%' order by airDate asc;
 select * from episodes where imdbId = '0318252';
 
-UPDATE episodes SET verified = 1 where showName = 'Naruto' and season = 5;
+UPDATE episodes SET verified = 1 where showName = 'Top Gear' and season = 2;
 
-select * from episodes where showName = 'Naruto' and verified = 0 order by airDate asc;
+select * from episodes where showName = 'Top Gear' and verified = 0 order by airDate asc;
 
 delete from episodes where episodeCode = 'survivorS40E0';
 
