@@ -1,7 +1,7 @@
 from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu, StringVar, OptionMenu, ANCHOR, Toplevel
-import watchListGenerator.conversionFunctions as conversionFunctions
-import watchListGenerator.watchListFunctions as watchListFunctions
-import watchListGenerator.verifyingFunctions as verifyingFunctions
+import pythonWtachListGenerator.watchListGenerator.conversionFunctions as conversionFunctions
+import pythonWtachListGenerator.watchListGenerator.watchListFunctions as watchListFunctions
+import pythonWtachListGenerator.watchListGenerator.verifyingFunctions as verifyingFunctions
 from imdb import IMDb
 from datetime import datetime
 import csv
@@ -67,7 +67,7 @@ def generatWatchlist():
     directory = pathlib.Path().absolute()
     shows = []
     year = variable.get()
-    for filename in os.listdir(str(directory) + r"\Local DB"):
+    for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
             if verifyingFunctions.checkIfContainsYear(filename, year):
                 shows.append(filename)
@@ -76,7 +76,7 @@ def generatWatchlist():
 
 def showAvilableShowsBtnFunc():
     directory = pathlib.Path().absolute()
-    for filename in os.listdir(str(directory) + r"\Local DB"):
+    for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
             showname = filename[0: len(filename) - 4]
             Lb1.insert(END, showname)

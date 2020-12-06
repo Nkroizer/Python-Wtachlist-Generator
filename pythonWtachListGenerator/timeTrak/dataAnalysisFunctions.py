@@ -1,6 +1,6 @@
-import watchListGenerator.verifyingFunctions as verifyingFunctions
-import watchListGenerator.watchListFunctions as watchListFunctions
-import watchListGenerator.conversionFunctions as conversionFunctions
+import pythonWtachListGenerator.watchListGenerator.verifyingFunctions as verifyingFunctions
+import pythonWtachListGenerator.watchListGenerator.watchListFunctions as watchListFunctions
+import pythonWtachListGenerator.watchListGenerator.conversionFunctions as conversionFunctions
 from tkinter import messagebox
 from datetime import timedelta
 import pickle

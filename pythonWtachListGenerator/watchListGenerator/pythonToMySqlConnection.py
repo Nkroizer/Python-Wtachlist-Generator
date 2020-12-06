@@ -3,7 +3,7 @@ import csv
 from imdb import IMDb
 import requests
 import json
-import watchListGenerator.conversionFunctions as conversionFunctions
+import pythonWtachListGenerator.watchListGenerator.conversionFunctions as conversionFunctions
 
 
 def responseToData(response):

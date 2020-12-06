@@ -1,6 +1,6 @@
 from tkinter import Tk, Frame, Label, LEFT, RIGHT, Entry, Button, Listbox, END, Menu, Checkbutton, IntVar
-import timeTrak.dataAnalysisFunctions as dataAnalysisFunctions
-import watchListGenerator.conversionFunctions as conversionFunctions
+import pythonWtachListGenerator.timeTrak.dataAnalysisFunctions as dataAnalysisFunctions
+import pythonWtachListGenerator.watchListGenerator.conversionFunctions as conversionFunctions
 from datetime import date
 from tkcalendar import Calendar
 import pickle

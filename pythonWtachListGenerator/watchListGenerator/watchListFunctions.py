@@ -1,7 +1,7 @@
-import watchListGenerator.conversionFunctions as conversionFunctions
-import watchListGenerator.verifyingFunctions as verifyingFunctions
-import watchListGenerator.equationCreator as equationCreator
-import watchListGenerator.pythonToMySqlConnection as pythonToMySqlConnection
+import pythonWtachListGenerator.watchListGenerator.conversionFunctions as conversionFunctions
+import pythonWtachListGenerator.watchListGenerator.verifyingFunctions as verifyingFunctions
+import pythonWtachListGenerator.watchListGenerator.equationCreator as equationCreator
+import pythonWtachListGenerator.watchListGenerator.pythonToMySqlConnection as pythonToMySqlConnection
 from tkinter import messagebox, Tk, HORIZONTAL, mainloop, Button
 from tkinter.ttk import Progressbar
 from imdb import IMDb
@@ -25,9 +25,9 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
     root.update()
 
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Watchlists")
+        "pythonWtachListGenerator/watchListGenerator/Watchlists")
     workbook = xlsxwriter.Workbook(
-        "pythonWtachListGenerator\\watchListGenerator\\Watchlists\\" + YOF + " Watchlist.xlsx")
+        "pythonWtachListGenerator/watchListGenerator/Watchlists/" + YOF + " Watchlist.xlsx")
     sheet1 = workbook.add_worksheet()
     sheet1.set_column('A:A', 25)  # 00
     sheet1.set_column('B:B', 7)  # 01
@@ -70,7 +70,7 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
     progressPart = 100/TotalNumberOfItemsToWork
     for show in showsToAdd:
         print("Started working on: " + show)
-        with open("pythonWtachListGenerator\\watchListGenerator\\Local DB\\" + show, newline='') as csvfile:
+        with open("pythonWtachListGenerator/watchListGenerator/Local DB/" + show, newline='') as csvfile:
             showCSV = csv.reader(csvfile, delimiter=' ', quotechar='|')
             for cell in showCSV:
                 Eshow = conversionFunctions.cleanFileName(
@@ -129,13 +129,13 @@ def generatAllWatchlists():
     ThisYear = today.year
     oldestYear = "1900"
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Files")
+        "pythonWtachListGenerator/watchListGenerator/Files")
     isExistsFile = os.path.exists(
-        str(directory) + '\\pythonWtachListGenerator\\watchListGenerator\\Files\\First Episode Information.p')
+        str(directory) + '/pythonWtachListGenerator/watchListGenerator/Files/First Episode Information.p')
     if not(isExistsFile):
         getDateOfFirstEpisodeInList()
     Oldest_Dates = pickle.load(
-        open("pythonWtachListGenerator\\watchListGenerator\\Files\\First Episode Information.p", "rb"))
+        open("pythonWtachListGenerator/watchListGenerator/Files/First Episode Information.p", "rb"))
     oldestYear = Oldest_Dates["year"]
     year = int(oldestYear)
     ThisYear = int(ThisYear) + 1
@@ -144,7 +144,7 @@ def generatAllWatchlists():
     progressPart = 100/TotalNumberOfItemsToWork
     for x in range(year, ThisYear):
         shows = []
-        for filename in os.listdir(str(directory) + r"\\pythonWtachListGenerator\\watchListGenerator\\Local DB"):
+        for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
             if ".csv" in filename:
                 if verifyingFunctions.checkIfContainsYear(filename, str(x)):
                     shows.append(filename)
@@ -158,11 +158,11 @@ def generatAllWatchlists():
 def getBadDates():
     directory = pathlib.Path().absolute()
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Files")
+        "pythonWtachListGenerator/watchListGenerator/Files")
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Local DB")
+        "pythonWtachListGenerator/watchListGenerator/Local DB")
     workbook = xlsxwriter.Workbook(
-        "pythonWtachListGenerator\\watchListGenerator\\Files\\Bad.xlsx")
+        "pythonWtachListGenerator/watchListGenerator/Files/Bad.xlsx")
     sheet1 = workbook.add_worksheet()
     sheet1.write(0, 0, "Show")
     sheet1.write(0, 1, "Season")
@@ -171,9 +171,9 @@ def getBadDates():
     sheet1.write(0, 4, "Air Date")
     row = 1
     formatDate = workbook.add_format({'num_format': 'd mmm yyyy'})
-    for filename in os.listdir(str(directory) + r"\\pythonWtachListGenerator\\watchListGenerator\\Local DB"):
+    for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
-            with open(r"pythonWtachListGenerator\\watchListGenerator\\Local DB\\" + filename, newline='') as csvfile:
+            with open(r"pythonWtachListGenerator/watchListGenerator/Local DB/" + filename, newline='') as csvfile:
                 showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
                 for cell in showReader:
                     if "1 Jan. 2000" in cell[3]:
@@ -223,7 +223,7 @@ def addShowClicked(IMDBID):
 
     # verifying that all neccessary folders exist
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Files")
+        "pythonWtachListGenerator/watchListGenerator/Files")
 
     series = ia.get_movie(IMDBID)
     ia.update(series, "episodes")
@@ -236,13 +236,13 @@ def addShowClicked(IMDBID):
     cleanTitle = conversionFunctions.cleanFileName(str(ShowTitle))
     status = conversionFunctions.showStatus(str(series["original title"]))
     isExistsShowLinkFile = os.path.exists(
-        str(directory) + '\\pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt')
+        str(directory) + '/pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt')
     if isExistsShowLinkFile:
         f = open(
-            "pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "a+")
+            "pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt", "a+")
     else:
         f = open(
-            "pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "w+")
+            "pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt", "w+")
     f.write(str(cleanTitle) + " : " + IMDBID + " : " + status + "\r")
     f.close()
     print("Started working on: " + cleanTitle)
@@ -250,7 +250,7 @@ def addShowClicked(IMDBID):
     currentProgress = 0
     progressPart = 100/TotalNumberOfItemsToWork
 
-    with open("pythonWtachListGenerator\\watchListGenerator\\Local DB\\" + cleanTitle + ".csv", 'w', newline='') as csvfile:
+    with open("pythonWtachListGenerator/watchListGenerator/Local DB/" + cleanTitle + ".csv", 'w', newline='') as csvfile:
         showWriter = csv.writer(csvfile, delimiter=' ',
                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for SeasonNum in SeasonsArr:
@@ -303,9 +303,9 @@ def addShowClicked(IMDBID):
 
 def getDateOfFirstEpisodeInList():
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Files")
+        "pythonWtachListGenerator/watchListGenerator/Files")
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Local DB")
+        "pythonWtachListGenerator/watchListGenerator/Local DB")
     today = date.today()
     oldestDate = today.strftime("%m/%d/%Y")
     oldestDate = conversionFunctions.StrToDate(oldestDate)
@@ -313,9 +313,9 @@ def getDateOfFirstEpisodeInList():
     oldestEpisode = ""
     directory = pathlib.Path().absolute()
     Oldest_Dates = {}
-    for filename in os.listdir(str(directory) + r"\\pythonWtachListGenerator\\watchListGenerator\\Local DB"):
+    for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
-            with open(r"pythonWtachListGenerator\\watchListGenerator\\Local DB\\" + filename, newline='') as csvfile:
+            with open(r"pythonWtachListGenerator/watchListGenerator/Local DB/" + filename, newline='') as csvfile:
                 showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
                 for cell in showReader:
                     show = str(conversionFunctions.cleanFileName(
@@ -341,7 +341,7 @@ def getDateOfFirstEpisodeInList():
     Oldest_Dates["date"] = tmpDate[0: len(tmpDate) - 9]
     Oldest_Dates["episode"] = str(oldestEpisode)
     pickle.dump(Oldest_Dates, open(
-        "pythonWtachListGenerator\\watchListGenerator\\Files\\First Episode Information.p", "wb"))
+        "pythonWtachListGenerator/watchListGenerator/Files/First Episode Information.p", "wb"))
 
 
 def getallYears():
@@ -351,13 +351,13 @@ def getallYears():
     directory = pathlib.Path().absolute()
     firstYear = "1900"
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Files")
+        "pythonWtachListGenerator/watchListGenerator/Files")
     isExistsFile = os.path.exists(
-        str(directory) + '\\pythonWtachListGenerator\\watchListGenerator\\Files\\First Episode Information.p')
+        str(directory) + '/pythonWtachListGenerator/watchListGenerator/Files/First Episode Information.p')
     if not(isExistsFile):
         getDateOfFirstEpisodeInList()
     Oldest_Dates = pickle.load(
-        open("pythonWtachListGenerator\\watchListGenerator\\Files\\First Episode Information.p", "rb"))
+        open("pythonWtachListGenerator/watchListGenerator/Files/First Episode Information.p", "rb"))
     firstYear = int(Oldest_Dates["year"])
     for x in range(firstYear, ThisYear):
         years.append(x)
@@ -377,18 +377,18 @@ def refreshShowStatus():
     ia = IMDb()
     directory = pathlib.Path().absolute()
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Files")
+        "pythonWtachListGenerator/watchListGenerator/Files")
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\TmpFiles")
+        "pythonWtachListGenerator/watchListGenerator/TmpFiles")
     original = str(
-        directory) + r'\\pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt'
+        directory) + r'/pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt'
     target = str(directory) + \
-        r'\\pythonWtachListGenerator\\watchListGenerator\\TmpFiles\\Show Links.txt'
+        r'/pythonWtachListGenerator/watchListGenerator/TmpFiles/Show Links.txt'
     shutil.copyfile(original, target)
     os.remove(str(directory) +
-              r'\\pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt')
+              r'/pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt')
     f = open(
-        "pythonWtachListGenerator\\watchListGenerator\\TmpFiles\\Show Links.txt", "r")
+        "pythonWtachListGenerator/watchListGenerator/TmpFiles/Show Links.txt", "r")
     if f.mode == 'r':
         f1 = f.readlines()
         TotalNumberOfItemsToWork = len(f1)
@@ -407,7 +407,7 @@ def refreshShowStatus():
             else:
                 status = 'ended'
             f2 = open(
-                "pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "a+")
+                "pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt", "a+")
             f2.write(str(cleanTitle) + " : " +
                      showToAdd + " : " + status + "\r")
             f2.close()
@@ -417,7 +417,7 @@ def refreshShowStatus():
     root.destroy()
     f.close()
     os.remove(str(directory) +
-              r'\\pythonWtachListGenerator\\watchListGenerator\\TmpFiles\\Show Links.txt')
+              r'/pythonWtachListGenerator/watchListGenerator/TmpFiles/Show Links.txt')
 
 
 def refreshDB(active):
@@ -432,18 +432,18 @@ def refreshDB(active):
 
     directory = pathlib.Path().absolute()
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\Files")
+        "pythonWtachListGenerator/watchListGenerator/Files")
     verifyingFunctions.checkIfFolderExistAndCreate(
-        "pythonWtachListGenerator\\watchListGenerator\\TmpFiles")
+        "pythonWtachListGenerator/watchListGenerator/TmpFiles")
     original = str(
-        directory) + r'\\pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt'
+        directory) + r'/pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt'
     target = str(directory) + \
-        r'\\pythonWtachListGenerator\\watchListGenerator\\TmpFiles\\Show Links.txt'
+        r'/pythonWtachListGenerator/watchListGenerator/TmpFiles/Show Links.txt'
     shutil.copyfile(original, target)
     os.remove(str(directory) +
-              r'\\pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt')
+              r'/pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt')
     f = open(
-        "pythonWtachListGenerator\\watchListGenerator\\TmpFiles\\Show Links.txt", "r")
+        "pythonWtachListGenerator/watchListGenerator/TmpFiles/Show Links.txt", "r")
     if f.mode == 'r':
         f1 = f.readlines()
         TotalNumberOfItemsToWork = len(f1)
@@ -461,10 +461,10 @@ def refreshDB(active):
     root.destroy()
     f.close()
     os.remove(str(directory) +
-              r'\\pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt')
+              r'/pythonWtachListGenerator/watchListGenerator/Files/Show Links.txt')
     shutil.copyfile(target, original)
     os.remove(str(directory) +
-              r'\\pythonWtachListGenerator\\watchListGenerator\\TmpFiles\\Show Links.txt')
+              r'/pythonWtachListGenerator/watchListGenerator/TmpFiles/Show Links.txt')
 
 
 class WatchListFunctions:

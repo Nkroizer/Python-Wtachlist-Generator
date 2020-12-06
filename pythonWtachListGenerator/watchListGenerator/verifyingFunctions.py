@@ -8,8 +8,8 @@ def checkIfFolderExistAndCreate(folderName):
 
 
 def checkIfContainsYear(show, YOF):
-    checkIfFolderExistAndCreate("pythonWtachListGenerator\\watchListGenerator\\Local DB")
-    with open(r"pythonWtachListGenerator\\watchListGenerator\\Local DB\\" + show, newline='') as csvfile:
+    checkIfFolderExistAndCreate("/pythonWtachListGenerator/watchListGenerator/Local DB")
+    with open(r"pythonWtachListGenerator/watchListGenerator/Local DB/" + show, newline='') as csvfile:
         showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
         for row in showReader:
             if str(YOF) in row[3]:

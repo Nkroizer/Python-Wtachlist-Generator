@@ -1,12 +1,17 @@
 from tkinter import Tk, Frame, Button, LEFT
+import runpy
+import pathlib
 
 
 def openWtachlistGenerator():
-    exec(open('pythonWtachListGenerator/watchListGenerator.py').read())
+    directory = pathlib.Path().absolute()
+    runpy.run_path(str(directory) +
+                   '/pythonWtachListGenerator/watchListGenerator.py')
 
 
 def openDataAnalysis():
-    exec(open('pythonWtachListGenerator/timeTrak2.0.py').read())
+    directory = pathlib.Path().absolute()
+    runpy.run_path(str(directory) + '/pythonWtachListGenerator/timeTrak.py')
 
 
 window = Tk()
