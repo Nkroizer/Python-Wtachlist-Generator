@@ -1,6 +1,6 @@
 import random
 startHour = 7
-startMinutes = 45
+startMinutes = 30
 
 startAdd = random.randint(0, 135)
 startAdd += startMinutes
@@ -12,7 +12,8 @@ if startAdd < 10:
     smallerThenTenPadding = "0"
 print("Start Hour: " + str(startHour) + ":" +
       smallerThenTenPadding + str(startAdd))
-workingHours = random.randint(540, 630)
+workingHours = random.randint(560, 660)
+# workingHours = random.randint(290, 390) # half day
 workingHours += startAdd
 while workingHours > 59:
     startHour += 1
