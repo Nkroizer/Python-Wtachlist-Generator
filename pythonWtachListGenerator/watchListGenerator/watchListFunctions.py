@@ -113,6 +113,11 @@ def mainWatchlistGeneratorFunction(showsToAdd, YOF, showMessage):
     root.destroy()
     workbook.close()
 
+    directory = pathlib.Path().absolute()
+    path = str(directory) + "/pythonWtachListGenerator/watchListGenerator/Watchlists"
+    path = os.path.realpath(path)
+    os.startfile(path)
+
 
 def generatAllWatchlists():
     root = Tk()
