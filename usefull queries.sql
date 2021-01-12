@@ -2,20 +2,26 @@ select showName, season, count(*) as cnt from episodes
 where verified = 0
 group by showName, season order by cnt asc;
 
-select * from episodes where showName like '%Twilight%' order by airDate asc;
+select * from episodes where showName like '%The Ray%' order by airDate asc;
 select * from episodes where imdbId = '0318252';
 
-UPDATE episodes SET verified = 1 where showName = 'Top Gear' and season = 2;
+UPDATE episodes SET watched = 1 where showName = 'Black Lightning' and season = 2;
 
-select * from episodes where showName = 'Top Gear' and verified = 0 order by airDate asc;
+UPDATE episodes SET verified = 1 where showName = 'Two and a Half Men' and season = 12;
 
-delete from episodes where episodeCode = 'survivorS40E0';
+select * from episodes where showName = 'Two and a Half Men' and verified = 0 order by airDate, episode asc;
+
+select * from episodes where showName = 'Two and a Half Men' and verified = 0 and season = 12 order by airDate, episode asc;
+
+
+
+delete from episodes where episodeCode = 'twoandahalfmenS1E0';
 
 UPDATE episodes SET verified = 1 where showName = 'The Twilight Zone (2002)';
 
 UPDATE episodes SET watched = 1 where showName = 'Cardcaptor Sakura';
 
-CALL `watchlistdatabase`.`_add_Plus_1_To_Air_Date`('The Twilight Zone (2002)');
+CALL `watchlistdatabase`.`_add_Plus_1_To_Air_Date`('Two and a Half Men');
 
 CALL `watchlistdatabase`.`_Remove_Plus_1_To_Air_Date`('Star Trek: Voyager');
 
@@ -147,5 +153,7 @@ $$
 DELIMITER ;
 
 CREATE DATABASE watchlistdatabase;
+
+CREATE DATABASE pokedex;
 
 ALTER TABLE episodes MODIFY episodeCode VARCHAR(255) UNIQUE NOT NULL;
