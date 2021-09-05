@@ -1,29 +1,39 @@
-select showName, season, count(*) as cnt from episodes 
+select showName, count(*) as cnt from episodes 
 where verified = 0
-group by showName, season order by cnt asc;
+group by showName order by cnt asc;
 
-select * from episodes where showName like '%The Ray%' order by airDate asc;
-select * from episodes where imdbId = '0318252';
+select verified, count(*) as cnt from episodes 
+group by verified order by cnt asc;
 
-UPDATE episodes SET watched = 1 where showName = 'Black Lightning' and season = 2;
+select * from episodes where showName like '%The Simpsons%' order by airDate asc;
 
-UPDATE episodes SET verified = 1 where showName = 'Two and a Half Men' and season = 12;
+delete from episodes where episodeCode = 'pokémon(1997)S03E42';
 
-select * from episodes where showName = 'Two and a Half Men' and verified = 0 order by airDate, episode asc;
+select * from episodes where mainImdbId = '7686464';
 
-select * from episodes where showName = 'Two and a Half Men' and verified = 0 and season = 12 order by airDate, episode asc;
+UPDATE episodes SET verified = 1 where showName = 'Gravity Falls (2012)';
+
+UPDATE episodes SET watched = 1 where showName = 'Under the Dome (2013)'
+and season = 5;
+
+select * from episodes where showName = 'Bleach: Burîchi' and verified = 0 order by airDate, episode asc;
+
+select * from episodes where showName = 'Bleach: Burîchi' and verified = 0 and season = 12 order by airDate, episode asc;
 
 
+delete from episodes where showName = 'Steven Universe'
+and season = 10;
 
-delete from episodes where episodeCode = 'twoandahalfmenS1E0';
+delete from episodes where airDate = '1900-01-01';
 
-UPDATE episodes SET verified = 1 where showName = 'The Twilight Zone (2002)';
 
-UPDATE episodes SET watched = 1 where showName = 'Cardcaptor Sakura';
+UPDATE episodes SET verified = 1 where showName = 'Twin Peaks (1990)';
 
-CALL `watchlistdatabase`.`_add_Plus_1_To_Air_Date`('Two and a Half Men');
+UPDATE episodes SET watched = 1 where showName = 'Twin Peaks (1990)';
 
-CALL `watchlistdatabase`.`_Remove_Plus_1_To_Air_Date`('Star Trek: Voyager');
+CALL `watchlistdatabase`.`_add_Plus_1_To_Air_Date`('Gravity Falls (2012)');
+
+CALL `watchlistdatabase`.`_Remove_Plus_1_To_Air_Date`('His Dark Materials (2019)');
 
 CALL `watchlistdatabase`.`_add_Days_to_To_Episode`('bleachburîchiS1E5', 1);
 
@@ -41,7 +51,9 @@ select count(*) as cnt from episodes where verified = 0;
 UPDATE episodes SET title = 'Build the Most Powerful Deck!' where episodeCode = 'thedisastrouslifeofsaikikS3E2';
 
 INSERT INTO episodes (showName, season, episode, title, kind, rating, airDate, year, plot, mainImdbId, mainTvdbId, imdbId, tvdbId, watched, wasIncremented, verified, episodeCode) 
-VALUES ('The Disastrous Life of Saiki K.', 3, 6, 'Reawakening Saiki Kusuo', 'episode', 0, '2019-12-30', 2019, 'N/A', 6354518, 313435, 0, 0, 0, 0, 1, 'thedisastrouslifeofsaikikS3E6');
+VALUES ('King Arthur and the Knights of Justice', 2, 13, 'Tone\'s Triumph', 'episode', 0, '1993-12-12', 1993, 'N/A', 292411, 70453, 0, 0, 0, 0, 0, 'kingarthurandtheknightsofjusticeS2E13');
+
+select * from episodes where showName like '%King Arthur and the Knights of Justice%' order by airDate asc;
 
 select distinct showName, imdbId from episodes where showName not in (select distinct showName from shows);
 select distinct showName from shows where showName not in (select distinct showName from episodes);

@@ -1,0 +1,396 @@
+# 2004
+'Bleach Burîchi',
+Season 1
+Season 2
+Season 3
+Season 4
+Season 5
+Season 6
+Season 7
+Season 8
+Season 9
+Season 10
+Season 11
+Season 12
+Season 13
+Season 14
+Season 15
+Season 16
+#------------------------------------------ [c] 23
+# 2005
+'Stargate Atlantis',
+'Bleach Burîchi',
+'Battlestar Galactica',
+Season 1
+Season 2
+Season 3
+Season 4
+'Veronica Mars',
+Season 1
+Season 2
+Season 3
+Season 4
+#------------------------------------------ [c] 19
+# 2006
+'Stargate Atlantis',
+'Bleach Burîchi',
+'Battlestar Galactica',
+'Veronica Mars',
+'Weeds',
+Season 1
+Season 2
+Season 3
+Season 4
+Season 5
+Season 6
+Season 7
+Season 8
+'My Name Is Earl',
+Season 1
+Season 2
+Season 3
+Season 4
+'Supernatural',
+Season 1
+Season 2
+Season 3
+Season 4
+Season 5
+Season 6
+Season 7
+Season 8
+Season 9
+Season 10
+Season 11
+Season 12
+Season 13
+Season 14
+Season 15
+#------------------------------------------ [c] 19
+# 2007
+'Stargate Atlantis',
+'Bleach Burîchi',
+'Battlestar Galactica',
+'Veronica Mars',
+'Weeds',
+'My Name Is Earl',
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+
+# Dexter :                          '0773262',
+
+#------------------------------------------ [c] 20
+# 2008
+'Stargate Atlantis',
+'Bleach Burîchi',
+'Battlestar Galactica',
+'Weeds',
+'Weeds',
+'My Name Is Earl',
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# Dexter :                          '0773262',
+# Lost :                            '0411008',
+# Doctor Who Confidential :         '0453422',
+# Burn Notice :                     '0810788',
+# Prison Break :                    '0455275',
+# How I Met Your Mother :           '0460649',
+#------------------------------------------ [c] 21
+# 2009
+'Stargate Atlantis',
+'Bleach Burîchi',
+'Battlestar Galactica',
+'Weeds',
+'My Name Is Earl',
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# Dexter :                          '0773262',
+# Lost :                            '0411008',
+# Burn Notice :                     '0810788',
+# Prison Break :                    '0455275',
+# How I Met Your Mother :           '0460649',
+# Fullmetal Alchemist:Brotherhood : '1355642',
+# Parks and Recreation :            '1266020',
+# Warehouse 13 :                    '1132290',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Heroes :                          '0813715',
+# Modern Family :                   '1442437',
+# The Cleveland Show :              '1195935',
+# Stargate Universe :               '1286039',
+# Misfits :                         '1548850',
+#------------------------------------------ [c] 29
+# 2010
+'Weeds',
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# Dexter :                          '0773262',
+# Lost :                            '0411008',
+# Doctor Who Confidential :         '0453422',
+# Burn Notice :                     '0810788',
+# How I Met Your Mother :           '0460649',
+# Fullmetal Alchemist:Brotherhood : '1355642',
+# Parks and Recreation :            '1266020',
+# Warehouse 13 :                    '1132290',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Heroes :                          '0813715',
+# Modern Family :                   '1442437',
+# The Cleveland Show :              '1195935',
+# Stargate Universe :               '1286039',
+# Misfits :                         '1548850',
+# Human Target :                    '1439741',
+# American Pickers :                '1596786',
+# House :                           '0412142',
+# American Restoration :            '1756927',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+#------------------------------------------ [c] 32
+# 2011
+'Weeds',
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# Dexter :                          '0773262',
+# Doctor Who Confidential :         '0453422',
+# Burn Notice :                     '0810788',
+# How I Met Your Mother :           '0460649',
+# Parks and Recreation :            '1266020',
+# Warehouse 13 :                    '1132290',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# The Cleveland Show :              '1195935',
+# Stargate Universe :               '1286039',
+# Misfits :                         '1548850',
+# Human Target :                    '1439741',
+# American Pickers :                '1596786',
+# House :                           '0412142',
+# American Restoration :            '1756927',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Yu-Gi-Oh! Zexal :                 '2363624',
+# Alphas :                          '1183865',
+# Pawn Stars :                      '1492088',
+#------------------------------------------ [c] 32
+# 2012
+'Weeds',
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# Dexter :                          '0773262',
+# Doctor Who Confidential :         '0453422',
+# Burn Notice :                     '0810788',
+# How I Met Your Mother :           '0460649',
+# Parks and Recreation :            '1266020',
+# Warehouse 13 :                    '1132290',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# The Cleveland Show :              '1195935',
+# Misfits :                         '1548850',
+# American Pickers :                '1596786',
+# House :                           '0412142',
+# American Restoration :            '1756927',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Yu-Gi-Oh! Zexal :                 '2363624',
+# Alphas :                          '1183865',
+# Pawn Stars :                      '1492088',
+# Suits :                           '1632701',
+# Gravity Falls :                   '1865718',
+# Glee :                            '1327801',
+# Brickleberry :                    '2022713',
+# Once Upon a Time :                '1843230',
+# The Mentalist :                   '1196946',
+# Green Arrow :                     '2193021',
+#------------------------------------------ [c] 37
+# 2013
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# Dexter :                          '0773262',
+# Doctor Who Confidential :         '0453422',
+# Burn Notice :                     '0810788',
+# How I Met Your Mother :           '0460649',
+# Parks and Recreation :            '1266020',
+# Warehouse 13 :                    '1132290',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# The Cleveland Show :              '1195935',
+# Misfits :                         '1548850',
+# American Pickers :                '1596786',
+# American Restoration :            '1756927',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Yu-Gi-Oh! Zexal :                 '2363624',
+# Pawn Stars :                      '1492088',
+# Suits :                           '1632701',
+# Gravity Falls :                   '1865718',
+# Glee :                            '1327801',
+# Brickleberry :                    '2022713',
+# Once Upon a Time :                '1843230',
+# The Mentalist :                   '1196946',
+# Green Arrow :                     '2193021',
+# Orphan Black :                    '2234222',
+# Hannibal :                        '2243973',
+# Continuum :                       '1954347',
+# The Big Bang Theory :             '0898266',
+# The Originals :                   '2632424',
+# Brooklyn Nine-Nine :              '2467372',
+# The Tomorrow People :             '2660734',
+# Once Upon a Time in Wonderland :  '2802008',
+#------------------------------------------ [c] 42
+# 2014
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# How I Met Your Mother :           '0460649',
+# Parks and Recreation :            '1266020',
+# Warehouse 13 :                    '1132290',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# American Pickers :                '1596786',
+# American Restoration :            '1756927',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Yu-Gi-Oh! Zexal :                 '2363624',
+# Pawn Stars :                      '1492088',
+# Suits :                           '1632701',
+# Gravity Falls :                   '1865718',
+# Glee :                            '1327801',
+# Brickleberry :                    '2022713',
+# Once Upon a Time :                '1843230',
+# The Mentalist :                   '1196946',
+# Green Arrow :                     '2193021',
+# Orphan Black :                    '2234222',
+# Hannibal :                        '2243973',
+# Continuum :                       '1954347',
+# The Big Bang Theory :             '0898266',
+# The Originals :                   '2632424',
+# Brooklyn Nine-Nine :              '2467372',
+# The Tomorrow People :             '2660734',
+# Once Upon a Time in Wonderland :  '2802008',
+# Steven Universe :                 '3061046',
+# Yu-Gi-Oh! Arc-V :                 '3696476',
+# BoJack Horseman :                 '3398228',
+#------------------------------------------ [] 39
+# 2015
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# Parks and Recreation :            '1266020',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# American Pickers :                '1596786',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Pawn Stars :                      '1492088',
+# Suits :                           '1632701',
+# Gravity Falls :                   '1865718',
+# Glee :                            '1327801',
+# Brickleberry :                    '2022713',
+# Once Upon a Time :                '1843230',
+# The Mentalist :                   '1196946',
+# Green Arrow :                     '2193021',
+# Orphan Black :                    '2234222',
+# Hannibal :                        '2243973',
+# Continuum :                       '1954347',
+# The Big Bang Theory :             '0898266',
+# The Originals :                   '2632424',
+# Brooklyn Nine-Nine :              '2467372',
+# Steven Universe :                 '3061046',
+# Yu-Gi-Oh! Arc-V :                 '3696476',
+# BoJack Horseman :                 '3398228',
+#------------------------------------------ [] 33
+# 2016
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# American Pickers :                '1596786',
+# American Restoration :            '1756927',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Pawn Stars :                      '1492088',
+# Suits :                           '1632701',
+# Gravity Falls :                   '1865718',
+# Once Upon a Time :                '1843230',
+# Green Arrow :                     '2193021',
+# Orphan Black :                    '2234222',
+# The Big Bang Theory :             '0898266',
+# The Originals :                   '2632424',
+# Brooklyn Nine-Nine :              '2467372',
+# Steven Universe :                 '3061046',
+# Yu-Gi-Oh! Arc-V :                 '3696476',
+# BoJack Horseman :                 '3398228',
+#------------------------------------------ [] 28
+# 2017
+'Supernatural',
+# Naruto: Shippûden :               '0988824',
+# Prison Break :                    '0455275',
+# The Vampire Diaries :             '1405406',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# American Pickers :                '1596786',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Pawn Stars :                      '1492088',
+# Suits :                           '1632701',
+# Once Upon a Time :                '1843230',
+# Green Arrow :                     '2193021',
+# Orphan Black :                    '2234222',
+# The Big Bang Theory :             '0898266',
+# The Originals :                   '2632424',
+# Brooklyn Nine-Nine :              '2467372',
+# Steven Universe :                 '3061046',
+# Yu-Gi-Oh! Arc-V :                 '3696476',
+# BoJack Horseman :                 '3398228',
+#------------------------------------------ [] 26
+# 2018
+'Supernatural',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# American Pickers :                '1596786',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Pawn Stars :                      '1492088',
+# Suits :                           '1632701',
+# Once Upon a Time :                '1843230',
+# Green Arrow :                     '2193021',
+# The Big Bang Theory :             '0898266',
+# The Originals :                   '2632424',
+# Brooklyn Nine-Nine :              '2467372',
+# Steven Universe :                 '3061046',
+# BoJack Horseman :                 '3398228',
+#------------------------------------------ [] 22
+# 2019
+'Veronica Mars',
+'Supernatural',
+# Archer :                          '1486217',
+# Modern Family :                   '1442437',
+# American Pickers :                '1596786',
+# The Walking Dead :                '1520211',
+# The Simpsons :                    '0096697',
+# Bob's Burgers :                   '1561755',
+# Pawn Stars :                      '1492088',
+# Suits :                           '1632701',
+# Green Arrow :                     '2193021',
+# The Big Bang Theory :             '0898266',
+# Brooklyn Nine-Nine :              '2467372',
+# Steven Universe :                 '3061046',
+# BoJack Horseman :                 '3398228',
+#------------------------------------------ [] 19
+# Obsolete
+# The Critic :                      '0108734',
+# Mighty Max :                      '0140749',
+# Star Trek: The Next Generation :  '0092455',
+# Dragon Ball Z :                   '0214341',
+#------------------------------------------

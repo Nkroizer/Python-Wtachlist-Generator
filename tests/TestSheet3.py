@@ -1,25 +1,84 @@
-import random
-startHour = 7
-startMinutes = 30
+import mysql.connector
+import csv
+from imdb import IMDb
+import requests
+import json
 
-startAdd = random.randint(0, 135)
-startAdd += startMinutes
-while startAdd > 59:
-    startHour += 1
-    startAdd -= 60
-smallerThenTenPadding = ""
-if startAdd < 10:
-    smallerThenTenPadding = "0"
-print("Start Hour: " + str(startHour) + ":" +
-      smallerThenTenPadding + str(startAdd))
-workingHours = random.randint(560, 660)
-# workingHours = random.randint(290, 390) # half day
-workingHours += startAdd
-while workingHours > 59:
-    startHour += 1
-    workingHours -= 60
-smallerThenTenPadding = ""
-if workingHours < 10:
-    smallerThenTenPadding = "0"
-print("Worked Until: " + str(startHour) + ":" +
-      smallerThenTenPadding + str(workingHours))
+def insertSingleEpisodeRecord(imdbIdIns):
+    mainImdbId = int(imdbIdIns)
+    ia = IMDb()
+    token = getToken()
+    tvdbId = getTVDBIdByIMDBId(imdbIdIns, token)
+    mainTvdbId = tvdbId
+    series = ia.get_movie(imdbIdIns)
+    showName = series["title"]
+    ia.update(series, "episodes")
+    SeasonsArr = sorted(series["episodes"].keys())
+    firstYear = 0
+    for SeasonNum in SeasonsArr:
+        seasonx = series["episodes"][SeasonNum]
+        EpisodeArr = sorted(seasonx)
+        for episodz in EpisodeArr:
+            episode_obj = series["episodes"][SeasonNum][episodz]
+            season = episode_obj["season"]
+            if not season == -1:
+                if season < 10:
+                    fixedSeason = "0" + str(season)
+                else:
+                    fixedSeason = str(season)
+                episode = episode_obj["episode"]
+                if episode < 10:
+                    fixedEpisode = "0" + str(episode)
+                else:
+                    fixedEpisode = str(episode)
+                title = episode_obj["title"]
+                kind = episode_obj["kind"]
+                rating = getRating(episode_obj)
+                airDate = getAirDate(episode_obj)
+                year = getYear(episode_obj)
+                if firstYear == 0:
+                    firstYear = year
+                plot = episode_obj["plot"]
+                imdbId = 0
+                tvdbId = 0
+                watched = 0
+                wasIncremented = 0
+                verified = 0
+                episodeCode = getCleanShowName(showName) + "(" + str(firstYear) + ")" + "S" + fixedSeason + "E" + fixedEpisode
+                oldEpisodeCode = getCleanShowName(showName) + "S" + str(season) + "E" + str(episode)
+                print(oldEpisodeCode)
+                mycursor.execute("SELECT * FROM episodes WHERE episodeCode = '" + str(oldEpisodeCode) + "'")
+                myresult = mycursor.fetchall()
+                if((len(myresult) > 0) and (myresult[0][17] == 1)):
+                    mycursor.execute("UPDATE episodes SET showName = '" + str(showName) + " (" + str(firstYear) + ")', episodeCode = '" + str(episodeCode) + "' WHERE episodeCode = '" + str(episodeCode) + "'")
+                else:
+                    print(episodeCode)
+                    mycursor.execute("SELECT * FROM episodes WHERE episodeCode = '" + str(episodeCode) + "'")
+                    myresult = mycursor.fetchall()
+                    if((len(myresult) > 0) and (myresult[0][17] == 1)):
+                        print("entry allready exists and verified")
+                    else:
+                        sql = "INSERT INTO episodes (showName, season, episode, title, kind, rating, airDate, year, plot, canonUniverse, nonCanonUniverse, mainImdbId, mainTvdbId, imdbId, tvdbId, watched, wasIncremented, verified, episodeCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                        val = (str(showName) + " (" + str(firstYear) + ")", season, episode, str(title), str(kind),
+                            rating, airDate, year, str(plot), "", "", mainImdbId, mainTvdbId, imdbId, tvdbId, watched, wasIncremented, verified, str(episodeCode))
+                        try:
+                            mycursor.execute(sql, val)
+                            mydb.commit()
+                            print("Done with: " +str(episodeCode))
+                        except:
+                            print("E?")
+                            print(val)
+    print("finished with " + str(showName))
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="pwlg2020",
+    database="watchlistDatabase"
+)
+
+mycursor = mydb.cursor()
+# mycursor.execute("SELECT * FROM episodes WHERE mainImdbId = 8421350")
+# myresult = mycursor.fetchall()
+# print(myresult[0][17])
+insertSingleEpisodeRecord(2243973)
