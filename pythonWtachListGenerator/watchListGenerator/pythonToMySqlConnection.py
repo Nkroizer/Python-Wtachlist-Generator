@@ -3,7 +3,7 @@ import csv
 from imdb import IMDb
 import requests
 import json
-import pythonWtachListGenerator.watchListGenerator.conversionFunctions as conversionFunctions
+import conversionFunctions as conversionFunctions
 # import conversionFunctions as conversionFunctions
 
 
@@ -320,4 +320,30 @@ mycursor = mydb.cursor()
 
 # insertAllShowRecords()
 # ImdbFileToDb()
-insertSingleEpisodeRecord('168366')
+
+# '121955',
+# '397306',
+# '475784',
+# '1236246',
+# '1305826',
+# '1641384',
+# '1898069',
+# '2364582',
+# '2560140',
+# '2919910',
+# '3107288',
+# '4532368',
+# '4955642',
+# '5034326',
+# '6279576',
+# '8005374',
+# '8425308',
+# '8712204',
+# '11192306',
+# '98936',
+# '4093826',
+updatetArry = ['6741278']
+for show in updatetArry:
+    insertSingleEpisodeRecord(show)
+
+
