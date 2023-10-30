@@ -1,12 +1,8 @@
-import requests
-import json
-from WatchListFunctions import cleanFileName
-import csv
-
+from pythonWtachListGenerator.helpers import _WF,_json,requests,csv
 
 def responseToData(response):
     x = response.text.encode('utf8')
-    res = json.loads(x)
+    res = _json.loads(x)
     return res["data"]
 
 
@@ -21,7 +17,7 @@ def getToken():
     response = requests.request("POST", url, headers=headers, data=payload)
 
     x = response.text.encode('utf8')
-    res = json.loads(x)
+    res = _json.loads(x)
     return res["token"]
 
 
@@ -36,7 +32,7 @@ def refreshToken():
     response = requests.request("GET", url, headers=headers, data=payload)
 
     x = response.text.encode('utf8')
-    res = json.loads(x)
+    res = _json.loads(x)
     return res["token"]
 
 
@@ -87,7 +83,7 @@ def EpisodesInformation(showId, token):
     data = responseToData(response)
 
     title = getSeriesName(showId, token)
-    cleanTitle = cleanFileName(title)
+    cleanTitle = _WF.WatchListFunctions.cleanFileName(title)
     with open("pythonWtachListGenerator\\watchListGenerator\\Local DB2\\" + cleanTitle + ".csv", 'w', newline='') as csvfile:
         showWriter = csv.writer(csvfile)
         for a in data:
@@ -106,12 +102,10 @@ def EpisodesInformation(showId, token):
                 print(Erate)
                 print("Season: " + str(ESeason) + " Episode: " + str(Eepisode))
                 try:
-                    showWriter.writerow(
-                        [str(ESeason), str(Eepisode), str(ETitle), str(EAirdate), str(Erate)])
+                    showWriter.writerow([str(ESeason), str(Eepisode), str(ETitle), str(EAirdate), str(Erate)])
                 except:
                     print("a?")
-                    showWriter.writerow(
-                        [str(ESeason), str(Eepisode), "bad tite encoding", str(EAirdate), str(Erate)])
+                    showWriter.writerow([str(ESeason), str(Eepisode), "bad tite encoding", str(EAirdate), str(Erate)])
                 print("Finished working on: " + cleanTitle)
             except:
                 print("oops")
@@ -138,8 +132,7 @@ def getTVDBIdByIMDBId(imdbID, token):
 
 def RegenerateLocalDB():
     token = getToken()
-    f = open(
-        "pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "r")
+    f = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "r")
     if f.mode == 'r':
         f1 = f.readlines()
         for x in f1:
@@ -151,5 +144,3 @@ def RegenerateLocalDB():
 
 
 RegenerateLocalDB()
-# searchDB("Naruto") #78857
-# EpisodesInformation(78857)

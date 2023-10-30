@@ -50,7 +50,7 @@ def rClickbinder(r):
 
 def addShowClick():
     link = showInput.get()
-    cleanTitle = _WF.addShowClickedMed(link)
+    cleanTitle = _WF.WatchListFunctions.addShowClickedMed(link)
     messagebox.showinfo("info", cleanTitle)
 
 
@@ -60,9 +60,9 @@ def generatWatchlist():
     year = variable.get()
     for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
-            if _VF.checkIfContainsYear(filename, year):
+            if _VF.VerifyingFunctions.checkIfContainsYear(filename, year):
                 shows.append(filename)
-    _WF.mainWatchlistGeneratorFunction(shows, year, True)
+    _WF.WatchListFunctions.mainWatchlistGeneratorFunction(shows, year, True)
 
 
 def showAvilableShowsBtnFunc():
@@ -74,31 +74,31 @@ def showAvilableShowsBtnFunc():
 
 
 def getallYearsFunc():
-    return _WF.getallYears()
+    return _WF.WatchListFunctions.getallYears()
 
 
 def refreshShowStatusFunc():
-    _WF.refreshShowStatus()
+    _WF.WatchListFunctions.refreshShowStatus()
 
 
 def refreshDBFuncActive():
-    _WF.refreshDB(True)
+    _WF.WatchListFunctions.refreshDB(True)
 
 
 def refreshDBFuncAll():
-    _WF.refreshDB(False)
+    _WF.WatchListFunctions.refreshDB(False)
 
 
 def getBadDatesFunc():
-    _WF.getBadDates()
+    _WF.WatchListFunctions.getBadDates()
 
 
 def getDateOfFirstEpisodeInListFunc():
-    _WF.getDateOfFirstEpisodeInList()
+    _WF.WatchListFunctions.getDateOfFirstEpisodeInList()
 
 
 def generatAllWatchlistsFunc():
-    _WF.generatAllWatchlists()
+    _WF.WatchListFunctions.generatAllWatchlists()
 
 
 def create_window(showName):

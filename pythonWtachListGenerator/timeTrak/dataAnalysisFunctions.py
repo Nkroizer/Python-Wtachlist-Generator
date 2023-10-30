@@ -2,7 +2,7 @@ from helpers import _VF,_WF,_CF,_pickle,_pathlib,messagebox,os,timedelta,xlsxwri
 
 class DataAnalysisFunctions:
     def intializeRawFile(self):
-        _VF.checkIfFolderExistAndCreate("pythonWtachListGenerator\\watchListGenerator\\Files")
+        _VF.VerifyingFunctions.checkIfFolderExistAndCreate("pythonWtachListGenerator\\watchListGenerator\\Files")
         directory = _pathlib.Path().absolute()
         isExistsFirstDateFile = os.path.exists(
             str(directory) + '\\pythonWtachListGenerator\\watchListGenerator\\Files\\First Episode Information.p')
@@ -10,7 +10,7 @@ class DataAnalysisFunctions:
         if isExistsRawFile:
             messagebox.showinfo("Raw File Allready Exists")
         if not(isExistsFirstDateFile):
-            _WF.getDateOfFirstEpisodeInListFunc()
+            _WF.WatchListFunctions.getDateOfFirstEpisodeInListFunc()
         #Oldest_Dates = _pickle.load(open("pythonWtachListGenerator\\watchListGenerator\\Files\\First Episode Information.p", "rb"))
         #oldestDate = Oldest_Dates["date"]
         #oldestYear = Oldest_Dates["year"]
@@ -195,7 +195,7 @@ class DataAnalysisFunctions:
 
 
     def turnRawFileIntoExcel(self):
-        _VF.checkIfFolderExistAndCreate("pythonWtachListGenerator\\watchListGenerator\\Files")
+        _VF.VerifyingFunctions.checkIfFolderExistAndCreate("pythonWtachListGenerator\\watchListGenerator\\Files")
         workbook = xlsxwriter.Workbook("pythonWtachListGenerator\\watchListGenerator\\Files\\Time Track 2.0.xlsx")
         sheet1 = workbook.add_worksheet()
         # ------------------------------------------Formats------------------------------------------------------------
@@ -291,7 +291,7 @@ class DataAnalysisFunctions:
 
 
     def addNewEntryToTimeTrak(self, inputDateReached, inputLastEpisodePlace, inputLastEpisodeReached, DDR):
-        _VF.checkIfFolderExistAndCreate("pythonWtachListGenerator\\watchListGenerator\\Files")
+        _VF.VerifyingFunctions.checkIfFolderExistAndCreate("pythonWtachListGenerator\\watchListGenerator\\Files")
         LatestInfo = _pickle.load(open("pythonWtachListGenerator\\watchListGenerator\\Files\\OldInfo.p", "rb"))
         NewLatestInfo = {}
         # today = date.today()

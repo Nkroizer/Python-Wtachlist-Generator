@@ -1,14 +1,10 @@
-import mysql.connector
-import csv
-from imdb import IMDb
-import requests
-import json
+from pythonWtachListGenerator.helpers import _json,_PTMC,IMDb,csv,mysql,requests
 
 def insertSingleEpisodeRecord(imdbIdIns):
     mainImdbId = int(imdbIdIns)
     ia = IMDb()
-    token = getToken()
-    tvdbId = getTVDBIdByIMDBId(imdbIdIns, token)
+    token = _PTMC.PythonToMySqlConnection.getToken()
+    tvdbId = _PTMC.PythonToMySqlConnection.getTVDBIdByIMDBId(imdbIdIns, token)
     mainTvdbId = tvdbId
     series = ia.get_movie(imdbIdIns)
     showName = series["title"]
@@ -33,9 +29,9 @@ def insertSingleEpisodeRecord(imdbIdIns):
                     fixedEpisode = str(episode)
                 title = episode_obj["title"]
                 kind = episode_obj["kind"]
-                rating = getRating(episode_obj)
-                airDate = getAirDate(episode_obj)
-                year = getYear(episode_obj)
+                rating = _PTMC.PythonToMySqlConnection.getRating(episode_obj)
+                airDate = _PTMC.PythonToMySqlConnection.getAirDate(episode_obj)
+                year = _PTMC.PythonToMySqlConnection.getYear(episode_obj)
                 if firstYear == 0:
                     firstYear = year
                 plot = episode_obj["plot"]
@@ -44,8 +40,8 @@ def insertSingleEpisodeRecord(imdbIdIns):
                 watched = 0
                 wasIncremented = 0
                 verified = 0
-                episodeCode = getCleanShowName(showName) + "(" + str(firstYear) + ")" + "S" + fixedSeason + "E" + fixedEpisode
-                oldEpisodeCode = getCleanShowName(showName) + "S" + str(season) + "E" + str(episode)
+                episodeCode = _PTMC.PythonToMySqlConnection.getCleanShowName(showName) + "(" + str(firstYear) + ")" + "S" + fixedSeason + "E" + fixedEpisode
+                oldEpisodeCode = _PTMC.PythonToMySqlConnection.getCleanShowName(showName) + "S" + str(season) + "E" + str(episode)
                 print(oldEpisodeCode)
                 mycursor.execute("SELECT * FROM episodes WHERE episodeCode = '" + str(oldEpisodeCode) + "'")
                 myresult = mycursor.fetchall()

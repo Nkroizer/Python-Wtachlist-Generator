@@ -41,10 +41,7 @@
 
 # importing tkinter module
 
-import pathlib
-from imdb import IMDb
-import requests
-import json
+from pythonWtachListGenerator.helpers import _json,requests,_pathlib,IMDb
 
 # INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl)
 # VALUES (value1, value2, value3, ...);
@@ -52,7 +49,7 @@ import json
 
 def responseToData(response):
     x = response.text.encode('utf8')
-    res = json.loads(x)
+    res = _json.loads(x)
     return res["data"]
 
 
@@ -67,7 +64,7 @@ def getToken():
     response = requests.request("POST", url, headers=headers, data=payload)
 
     x = response.text.encode('utf8')
-    res = json.loads(x)
+    res = _json.loads(x)
     return res["token"]
 
 
@@ -90,7 +87,7 @@ def getTVDBIdByIMDBId(imdbID, token):
 
 
 ia = IMDb()
-directory = pathlib.Path().absolute()
+directory = _pathlib.Path().absolute()
 f = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "r")
 token = getToken()
 sqlScript = r"INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl)" + "\nVALUES"
@@ -114,8 +111,7 @@ if f.mode == 'r':
         if status == "active":
             active = 1
         tvdbId = getTVDBIdByIMDBId(imdbId, token)
-        sqlScript += "(\'" + str(showName) + "\'," + str(releaseYear) + "," + str(seasons) + "," + str(active) + "," + str(
-            imdbId) + "," + str(tvdbId) + ",\'" + str(plot) + "\',\'" + str(coverUrl) + "\',\'" + str(fullSizeCoverUrl) + "\');\n"
+        sqlScript += "(\'" + str(showName) + "\'," + str(releaseYear) + "," + str(seasons) + "," + str(active) + "," + str(imdbId) + "," + str(tvdbId) + ",\'" + str(plot) + "\',\'" + str(coverUrl) + "\',\'" + str(fullSizeCoverUrl) + "\');\n"
 fi.write(sqlScript)
 fi.close()
 f.close()
