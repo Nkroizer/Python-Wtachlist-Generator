@@ -1,12 +1,4 @@
-from tkinter import Tk, messagebox, Frame, Label, LEFT, Entry, Button, Listbox, END, Menu, StringVar, OptionMenu, ANCHOR, Toplevel
-import pythonWtachListGenerator.watchListGenerator.conversionFunctions as conversionFunctions
-import pythonWtachListGenerator.watchListGenerator.watchListFunctions as watchListFunctions
-import pythonWtachListGenerator.watchListGenerator.verifyingFunctions as verifyingFunctions
-from imdb import IMDb
-from datetime import datetime
-import csv
-import pathlib
-import os
+from helpers import _WF,_VF,_pathlib,Tk,Menu,messagebox,os,END,Toplevel,Frame,csv,Label,datetime,StringVar,LEFT,Entry,Button,OptionMenu,Listbox
 
 root = Tk()
 
@@ -50,8 +42,7 @@ def rClicker(e):
 def rClickbinder(r):
     try:
         for b in ['Text', 'Entry', 'Listbox', 'Label']:
-            r.bind_class(b, sequence='<Button-3>',
-                         func=rClicker, add='')
+            r.bind_class(b, sequence='<Button-3>',func=rClicker, add='')
     except:
         print(' - rClickbinder, something wrong')
         pass
@@ -59,23 +50,23 @@ def rClickbinder(r):
 
 def addShowClick():
     link = showInput.get()
-    cleanTitle = watchListFunctions.addShowClickedMed(link)
+    cleanTitle = _WF.addShowClickedMed(link)
     messagebox.showinfo("info", cleanTitle)
 
 
 def generatWatchlist():
-    directory = pathlib.Path().absolute()
+    directory = _pathlib.Path().absolute()
     shows = []
     year = variable.get()
     for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
-            if verifyingFunctions.checkIfContainsYear(filename, year):
+            if _VF.checkIfContainsYear(filename, year):
                 shows.append(filename)
-    watchListFunctions.mainWatchlistGeneratorFunction(shows, year, True)
+    _WF.mainWatchlistGeneratorFunction(shows, year, True)
 
 
 def showAvilableShowsBtnFunc():
-    directory = pathlib.Path().absolute()
+    directory = _pathlib.Path().absolute()
     for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
             showname = filename[0: len(filename) - 4]
@@ -83,31 +74,31 @@ def showAvilableShowsBtnFunc():
 
 
 def getallYearsFunc():
-    return watchListFunctions.getallYears()
+    return _WF.getallYears()
 
 
 def refreshShowStatusFunc():
-    watchListFunctions.refreshShowStatus()
+    _WF.refreshShowStatus()
 
 
 def refreshDBFuncActive():
-    watchListFunctions.refreshDB(True)
+    _WF.refreshDB(True)
 
 
 def refreshDBFuncAll():
-    watchListFunctions.refreshDB(False)
+    _WF.refreshDB(False)
 
 
 def getBadDatesFunc():
-    watchListFunctions.getBadDates()
+    _WF.getBadDates()
 
 
 def getDateOfFirstEpisodeInListFunc():
-    watchListFunctions.getDateOfFirstEpisodeInList()
+    _WF.getDateOfFirstEpisodeInList()
 
 
 def generatAllWatchlistsFunc():
-    watchListFunctions.generatAllWatchlists()
+    _WF.generatAllWatchlists()
 
 
 def create_window(showName):
@@ -116,14 +107,10 @@ def create_window(showName):
     frame = Frame(window)
     with open("pythonWtachListGenerator\\watchListGenerator\\Local DB\\" + showName + ".csv", newline='') as csvfile:
         showCSV = csv.reader(csvfile, delimiter=' ', quotechar='|')
-        Label(frame, text="Season", borderwidth=2,
-              relief="ridge", width=15).grid(row=0, column=0)
-        Label(frame, text="Episode", borderwidth=2,
-              relief="ridge", width=15).grid(row=0, column=1)
-        Label(frame, text="Title", borderwidth=2,
-              relief="ridge", width=25).grid(row=0, column=2)
-        Label(frame, text="Air Date", borderwidth=2,
-              relief="ridge", width=15).grid(row=0, column=3)
+        Label(frame, text="Season", borderwidth=2, relief="ridge", width=15).grid(row=0, column=0)
+        Label(frame, text="Episode", borderwidth=2, relief="ridge", width=15).grid(row=0, column=1)
+        Label(frame, text="Title", borderwidth=2, relief="ridge", width=25).grid(row=0, column=2)
+        Label(frame, text="Air Date", borderwidth=2, relief="ridge", width=15).grid(row=0, column=3)
         rowNumber = 1
         for cell in showCSV:
             ESeason = cell[0]
@@ -139,14 +126,10 @@ def create_window(showName):
             except:
                 EAirdate = '2000-01-01 00:00:00'
             # EAirdate = DateFormatToListFormat(EAirdate)
-            Label(frame, text=ESeason, borderwidth=2, relief="ridge",
-                  width=15).grid(row=rowNumber, column=0)
-            Label(frame, text=Eepisode, borderwidth=2, relief="ridge",
-                  width=15).grid(row=rowNumber, column=1)
-            Label(frame, text=ETitle, borderwidth=2, relief="ridge",
-                  width=25).grid(row=rowNumber, column=2)
-            Label(frame, text=EAirdate, borderwidth=2, relief="ridge",
-                  width=15).grid(row=rowNumber, column=3)
+            Label(frame, text=ESeason, borderwidth=2, relief="ridge", width=15).grid(row=rowNumber, column=0)
+            Label(frame, text=Eepisode, borderwidth=2, relief="ridge", width=15).grid(row=rowNumber, column=1)
+            Label(frame, text=ETitle, borderwidth=2, relief="ridge", width=25).grid(row=rowNumber, column=2)
+            Label(frame, text=EAirdate, borderwidth=2, relief="ridge", width=15).grid(row=rowNumber, column=3)
             rowNumber += 1
     frame.pack()
 
@@ -199,14 +182,11 @@ frame2.pack()
 frame3 = Frame(root)
 BadDateGenBtn = Button(frame3, text="Get Bad Dates", command=getBadDatesFunc)
 
-showAvilableShowsBtn = Button(
-    frame3, text="Show Avilable Shows", command=showAvilableShowsBtnFunc)
+showAvilableShowsBtn = Button(frame3, text="Show Avilable Shows", command=showAvilableShowsBtnFunc)
 
-FirstDateGenBtn = Button(frame3, text="Get First Dates",
-                         command=getDateOfFirstEpisodeInListFunc)
+FirstDateGenBtn = Button(frame3, text="Get First Dates", command=getDateOfFirstEpisodeInListFunc)
 
-GenerateAllWatchlistsBtn = Button(
-    frame3, text="Generate All Watchlists", command=generatAllWatchlistsFunc)
+GenerateAllWatchlistsBtn = Button(frame3, text="Generate All Watchlists", command=generatAllWatchlistsFunc)
 
 BadDateGenBtn.pack(side=LEFT, padx=10, pady=7)
 showAvilableShowsBtn.pack(side=LEFT, padx=10, pady=7)
@@ -215,15 +195,12 @@ GenerateAllWatchlistsBtn.pack(side=LEFT, padx=10, pady=7)
 frame3.pack()
 
 frame4 = Frame(root)
-refreshShowStatusBtn = Button(
-    frame4, text="Refresh Show Status", command=refreshShowStatusFunc)
+refreshShowStatusBtn = Button(frame4, text="Refresh Show Status", command=refreshShowStatusFunc)
 
 
-refreshDBBtn = Button(
-    frame4, text="Refresh DB (Active)", command=refreshDBFuncActive)
+refreshDBBtn = Button(frame4, text="Refresh DB (Active)", command=refreshDBFuncActive)
 
-refreshDBBtn = Button(
-    frame4, text="Refresh DB (All)", command=refreshDBFuncAll)
+refreshDBBtn = Button(frame4, text="Refresh DB (All)", command=refreshDBFuncAll)
 
 
 refreshShowStatusBtn.pack(side=LEFT, padx=10, pady=7)

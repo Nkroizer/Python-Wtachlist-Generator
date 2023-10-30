@@ -1,6 +1,4 @@
-import os
-import csv
-
+from helpers import os,csv
 
 def checkIfFolderExistAndCreate(folderName):
     if not os.path.exists(folderName):
@@ -15,7 +13,3 @@ def checkIfContainsYear(show, YOF):
             if str(YOF) in row[3]:
                 return True
     return False
-
-
-class VerifyingFunctions:
-    pass

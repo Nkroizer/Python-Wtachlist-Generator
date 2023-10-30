@@ -1,10 +1,4 @@
-import mysql.connector
-import csv
-from imdb import IMDb
-import requests
-import json
-import conversionFunctions as conversionFunctions
-# import conversionFunctions as conversionFunctions
+from helpers import _CF,json,requests,IMDb,csv,mysql
 
 
 def responseToData(response):
@@ -67,7 +61,7 @@ def getAirDate(episode_obj):
     if "May" in str(EAirdate) and not("May." in str(EAirdate)):
         EAirdate = EAirdate.replace('May', 'May.')
 
-    return conversionFunctions.DateFormatToMySqlFormat(EAirdate)
+    return _CF.ConversionFunctions.DateFormatToMySqlFormat(EAirdate)
 
 
 def getYear(episode_obj):

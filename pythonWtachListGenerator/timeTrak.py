@@ -1,9 +1,4 @@
-from tkinter import Tk, Frame, Label, LEFT, RIGHT, Entry, Button, Listbox, END, Menu, Checkbutton, IntVar
-import pythonWtachListGenerator.timeTrak.dataAnalysisFunctions as dataAnalysisFunctions
-import pythonWtachListGenerator.watchListGenerator.conversionFunctions as conversionFunctions
-from datetime import date
-from tkcalendar import Calendar
-import pickle
+from helpers import _DAF,_CF,_pickle,Tk,Menu,Frame,date,Button,Label,Entry,RIGHT,LEFT,Checkbutton,IntVar,Calendar
 
 window = Tk()
 
@@ -47,8 +42,7 @@ def rClicker(e):
 def rClickbinder(r):
     try:
         for b in ['Text', 'Entry', 'Listbox', 'Label']:
-            r.bind_class(b, sequence='<Button-3>',
-                         func=rClicker, add='')
+            r.bind_class(b, sequence='<Button-3>', func=rClicker, add='')
     except:
         print(' - rClickbinder, something wrong')
         pass
@@ -63,36 +57,33 @@ def addNewEntryToTimeTrakBridge():
     TodaysFlag = CheckVar1.get()
     if TodaysFlag == 1:
         DDRTMP = date.today()
+
     DDR = DDRTMP.strftime("%m/%d/%Y")
-    dataAnalysisFunctions.addNewEntryToTimeTrak(
-        inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached, DDR)
+    _DAF.DataAnalysisFunctions.addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached, DDR)
 
 
 def intializeRawFileFunc():
-    dataAnalysisFunctions.intializeRawFile()
+    _DAF.DataAnalysisFunctions.intializeRawFile()
 
 
 def turnRawFileIntoExcelFunc():
-    dataAnalysisFunctions.turnRawFileIntoExcel()
+    _DAF.DataAnalysisFunctions.turnRawFileIntoExcel()
 
 
 # Add show section
 
-
-LatestInfo = pickle.load(
-    open("pythonWtachListGenerator\\watchListGenerator\\Files\\OldInfo.p", "rb"))
+LatestInfo = _pickle.load(open("pythonWtachListGenerator\\watchListGenerator\\Files\\OldInfo.p", "rb"))
 lastDateReached = LatestInfo["colB"]
-LDR = conversionFunctions.StrToDate(lastDateReached)
+LDR = _CF.ConversionFunctions.StrToDate(lastDateReached)
 
 lastTodaysDate = LatestInfo["colD"]
-LTD = conversionFunctions.StrToDate(lastTodaysDate)
+LTD = _CF.ConversionFunctions.StrToDate(lastTodaysDate)
 
 # ----------------------------------------------------------------------------------
 
 frame = Frame(window)
 
-createNewFileBtn = Button(
-    frame, text="Create New Raw File", command=intializeRawFileFunc, width=18)
+createNewFileBtn = Button(frame, text="Create New Raw File", command=intializeRawFileFunc, width=18)
 
 createNewFileBtn.pack(side=LEFT, padx=7, pady=7)
 
@@ -102,8 +93,7 @@ frame.pack()
 
 frame2 = Frame(window)
 
-convertRawFileBtn = Button(
-    frame2, text="Convert Raw File to Excel", command=turnRawFileIntoExcelFunc, width=22)
+convertRawFileBtn = Button(frame2, text="Convert Raw File to Excel", command=turnRawFileIntoExcelFunc, width=22)
 
 convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
 
@@ -115,8 +105,7 @@ frame3 = Frame(window)
 
 inputDateReachedLbl = Label(frame3, text="Current Date of episode reached")
 
-calDateReached = Calendar(frame3, font="Arial 14", selectmode='day', locale='en_US',
-                          cursor="hand1", year=LDR.year, month=LDR.month, day=LDR.day)
+calDateReached = Calendar(frame3, font="Arial 14", selectmode='day', locale='en_US', cursor="hand1", year=LDR.year, month=LDR.month, day=LDR.day)
 
 inputDateReachedLbl.pack(side=LEFT, padx=10, pady=7)
 
@@ -130,13 +119,11 @@ frame4 = Frame(window)
 
 DDLbl = Label(frame4, text="Date Date Reached")
 
-calDateToday = Calendar(frame4, font="Arial 14", selectmode='day', locale='en_US',
-                        cursor="hand1", year=LTD.year, month=LTD.month, day=LTD.day)
+calDateToday = Calendar(frame4, font="Arial 14", selectmode='day', locale='en_US', cursor="hand1", year=LTD.year, month=LTD.month, day=LTD.day)
 
 CheckVar1 = IntVar()
 
-C1 = Checkbutton(frame4, text="Today", variable=CheckVar1,
-                 onvalue=1, offvalue=0)
+C1 = Checkbutton(frame4, text="Today", variable=CheckVar1, onvalue=1, offvalue=0)
 
 DDLbl.pack(side=LEFT, padx=45, pady=30)
 
@@ -182,8 +169,7 @@ frame6.pack()
 
 frame7 = Frame(window)
 
-convertRawFileBtn = Button(
-    frame7, text="Add TimeTrak Line", command=addNewEntryToTimeTrakBridge, width=22)
+convertRawFileBtn = Button(frame7, text="Add TimeTrak Line", command=addNewEntryToTimeTrakBridge, width=22)
 
 convertRawFileBtn.pack(side=LEFT, padx=10, pady=7)
 

@@ -1,7 +1,4 @@
-from imdb import IMDb
-import requests
-import json
-
+from helpers import json,requests,IMDb
 
 def responseToData(response):
     x = response.text.encode('utf8')
