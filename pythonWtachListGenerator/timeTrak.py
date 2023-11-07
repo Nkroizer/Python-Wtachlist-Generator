@@ -1,4 +1,10 @@
-from helpers import _DAF,_CF,_pickle,Tk,Menu,Frame,date,Button,Label,Entry,RIGHT,LEFT,Checkbutton,IntVar,Calendar
+from tkinter import Frame, Label, LEFT, RIGHT, Entry, Button, Menu, Checkbutton, IntVar
+import watchListGenerator.ConversionFunctions as _CF
+import timeTrak.DataAnalysisFunctions as _DAF
+from tkinter import Tk
+from tkcalendar import Calendar
+from datetime import date
+import pickle
 
 window = Tk()
 
@@ -59,25 +65,25 @@ def addNewEntryToTimeTrakBridge():
         DDRTMP = date.today()
 
     DDR = DDRTMP.strftime("%m/%d/%Y")
-    _DAF.DataAnalysisFunctions.addNewEntryToTimeTrak(inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached, DDR)
+    _DAF.DataAnalysisFunctions.add_new_entry_to_time_trak(inputDateReached, inputLastEpisodePlace, InputLastEpisodeReached, DDR)
 
 
 def intializeRawFileFunc():
-    _DAF.DataAnalysisFunctions.intializeRawFile()
+    _DAF.DataAnalysisFunctions.intialize_raw_file()
 
 
 def turnRawFileIntoExcelFunc():
-    _DAF.DataAnalysisFunctions.turnRawFileIntoExcel()
+    _DAF.DataAnalysisFunctions.turn_raw_file_into_excel()
 
 
 # Add show section
 
-LatestInfo = _pickle.load(open("pythonWtachListGenerator\\watchListGenerator\\Files\\OldInfo.p", "rb"))
+LatestInfo = pickle.load(open("pythonWtachListGenerator\\watchListGenerator\\Files\\OldInfo.p", "rb"))
 lastDateReached = LatestInfo["colB"]
-LDR = _CF.ConversionFunctions.StrToDate(lastDateReached)
+LDR = _CF.ConversionFunctions.string_to_date(lastDateReached)
 
 lastTodaysDate = LatestInfo["colD"]
-LTD = _CF.ConversionFunctions.StrToDate(lastTodaysDate)
+LTD = _CF.ConversionFunctions.string_to_date(lastTodaysDate)
 
 # ----------------------------------------------------------------------------------
 

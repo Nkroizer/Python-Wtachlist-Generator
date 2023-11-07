@@ -1,9 +1,14 @@
-from helpers import _CF,_json,requests,IMDb,csv,mysql
+import ConversionFunctions as _CF
+from imdb import IMDb
+import requests
+import json
+import mysql.connector
+import csv
 
 class PythonToMySqlConnection:
-    def responseToData(self, response):
+    def response_to_data(self, response):
         x = response.text.encode('utf8')
-        res = _json.loads(x)
+        res = json.loads(x)
         try:
             return res["data"]
         except:
@@ -11,7 +16,7 @@ class PythonToMySqlConnection:
             return []
 
 
-    def getToken(self):
+    def get_token(self):
         url = "https://api.thetvdb.com/login"
 
         payload = "{\r\n  \"apikey\": \"68598ddce1a4c00eb4043bcf3675a4ea\",\r\n  \"userkey\": \"5E95993E26FF76.31716214\",\r\n  \"username\": \"kroizer21\"\r\n}"
@@ -22,18 +27,18 @@ class PythonToMySqlConnection:
         response = requests.request("POST", url, headers=headers, data=payload)
 
         x = response.text.encode('utf8')
-        res = _json.loads(x)
+        res = json.loads(x)
         return res["token"]
 
 
-    def getTVDBIdByIMDBId(self, imdbID, token):
+    def get_tvdb_id_by_imdb_id(self, imdbID, token):
         url = "https://api.thetvdb.com/search/series?imdbId=tt" + str(imdbID)
         payload = {}
         headers = {
             'Authorization': 'Bearer ' + str(token)
         }
         response = requests.request("GET", url, headers=headers, data=payload)
-        data = responseToData(response)
+        data = self.response_to_data(response)
         try:
             res2 = data[0]
             tvdbID = res2["id"]
@@ -42,7 +47,7 @@ class PythonToMySqlConnection:
             return 0
 
 
-    def getRating(self, episode_obj):
+    def get_rating(self, episode_obj):
         try:
             rating = episode_obj["rating"]
             return rating
@@ -50,7 +55,7 @@ class PythonToMySqlConnection:
             return 0
 
 
-    def getAirDate(self, episode_obj):
+    def get_air_date(self, episode_obj):
         try:
             EAirdate = episode_obj["original air date"]
         except:
@@ -61,10 +66,10 @@ class PythonToMySqlConnection:
         if "May" in str(EAirdate) and not("May." in str(EAirdate)):
             EAirdate = EAirdate.replace('May', 'May.')
 
-        return _CF.ConversionFunctions.DateFormatToMySqlFormat(EAirdate)
+        return _CF.ConversionFunctions.date_format_to_mySql_format(EAirdate)
 
 
-    def getYear(self, episode_obj):
+    def get_year(self, episode_obj):
         try:
             year = episode_obj["year"]
             return year
@@ -72,7 +77,7 @@ class PythonToMySqlConnection:
             return 0
 
 
-    def getPlot(self, episode_obj):
+    def get_plot(self, episode_obj):
         try:
             plot = episode_obj["plot outline"]
             return plot
@@ -80,7 +85,7 @@ class PythonToMySqlConnection:
             return "No plot ouline"
 
 
-    def getCleanShowName(self, showName):
+    def get_clean_show_name(self, showName):
         cleanName = showName.replace(" ", "")
         cleanName = cleanName.replace(":", "")
         cleanName = cleanName.replace("-", "")
@@ -92,7 +97,7 @@ class PythonToMySqlConnection:
         return cleanName
 
 
-    def insertAllShowRecords(self):
+    def insert_all_show_records(self):
         f = open(
             "pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "r")
         if f.mode == 'r':
@@ -100,18 +105,18 @@ class PythonToMySqlConnection:
             for x in f1:
                 text = x.split(' : ')
                 imdbId = text[1]
-                insertSingleShowRecord(imdbId)
+                self.insert_single_show_record(imdbId)
         f.close()
 
 
-    def insertSingleShowRecord(self, imdbId):
+    def insert_single_show_record(self, imdbId):
         ia = IMDb()
-        token = getToken()
+        token = self.get_token()
         series = ia.get_movie(imdbId)
         releaseYear = series["year"]
         showName = series["title"]
         seasons = series["seasons"]
-        plot = getPlot(series)
+        plot = self.get_plot(series)
         plot = plot[0: 1499]
         coverUrl = series["cover url"]
         fullSizeCoverUrl = series["full-size cover url"]
@@ -123,7 +128,7 @@ class PythonToMySqlConnection:
         active = 0
         if lastDig == '-':
             active = 1
-        tvdbId = getTVDBIdByIMDBId(imdbId, token)
+        tvdbId = self.get_tvdb_id_by_imdb_id(imdbId, token)
         sql = "INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         val = (str(showName), releaseYear, seasons, active, imdbId, tvdbId, str(plot), str(coverUrl), str(fullSizeCoverUrl))
         try:
@@ -136,22 +141,22 @@ class PythonToMySqlConnection:
         print(mycursor.rowcount, "record inserted.")
 
 
-    def insertAllEpisodeRecords(self):
+    def insert_all_episode_records(self):
         f = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "r")
         if f.mode == 'r':
             f1 = f.readlines()
             for x in f1:
                 text = x.split(' : ')
                 imdbId = text[1]
-                insertSingleEpisodeRecord(imdbId)
+                self.insert_single_episode_record(imdbId)
         f.close()
 
 
-    def insertSingleEpisodeRecord(self, imdbIdIns):
+    def insert_single_episode_record(self, imdbIdIns):
         mainImdbId = int(imdbIdIns)
         ia = IMDb()
-        token = getToken()
-        tvdbId = getTVDBIdByIMDBId(imdbIdIns, token)
+        token = self.get_token()
+        tvdbId = self.get_tvdb_id_by_imdb_id(imdbIdIns, token)
         mainTvdbId = tvdbId
         series = ia.get_movie(imdbIdIns)
         showName = series["title"]
@@ -183,9 +188,9 @@ class PythonToMySqlConnection:
                                 fixedEpisode = str(episode)
                             title = episode_obj["title"]
                             kind = episode_obj["kind"]
-                            rating = getRating(episode_obj)
-                            airDate = getAirDate(episode_obj)
-                            year = getYear(episode_obj)
+                            rating = self.get_rating(episode_obj)
+                            airDate = self.get_air_date(episode_obj)
+                            year = self.get_year(episode_obj)
                             if firstYear == 0:
                                 firstYear = year
                             plot = episode_obj["plot"]
@@ -194,7 +199,7 @@ class PythonToMySqlConnection:
                             watched = 0
                             wasIncremented = 0
                             verified = 0
-                            episodeCode = getCleanShowName(showName) + "(" + str(firstYear) + ")" + "S" + fixedSeason + "E" + fixedEpisode
+                            episodeCode = self.get_clean_show_name(showName) + "(" + str(firstYear) + ")" + "S" + fixedSeason + "E" + fixedEpisode
                             fullShowName =  str(showName) + " (" + str(firstYear) + ")"
                             print(episodeCode)
                             mycursor.execute("SELECT * FROM episodes WHERE episodeCode = '" + str(episodeCode) + "'")
@@ -215,7 +220,7 @@ class PythonToMySqlConnection:
         print("finished with " + str(showName))
 
 
-    def selectAllFromShows(self):
+    def select_all_from_shows(self):
         mycursor.execute("SELECT * FROM shows")
 
         myresult = mycursor.fetchall()
@@ -224,37 +229,37 @@ class PythonToMySqlConnection:
             print(x)
 
 
-    def createdatabase(self):
+    def create_database(self):
         sql = r"CREATE DATABASE watchlistdatabase"
         return sql
 
 
-    def createShowsTabel(self):
+    def create_shows_table(self):
         sql = r"CREATE TABLE shows (id INT AUTO_INCREMENT PRIMARY KEY, showName VARCHAR(255), releaseYear INT, seasons INT, active BIT, imdbId INT UNIQUE, tvdbId INT UNIQUE, plot VARCHAR(1500), coverUrl VARCHAR(255), fullSizeCoverUrl VARCHAR(255))"
         return sql
 
 
-    def createEpisodesTabel(self):
+    def create_episodes_table(self):
         sql = r"CREATE TABLE episodes (showName VARCHAR(255), season INT, episode INT, title VARCHAR(255), kind VARCHAR(255), rating FLOAT, airDate DATE, year INT, plot VARCHAR(1500), mainImdbId INT, mainTvdbId INT, imdbId INT, tvdbId INT, watched BIT, wasIncremented BIT, verified BIT, episodeCode VARCHAR(255) UNIQUE)"
         return sql
 
 
-    def initDataBases(self):
-        command = createdatabase()
+    def init_databases(self):
+        command = self.create_database()
         mycursor.execute(command)
-        command = createShowsTabel()
+        command = self.create_shows_table()
         mycursor.execute(command)
-        command = createEpisodesTabel()
+        command = self.create_episodes_table()
         mycursor.execute(command)
 
 
-    def checkIfTableExists(self):
+    def check_if_table_exists(self):
         mycursor.execute("SHOW TABLES")
         for x in mycursor:
             print(x)
 
 
-    def ImdbFileToDb(self):
+    def imdb_file_to_db(self):
         with open("pythonWtachListGenerator\\watchListGenerator\\Tv Shows I Watch.csv", newline='') as csvfile:
             showCSV = csv.reader(csvfile, delimiter=',', quotechar='|')
             for cell in showCSV:
@@ -264,11 +269,11 @@ class PythonToMySqlConnection:
                 mycursor.execute("SELECT imdbId FROM shows WHERE imdbId =" + x)
                 myresult = mycursor.fetchall()
                 if(len(myresult) < 1):
-                    insertSingleShowRecord(x)
-                    insertSingleEpisodeRecord(x)
+                    self.insert_single_show_record(x)
+                    self.insert_single_episode_record(x)
 
 
-    def forceUpdateEpisodesYear(self, imdbIdIns, showName, year):
+    def force_update_episodes_year(self, imdbIdIns, showName, year):
         mycursor.execute("SELECT  * FROM episodes WHERE mainImdbId = '" + str(imdbIdIns) +"'")
         myresult = mycursor.fetchall()
         for i in range(len(myresult)):
@@ -286,7 +291,7 @@ class PythonToMySqlConnection:
             else:
                 fixedEpisode = str(episode)
             oldEpisodeCode = row[len(row) - 1]
-            episodeCode = getCleanShowName(showName) + "(" + str(year) + ")" + "S" + fixedSeason + "E" + fixedEpisode
+            episodeCode = self.get_clean_show_name(showName) + "(" + str(year) + ")" + "S" + fixedSeason + "E" + fixedEpisode
             fullShowName =  str(showName) + " (" + str(year) + ")"
             mycursor.execute("UPDATE episodes SET showName = '" + str(fullShowName) + "', episodeCode = '" + str(episodeCode) + "' WHERE episodeCode = '" + str(oldEpisodeCode) + "'")
             print("episode code :" + str(oldEpisodeCode) + " Updated to " + str(episodeCode))
@@ -301,41 +306,4 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-# forceUpdateEpisodesYear(168366, "Pokémon" ,1997)
-
-# mycursor.execute("SELECT imdbId FROM shows")
-
-# myresult = mycursor.fetchall()
-
-# initDataBases()
-# mycursor.execute(sql)
-
-# insertAllShowRecords()
-# ImdbFileToDb()
-
-# '121955',
-# '397306',
-# '475784',
-# '1236246',
-# '1305826',
-# '1641384',
-# '1898069',
-# '2364582',
-# '2560140',
-# '2919910',
-# '3107288',
-# '4532368',
-# '4955642',
-# '5034326',
-# '6279576',
-# '8005374',
-# '8425308',
-# '8712204',
-# '11192306',
-# '98936',
-# '4093826',
-updatetArry = ['6741278']
-for show in updatetArry:
-    insertSingleEpisodeRecord(show)
-
 

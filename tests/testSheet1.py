@@ -41,19 +41,22 @@
 
 # importing tkinter module
 
-from pythonWtachListGenerator.helpers import _json,requests,_pathlib,IMDb
+from imdb import IMDb
+import requests
+import json
+import pathlib
 
 # INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl)
 # VALUES (value1, value2, value3, ...);
 
 
-def responseToData(response):
+def response_to_data(response):
     x = response.text.encode('utf8')
-    res = _json.loads(x)
+    res = json.loads(x)
     return res["data"]
 
 
-def getToken():
+def get_token():
     url = "https://api.thetvdb.com/login"
 
     payload = "{\r\n  \"apikey\": \"68598ddce1a4c00eb4043bcf3675a4ea\",\r\n  \"userkey\": \"5E95993E26FF76.31716214\",\r\n  \"username\": \"kroizer21\"\r\n}"
@@ -64,11 +67,11 @@ def getToken():
     response = requests.request("POST", url, headers=headers, data=payload)
 
     x = response.text.encode('utf8')
-    res = _json.loads(x)
+    res = json.loads(x)
     return res["token"]
 
 
-def getTVDBIdByIMDBId(imdbID, token):
+def get_tvdb_id_by_imdb_id(imdbID, token):
     url = "https://api.thetvdb.com/search/series?imdbId=tt" + str(imdbID)
     payload = {}
     headers = {
@@ -77,7 +80,7 @@ def getTVDBIdByIMDBId(imdbID, token):
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
-    data = responseToData(response)
+    data = response_to_data(response)
 
     res2 = data[0]
 
@@ -87,9 +90,9 @@ def getTVDBIdByIMDBId(imdbID, token):
 
 
 ia = IMDb()
-directory = _pathlib.Path().absolute()
+directory = pathlib.Path().absolute()
 f = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "r")
-token = getToken()
+token = get_token()
 sqlScript = r"INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl)" + "\nVALUES"
 fi = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Sql script.txt", "w+")
 if f.mode == 'r':
@@ -110,7 +113,7 @@ if f.mode == 'r':
         active = 0
         if status == "active":
             active = 1
-        tvdbId = getTVDBIdByIMDBId(imdbId, token)
+        tvdbId = get_tvdb_id_by_imdb_id(imdbId, token)
         sqlScript += "(\'" + str(showName) + "\'," + str(releaseYear) + "," + str(seasons) + "," + str(active) + "," + str(imdbId) + "," + str(tvdbId) + ",\'" + str(plot) + "\',\'" + str(coverUrl) + "\',\'" + str(fullSizeCoverUrl) + "\');\n"
 fi.write(sqlScript)
 fi.close()

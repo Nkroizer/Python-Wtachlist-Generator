@@ -1,12 +1,15 @@
-from pythonWtachListGenerator.helpers import _WF,_json,requests,csv
+import pythonWtachListGenerator.watchListGenerator.WatchListFunctions as _WF
+import requests
+import json
+import csv
 
-def responseToData(response):
+def response_to_data(response):
     x = response.text.encode('utf8')
-    res = _json.loads(x)
+    res = json.loads(x)
     return res["data"]
 
 
-def getToken():
+def get_token():
     url = "https://api.thetvdb.com/login"
 
     payload = "{\r\n  \"apikey\": \"68598ddce1a4c00eb4043bcf3675a4ea\",\r\n  \"userkey\": \"5E95993E26FF76.31716214\",\r\n  \"username\": \"kroizer21\"\r\n}"
@@ -17,13 +20,13 @@ def getToken():
     response = requests.request("POST", url, headers=headers, data=payload)
 
     x = response.text.encode('utf8')
-    res = _json.loads(x)
+    res = json.loads(x)
     return res["token"]
 
 
 def refreshToken():
     url = "https://api.thetvdb.com/refresh_token"
-    token = getToken()
+    token = get_token()
     payload = {}
     headers = {
         'Authorization': 'Bearer ' + str(token)
@@ -32,7 +35,7 @@ def refreshToken():
     response = requests.request("GET", url, headers=headers, data=payload)
 
     x = response.text.encode('utf8')
-    res = _json.loads(x)
+    res = json.loads(x)
     return res["token"]
 
 
@@ -45,7 +48,7 @@ def searchDB(strSeasrch, token):
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
-    data = responseToData(response)
+    data = response_to_data(response)
 
     res2 = data[0]
 
@@ -66,7 +69,7 @@ def getSeriesName(tvdbID, token):
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
-    data = responseToData(response)
+    data = response_to_data(response)
 
     return data["seriesName"]
 
@@ -80,10 +83,10 @@ def EpisodesInformation(showId, token):
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
-    data = responseToData(response)
+    data = response_to_data(response)
 
     title = getSeriesName(showId, token)
-    cleanTitle = _WF.WatchListFunctions.cleanFileName(title)
+    cleanTitle = _WF.WatchListFunctions.clean_file_name(title)
     with open("pythonWtachListGenerator\\watchListGenerator\\Local DB2\\" + cleanTitle + ".csv", 'w', newline='') as csvfile:
         showWriter = csv.writer(csvfile)
         for a in data:
@@ -112,7 +115,7 @@ def EpisodesInformation(showId, token):
         print("------------------------------------------------------")
 
 
-def getTVDBIdByIMDBId(imdbID, token):
+def get_tvdb_id_by_imdb_id(imdbID, token):
     url = "https://api.thetvdb.com/search/series?imdbId=tt" + str(imdbID)
     payload = {}
     headers = {
@@ -121,7 +124,7 @@ def getTVDBIdByIMDBId(imdbID, token):
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
-    data = responseToData(response)
+    data = response_to_data(response)
 
     res2 = data[0]
 
@@ -131,7 +134,7 @@ def getTVDBIdByIMDBId(imdbID, token):
 
 
 def RegenerateLocalDB():
-    token = getToken()
+    token = get_token()
     f = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "r")
     if f.mode == 'r':
         f1 = f.readlines()
@@ -139,7 +142,7 @@ def RegenerateLocalDB():
             text = x.split(' : ')
             strid = text[1]
             strid = strid[0: len(strid) - 1]
-            tvdbId = getTVDBIdByIMDBId(strid, token)
+            tvdbId = get_tvdb_id_by_imdb_id(strid, token)
             EpisodesInformation(tvdbId, token)
 
 

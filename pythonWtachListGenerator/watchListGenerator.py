@@ -1,4 +1,11 @@
-from helpers import _WF,_VF,_pathlib,Tk,Menu,messagebox,os,END,Toplevel,Frame,csv,Label,datetime,StringVar,LEFT,Entry,Button,OptionMenu,Listbox
+from tkinter import Frame, Label, LEFT, Entry, Button, Listbox, END, Menu,messagebox,StringVar,OptionMenu, Toplevel
+import watchListGenerator.VerifyingFunctions as _VF
+import watchListGenerator.WatchListFunctions as _WF
+from datetime import datetime
+from tkinter import Tk
+import pathlib
+import os
+import csv
 
 root = Tk()
 
@@ -50,23 +57,23 @@ def rClickbinder(r):
 
 def addShowClick():
     link = showInput.get()
-    cleanTitle = _WF.WatchListFunctions.addShowClickedMed(link)
+    cleanTitle = _WF.WatchListFunctions.add_show_clicked_med(link)
     messagebox.showinfo("info", cleanTitle)
 
 
 def generatWatchlist():
-    directory = _pathlib.Path().absolute()
+    directory = pathlib.Path().absolute()
     shows = []
     year = variable.get()
     for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
-            if _VF.VerifyingFunctions.checkIfContainsYear(filename, year):
+            if _VF.VerifyingFunctions.check_if_contains_year(filename, year):
                 shows.append(filename)
-    _WF.WatchListFunctions.mainWatchlistGeneratorFunction(shows, year, True)
+    _WF.WatchListFunctions.main_watchlist_generator_function(shows, year, True)
 
 
 def showAvilableShowsBtnFunc():
-    directory = _pathlib.Path().absolute()
+    directory = pathlib.Path().absolute()
     for filename in os.listdir(str(directory) + r"/pythonWtachListGenerator/watchListGenerator/Local DB"):
         if ".csv" in filename:
             showname = filename[0: len(filename) - 4]
@@ -74,31 +81,31 @@ def showAvilableShowsBtnFunc():
 
 
 def getallYearsFunc():
-    return _WF.WatchListFunctions.getallYears()
+    return _WF.WatchListFunctions.get_all_years()
 
 
 def refreshShowStatusFunc():
-    _WF.WatchListFunctions.refreshShowStatus()
+    _WF.WatchListFunctions.refresh_show_status()
 
 
 def refreshDBFuncActive():
-    _WF.WatchListFunctions.refreshDB(True)
+    _WF.WatchListFunctions.refresh_db(True)
 
 
 def refreshDBFuncAll():
-    _WF.WatchListFunctions.refreshDB(False)
+    _WF.WatchListFunctions.refresh_db(False)
 
 
 def getBadDatesFunc():
-    _WF.WatchListFunctions.getBadDates()
+    _WF.WatchListFunctions.get_bad_dates()
 
 
 def getDateOfFirstEpisodeInListFunc():
-    _WF.WatchListFunctions.getDateOfFirstEpisodeInList()
+    _WF.WatchListFunctions.get_date_of_first_episode_in_list()
 
 
 def generatAllWatchlistsFunc():
-    _WF.WatchListFunctions.generatAllWatchlists()
+    _WF.WatchListFunctions.generat_all_watchlists()
 
 
 def create_window(showName):
@@ -125,7 +132,6 @@ def create_window(showName):
                 EAirdate = datetime.strptime(EAirdate, '%d %b. %Y')
             except:
                 EAirdate = '2000-01-01 00:00:00'
-            # EAirdate = DateFormatToListFormat(EAirdate)
             Label(frame, text=ESeason, borderwidth=2, relief="ridge", width=15).grid(row=rowNumber, column=0)
             Label(frame, text=Eepisode, borderwidth=2, relief="ridge", width=15).grid(row=rowNumber, column=1)
             Label(frame, text=ETitle, borderwidth=2, relief="ridge", width=25).grid(row=rowNumber, column=2)

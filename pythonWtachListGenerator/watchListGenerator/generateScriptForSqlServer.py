@@ -1,9 +1,11 @@
-from helpers import _json,requests,IMDb
+from imdb import IMDb
+import requests
+import json
 
 class GenerateScriptForSqlServer:
-    def responseToData(self, response):
+    def response_to_data(self, response):
         x = response.text.encode('utf8')
-        res = _json.loads(x)
+        res = json.loads(x)
         try:
             return res["data"]
         except:
@@ -11,7 +13,7 @@ class GenerateScriptForSqlServer:
             return []
 
 
-    def getToken(self):
+    def get_token(self):
         url = "https://api.thetvdb.com/login"
 
         payload = "{\r\n  \"apikey\": \"68598ddce1a4c00eb4043bcf3675a4ea\",\r\n  \"userkey\": \"5E95993E26FF76.31716214\",\r\n  \"username\": \"kroizer21\"\r\n}"
@@ -22,27 +24,27 @@ class GenerateScriptForSqlServer:
         response = requests.request("POST", url, headers=headers, data=payload)
 
         x = response.text.encode('utf8')
-        res = _json.loads(x)
+        res = json.loads(x)
         return res["token"]
 
 
-    def getTVDBIdByIMDBId(self, imdbID, token):
+    def get_tvdb_id_by_imdb_id(self, imdbID, token):
         url = "https://api.thetvdb.com/search/series?imdbId=tt" + str(imdbID)
         payload = {}
         headers = {
             'Authorization': 'Bearer ' + str(token)
         }
         response = requests.request("GET", url, headers=headers, data=payload)
-        data = responseToData(response)
+        data = self.response_to_data(response)
         res2 = data[0]
         tvdbID = res2["id"]
         return tvdbID
 
 
-    def generateAll(self):
+    def generate_all(self):
         ia = IMDb()
         f = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Show Links.txt", "r")
-        token = getToken()
+        token = self.get_token()
         sqlScript = r"INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl)" + "\nVALUES\r"
         fi = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Sql script.txt", "w+")
         fi.write(sqlScript)
@@ -64,7 +66,7 @@ class GenerateScriptForSqlServer:
                 active = 0
                 if status == "active":
                     active = 1
-                tvdbId = getTVDBIdByIMDBId(imdbId, token)
+                tvdbId = self.get_tvdb_id_by_imdb_id(imdbId, token)
                 sqlScript = "(\'" + str(showName) + "\'," + str(releaseYear) + "," + str(seasons) + "," + str(active) + "," + str(imdbId) + "," + str(tvdbId) + ",\'" + str(plot) + "\',\'" + str(coverUrl) + "\',\'" + str(fullSizeCoverUrl) + "\');\r"
                 fi = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Sql script.txt", "a+")
                 fi.write(sqlScript)
@@ -73,9 +75,9 @@ class GenerateScriptForSqlServer:
         f.close()
 
 
-    def generateSingle(self, imdbId):
+    def generate_single(self, imdbId):
         ia = IMDb()
-        token = getToken()
+        token = self.get_token()
         sqlScript = r"INSERT INTO shows (showName, releaseYear, seasons, active, imdbId, tvdbId, plot, coverUrl, fullSizeCoverUrl)" + "\nVALUES\r"
         fi = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Sql script.txt", "w+")
         fi.write(sqlScript)
@@ -94,7 +96,7 @@ class GenerateScriptForSqlServer:
         active = 0
         if lastDig == '-':
             active = 1
-        tvdbId = getTVDBIdByIMDBId(imdbId, token)
+        tvdbId = self.get_tvdb_id_by_imdb_id(imdbId, token)
         sqlScript = "(\'" + str(showName) + "\'," + str(releaseYear) + "," + str(seasons) + "," + str(active) + "," + str(imdbId) + "," + str(tvdbId) + ",\'" + str(plot) + "\',\'" + str(coverUrl) + "\',\'" + str(fullSizeCoverUrl) + "\');\r"
         fi = open("pythonWtachListGenerator\\watchListGenerator\\Files\\Sql script.txt", "a+")
         fi.write(sqlScript)

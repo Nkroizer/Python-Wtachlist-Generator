@@ -1,13 +1,14 @@
-from helpers import os,csv
+import csv
+import os
 
 class VerifyingFunctions:
-    def checkIfFolderExistAndCreate(self, folderName):
+    def check_if_folder_exist_and_create(self, folderName):
         if not os.path.exists(folderName):
             os.makedirs(folderName)
 
 
-    def checkIfContainsYear(self, show, YOF):
-        checkIfFolderExistAndCreate("/pythonWtachListGenerator/watchListGenerator/Local DB")
+    def check_if_contains_year(self, show, YOF):
+        self.check_if_folder_exist_and_create("/pythonWtachListGenerator/watchListGenerator/Local DB")
         with open(r"pythonWtachListGenerator/watchListGenerator/Local DB/" + show, newline='') as csvfile:
             showReader = csv.reader(csvfile, delimiter=' ', quotechar='|')
             for row in showReader:

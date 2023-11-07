@@ -1,10 +1,12 @@
-from pythonWtachListGenerator.helpers import _json,_PTMC,IMDb,csv,mysql,requests
+import pythonWtachListGenerator.watchListGenerator.PythonToMySqlConnection as _PTMC
+from imdb import IMDb
+import mysql.connector
 
-def insertSingleEpisodeRecord(imdbIdIns):
+def insert_single_episode_record(imdbIdIns):
     mainImdbId = int(imdbIdIns)
     ia = IMDb()
-    token = _PTMC.PythonToMySqlConnection.getToken()
-    tvdbId = _PTMC.PythonToMySqlConnection.getTVDBIdByIMDBId(imdbIdIns, token)
+    token = _PTMC.PythonToMySqlConnection.get_token()
+    tvdbId = _PTMC.PythonToMySqlConnection.get_tvdb_id_by_imdb_id(imdbIdIns, token)
     mainTvdbId = tvdbId
     series = ia.get_movie(imdbIdIns)
     showName = series["title"]
@@ -29,9 +31,9 @@ def insertSingleEpisodeRecord(imdbIdIns):
                     fixedEpisode = str(episode)
                 title = episode_obj["title"]
                 kind = episode_obj["kind"]
-                rating = _PTMC.PythonToMySqlConnection.getRating(episode_obj)
-                airDate = _PTMC.PythonToMySqlConnection.getAirDate(episode_obj)
-                year = _PTMC.PythonToMySqlConnection.getYear(episode_obj)
+                rating = _PTMC.PythonToMySqlConnection.get_rating(episode_obj)
+                airDate = _PTMC.PythonToMySqlConnection.get_air_date(episode_obj)
+                year = _PTMC.PythonToMySqlConnection.get_year(episode_obj)
                 if firstYear == 0:
                     firstYear = year
                 plot = episode_obj["plot"]
@@ -40,8 +42,8 @@ def insertSingleEpisodeRecord(imdbIdIns):
                 watched = 0
                 wasIncremented = 0
                 verified = 0
-                episodeCode = _PTMC.PythonToMySqlConnection.getCleanShowName(showName) + "(" + str(firstYear) + ")" + "S" + fixedSeason + "E" + fixedEpisode
-                oldEpisodeCode = _PTMC.PythonToMySqlConnection.getCleanShowName(showName) + "S" + str(season) + "E" + str(episode)
+                episodeCode = _PTMC.PythonToMySqlConnection.get_clean_show_name(showName) + "(" + str(firstYear) + ")" + "S" + fixedSeason + "E" + fixedEpisode
+                oldEpisodeCode = _PTMC.PythonToMySqlConnection.get_clean_show_name(showName) + "S" + str(season) + "E" + str(episode)
                 print(oldEpisodeCode)
                 mycursor.execute("SELECT * FROM episodes WHERE episodeCode = '" + str(oldEpisodeCode) + "'")
                 myresult = mycursor.fetchall()
@@ -77,4 +79,4 @@ mycursor = mydb.cursor()
 # mycursor.execute("SELECT * FROM episodes WHERE mainImdbId = 8421350")
 # myresult = mycursor.fetchall()
 # print(myresult[0][17])
-insertSingleEpisodeRecord(2243973)
+insert_single_episode_record(2243973)
